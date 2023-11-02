@@ -1,0 +1,47 @@
+$(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+});
+function make_modal ( $className, $html = null, $open_modal = false, $dialogSize = null ) {
+    let $modalHtml = '';
+    let dialogClass = $dialogSize;
+    $className = ( $className !== '' ) ? $className : 'custom-modal1';
+    let id_name = $className.split(' ')[0];
+    $modalHtml += `<div class="modal fade ${$className}" id="${id_name}" role="document" data-backdrop="static" data-keyboard="false">`;
+        $modalHtml += `<div class="modal-dialog ${dialogClass} modal-dialog-centered" role="document">`;
+            $modalHtml += '<div class="modal-content append-wrapper">';
+                $modalHtml += ( $html ) ? $html : '';
+            $modalHtml += '</div>';
+        $modalHtml += '</div>';
+    $modalHtml += '</div>';
+
+    $('body').append($modalHtml);
+
+    let $elem = $('body').find('#' + id_name);
+    if ( $open_modal ) {
+        $elem.modal('show');
+    }
+    /* On close remove the modal */
+    $elem.on('hidden.bs.modal', function(event) {
+        $(this).remove();
+    });
+    return $elem;
+}
+
+function delete_confirmation(message = 'Are you sure you want to delete this record?', confirmButtonText = "Yes, delete!", cancelButtonText = 'No, cancel' ) {
+    return Swal.fire({
+        text: message,
+        icon: "warning",
+        showCancelButton: !0,
+        buttonsStyling: !1,
+        confirmButtonText: confirmButtonText,
+        cancelButtonText: cancelButtonText,
+        customClass: {
+            confirmButton: "btn fw-bold btn-danger",
+            cancelButton: "btn fw-bold btn-active-light-primary"
+        }
+    });
+}

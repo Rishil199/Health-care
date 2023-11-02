@@ -1,0 +1,19 @@
+label.error {
+    color: red
+}
+
+label#name-error {
+    color: red;
+}
+
+.st0 {
+    fill: #26282B !important;
+}
+
+.header-upper-right>ul>li:hover>a .svg-icon svg path, .header-upper-right>ul>li.active>a .svg-icon svg path, .header-upper-right .responsive li:hover > a .svg-icon svg path {
+    fill: var(--white) !important;
+}
+
+.st0:hover {
+/*    fill: #fff !important;*/
+}

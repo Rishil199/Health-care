@@ -1,0 +1,7 @@
+label.error {
+    color: red
+}
+
+label#name-error {
+    color: red;
+}
