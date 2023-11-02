@@ -65,34 +65,39 @@
                   </div>
                </div>
             </div>
-            @if(Auth::user()->hasRole(['Super Admin']))  
-            <div class="col-md-6 mb-3">
-               <div class="form-group theme-form-group">
-                  <label class="theme-label" for="picker1">Select Clinic</label>
-                  <div class="theme-form-input">
-                     <select class="form-control form-select" name="clinic_id" id="clinic-dropdown">
-                        <option value="">Select Clinic</option>
-                        @foreach($clinics as $value)
-                        <option value="{{ $value->id }}" {{ $patient->clinic_id == $value->id ? 'selected' : '' }}>{{ @$value->user->first_name }}</option>
-                        @endforeach
-                     </select>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-6 mb-3">
-               <div class="form-group theme-form-group">
-                  <label class="theme-label" for="picker1">Select Doctor</label>
-                  <div class="theme-form-input">
-                     <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
-                        <option value="">Select Doctor</option>
-                        @foreach($doctors as $value)
-                        <option value="{{ $value->id }}" {{ $patient->doctor_id == $value->id  ? 'selected' : '' }}>{{ $value->user->first_name }} {{ $value->user->last_name }}</option>
-                        @endforeach
-                     </select>
-                  </div>
-               </div>
-            </div>
+            @if(Auth::user()->hasRole(['Clinic']))
+               <input type="hidden" name="clinic_id" value="{{ $patient->clinic_id }}" />
             @endif
+            @if(Auth::user()->hasRole(['Super Admin']))
+               <div class="col-md-6 mb-3">
+                  <div class="form-group theme-form-group">
+                     <label class="theme-label" for="picker1">Select Clinic</label>
+                     <div class="theme-form-input">
+                        <select class="form-control form-select" name="clinic_id" id="clinic-dropdown">
+                           <option value="">Select Clinic</option>
+                           @foreach($clinics as $value)
+                           <option value="{{ $value->id }}" {{ $patient->clinic_id == $value->id ? 'selected' : '' }}>{{ @$value->user->first_name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 mb-3">
+                  <div class="form-group theme-form-group">
+                     <label class="theme-label" for="picker1">Select Doctor</label>
+                     <div class="theme-form-input">
+                        <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
+                           <option value="">Select Doctor</option>
+                           @foreach($doctors as $value)
+                           <option value="{{ $value->id }}" {{ $patient->doctor_id == $value->id  ? 'selected' : '' }}>{{ $value->user->first_name }} {{ $value->user->last_name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            @endif
+
+
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>

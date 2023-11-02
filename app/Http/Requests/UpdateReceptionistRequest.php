@@ -27,8 +27,8 @@ class UpdateReceptionistRequest extends FormRequest
         $userId  = Auth::id();
    
         return [
-            'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
-            'last_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
+            'first_name' => 'required|regex: /^[A-Z]{2,30}+$/i',
+            'last_name' => 'required|regex: /^[A-Z]{2,30}+$/i',
             'email' => 'required|email',
             'phone_no' => 'required|digits:10|numeric',
             'status' => 'required',

@@ -57,6 +57,7 @@ class AuthenticatedSessionController extends Controller
 
             $request->session()->regenerateToken();
 
+            
             // throw ValidationException::withMessages([
             //     'email' => trans('auth.failed'),
             // ]);

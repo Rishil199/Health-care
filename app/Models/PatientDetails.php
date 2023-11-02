@@ -14,7 +14,6 @@ class PatientDetails extends Model
         'clinic_id',
         'user_id',
         'doctor_id',
-        'receptionist_id',
         'patient_number',
         'gender',
         'admit_date',        
