@@ -8,7 +8,7 @@
          <div class="col-12">
             <div class="welcome-title">
                <div class="wt-lower">
-                  <p>Welcome to <b class="theme-black">Narola Care</b> {{$title}}</p>
+                       <p>Welcome to <b class="theme-black">Narola Care</b> {{$title}}</p>
                </div>
             </div>
          </div>
@@ -370,6 +370,8 @@
                                           <tr>
                                              <td colspan="6" class="text-center">No Data Found</td>
                                           </tr>
+                                          {{-- @else 
+                                          <h2>data</h2> --}}
                                           @endif
                                        </tbody>
                                     </table>

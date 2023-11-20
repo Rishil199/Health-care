@@ -50,7 +50,7 @@
                         </svg>
                      </span>
                      <span class="svg-text">
-                     Add Patient
+                     Adds Patient
                      </span>
                   </button>
                </a>

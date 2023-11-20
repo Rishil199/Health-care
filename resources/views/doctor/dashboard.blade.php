@@ -123,7 +123,7 @@
                   <div class="col-12">
                      <div class="latest-user-block theme-block">
                         <div class="title">
-                           <strong>Latest Users</strong>
+                           <strong>Latest User</strong>
                         </div>
                         <div class="theme-tab">
                            <ul class="nav nav-tabs" id="latestUserTab" role="tablist">

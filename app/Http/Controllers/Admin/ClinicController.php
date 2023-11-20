@@ -26,6 +26,7 @@ class ClinicController extends Controller
      */
 
     public function index(Request $request) {
+        // dd("dd");
         if ($request->ajax()) {
             
             $clinics = ClinicDetails::select(array(

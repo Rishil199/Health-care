@@ -28,7 +28,7 @@ class DoctorController extends Controller
      */
 
     public function dashboard() {
-        
+        //   dd(Auth::check());
         $clinicCount = ClinicDetails::get()->count();
         
         $receptionistCount = ReceptionistDetails::get()->count();
@@ -60,13 +60,16 @@ class DoctorController extends Controller
 
     public function appointments(Request $request) {
         $user_id = auth()->id();
-        
-        $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+        // dd($user_id);
+        $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',$user_id)->first();
+        // dd($clinic_details);
         
         $doctors = DoctorDetails::select('id','user_id')->where('user_id',Auth::user()->id)->get();
         if(Auth::user()->hasRole(['Clinic'])) {
+            // dd('dd');
             $doctors = DoctorDetails::select('id','user_id')->where('clinic_id',$clinic_details->id)->get();
         }
+  
 
         if ( $request->ajax() ) {
             if ( $request->load_view == 'true' ) {
@@ -241,11 +244,12 @@ class DoctorController extends Controller
 
         if(Auth::user()->hasRole(['Clinic'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            // dd($user_id->id);
 
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-
+            // dd($receptionist_details->id);
             $all_appointment = DoctorAppointmentDetails::where('clinic_id',$user_id->id)
-                ->when($receptionist_details, function ($query) {
+                ->when($receptionist_details, function ($query) use ($receptionist_details) {
                     $query->orWhere('receptionist_id', $receptionist_details->id);
                 })
                 ->withTrashed()
@@ -267,7 +271,7 @@ class DoctorController extends Controller
                 ->where(function ( $query ) use ($receptionist_details, $user_id) {
                     $query
                         ->where('clinic_id', $user_id->id)
-                        ->when($receptionist_details, function ( $query ) {
+                        ->when($receptionist_details, function ( $query ) use ($receptionist_details) {
                             $query->orWhere('receptionist_id', $receptionist_details->id);
                         });
                 })
@@ -276,7 +280,7 @@ class DoctorController extends Controller
             $upcoming_appointment = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()
                 ->where(function ( $query ) use ($receptionist_details, $user_id) {
                     $query
-                        ->when($receptionist_details, function ( $query ) {
+                        ->when($receptionist_details, function ( $query ) use ($receptionist_details){
                             $query->orWhere('receptionist_id', $receptionist_details->id);
                         })
                         ->where('clinic_id', $user_id->id);
@@ -286,7 +290,7 @@ class DoctorController extends Controller
             $past_appointment = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($receptionist_details, $user_id) {
                     $query
-                        ->when($receptionist_details, function ( $query ) {
+                        ->when($receptionist_details, function ( $query ) use ($receptionist_details) {
                             $query->orWhere('receptionist_id', $receptionist_details->id);
                         })
                         ->where('clinic_id', $user_id->id);

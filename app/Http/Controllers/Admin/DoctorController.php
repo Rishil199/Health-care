@@ -28,27 +28,31 @@ class DoctorController extends Controller
      */
 
     public function index(Request $request) {
-    
+    //   dd("dd");
         if ($request->ajax()) {
             
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->get();
 
-            if(Auth::user()->hasRole(['Receptionist'])){
-                $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-                $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
-                $doctors = DoctorDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+            // if(Auth::user()->hasRole(['Receptionist'])){
+            //     // dd("dd");
+            //     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            //     // dd($user_id);
+            //     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+            //     // dd($clinic_user_id);
+            //     $doctors = DoctorDetails::with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
          
-            }
+            // }
+            // // dd($doctors);
 
-            if(Auth::user()->hasRole(['Clinic'])){
-                $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-                
-                $doctors = DoctorDetails::select(array(
-                'id','user_id','clinic_id','status','created_at'
-                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
-            }
+            // if(Auth::user()->hasRole(['Clinic'])){
+            //     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            //     // dd($user_id);
+            //     $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            //      ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+            // }
 
 
             return Datatables::of($doctors)
@@ -208,10 +212,15 @@ class DoctorController extends Controller
         $doctor->experience = $request['experience'];
         $doctor->expertice = $post_data['expertice'];
         $doctor->user_id = $users['id'];
+        // dd($doctor);
          if(Auth::user()->hasRole(['Receptionist'])){
+            // dd("ddd");
             $clinic_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-            $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
+            // dd($clinic_id);
+            // $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
+            //  dd($doctor);
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id->clinic_id;
+            // dd($doctor);
         }
         if(Auth::user()->hasRole(['Clinic'])){
             $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
@@ -308,13 +317,17 @@ class DoctorController extends Controller
 
     public function update(UpdateDoctorRequest $request, $id)
     {
-       
+        
+        // dd("ddd")  ;
+
         $clinic_id = 0;
         $user_id = 0;
         $latitude = 0;
         $logitude = 0;
        
         $doctor = DoctorDetails::with('user')->findOrFail($id);
+        // dd($doctor);
+      
         $doctor->address = $request->validated()['address'];
         $doctor->status = $request['status'];
         $doctor->gender = $request['gender'];
@@ -324,20 +337,23 @@ class DoctorController extends Controller
         $doctor->expertice = $request->validated()['expertice'];
         $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
         if(Auth::user()->hasRole(['Receptionist'])){
-            $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
+            // $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $doctor->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
+        // dd($doctor);
         $doctor->save();
-        
         try {
             $doctor->user()->update([
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name'],
-            'email' => $request['email'],
+                'first_name' => $request['first_name'],
+                'last_name' => $request['last_name'],
+                'email' => $request['email'],
             'phone_no' => $request['phone_no']],
         );
+        // dd($doctor);
+       
         } catch(\Illuminate\Database\QueryException $e){
+            dd("Dd");
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
                 return "Duplicate entry";
@@ -445,6 +461,7 @@ class DoctorController extends Controller
 
 
     public function doctorsListing(Request $request){
+
          if ($request->ajax()) {
             
             $doctors = DoctorDetails::select(array(

@@ -173,7 +173,7 @@ class RoleController extends Controller
 
     public function update(UpdateRoleRequest $request, $id)
     {
-        $role = Role::findfindOrFail($id);
+        $role = Role::findOrFail($id);
         $role->name = ucfirst($request->validated()['name']);
         $role->save();
 

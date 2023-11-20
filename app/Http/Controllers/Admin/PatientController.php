@@ -31,31 +31,39 @@ class PatientController extends Controller
      */
 
     public function index(Request $request) {
-
+//  dd("dd");
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-       
+        // $patients = PatientDetails::select(array(
+        //     'id','user_id','clinic_id','created_at','doctor_id'
+        //     ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
+            // dd($patients);
         if ($request->ajax()) {
             
             if(Auth::user()->hasRole('Super Admin')){
-                  $patients = PatientDetails::select(array(
+                $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
-                ))->latest()->with('user')->get();  
-            }
-            if(Auth::user()->hasRole('Doctor')) {
+                    ))->latest()->with('user')->get();  
+                }
+                if(Auth::user()->hasRole('Doctor')) {
+                // dd("dd");
                 $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-                // dd($user_id->id);
+                // dd($user_id);
                 $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+                // dd($clinic_user_id);
                 $patients = PatientDetails::select(array(
                 'id','user_id','clinic_id','created_at','doctor_id'
                 ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
+                // dd($patients);
             }
              if(Auth::user()->hasRole('Receptionist')) {
+                // dd("dd");
                     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
                     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id','receptionist_id')->where('clinic_id',$user_id->clinic_id)->first();
                     $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
-                 ))->latest()->with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-            }
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                    // dd($patients);
+                }
 
             if(Auth::user()->hasRole('Clinic')) {
 
@@ -133,10 +141,12 @@ class PatientController extends Controller
                 ->rawColumns(['action','status','first_name','email'])
                 ->make(true);
         }
-
+    
         $this->data = array(
             'title' => 'Patients',
         );
+        // dd($this->data);
+        // dd($patients);
 
         return view('admin.patients.index', $this->data);
     }
@@ -154,6 +164,7 @@ class PatientController extends Controller
         $doctors = DoctorDetails::with('user')->select('id','user_id')->get();
 
         if(Auth::user()->hasRole(['Receptionist'])){    
+            // dd('dd')
             
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
 
@@ -163,8 +174,8 @@ class PatientController extends Controller
             'id','user_id','clinic_id','created_at'
             ))->latest()->with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
             
-            $doctors = DoctorDetails::with('user')->select('id','user_id','receptionist_id')->where('receptionist_id',Auth::user()->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-
+            $doctors = DoctorDetails::with('user')->select('id','user_id')->where('clinic_id',Auth::user()->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+              
         }
 
         if(Auth::user()->hasRole('Clinic')){
@@ -291,14 +302,18 @@ class PatientController extends Controller
 
         if(Auth::user()->hasRole(['Clinic'])){
             
-            $user_id = PatientDetails::select('user_id','id')->where('user_id',$id)->first();
+            $user_id =PatientDetails::find($id);;
+            // dd($user_id);
             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$user_id->id)->with('user')->first();
         }
         if(Auth::user()->hasRole(['Receptionist'])){
              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
         }
         if(Auth::user()->hasRole(['Doctor'])){
-            $user_id = PatientDetails::select('user_id','id')->where('user_id',$id)->first();
+            // $user=Auth::user();
+            // dd($user->id);
+            $user_id = PatientDetails::find($id);
+            // dd($user_id);
             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$user_id->id)->with('user')->first();
         }
 
