@@ -52,7 +52,7 @@ class PatientController extends Controller
                 // dd($clinic_user_id);
                 $patients = PatientDetails::select(array(
                 'id','user_id','clinic_id','created_at','doctor_id'
-                ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
+                ))->with('user')->where('doctor_id',$user_id->id)->get();
                 // dd($patients);
             }
              if(Auth::user()->hasRole('Receptionist')) {
@@ -62,7 +62,7 @@ class PatientController extends Controller
                     $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-                    // dd($patients);
+                    
                 }
 
             if(Auth::user()->hasRole('Clinic')) {
@@ -72,6 +72,7 @@ class PatientController extends Controller
                 $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
                 ))->latest()->with('user')->where('clinic_id',$clinic_details->id)->orWhere('receptionist_id',$user_id->id)->get();
+    
             }
 
             return Datatables::of($patients)
@@ -382,6 +383,7 @@ class PatientController extends Controller
 
     public function update(UpdatePatientRequest $request, $id)
     {
+     
         $clinic_id = 0;
         $latitude = 0;
         $logitude = 0;
@@ -413,6 +415,7 @@ class PatientController extends Controller
             'email' => $request['email'],
             'phone_no' => $request['phone_no']],
         );
+        //    dd($patient);
         return response()->json(
              [
                'status' => true,
@@ -420,6 +423,7 @@ class PatientController extends Controller
              ]
         );
         return response()->json($response);
+        
     }
 
     /**

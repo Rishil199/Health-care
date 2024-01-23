@@ -33,6 +33,7 @@ class UserController extends Controller
     public function dashboard() {
         //   dd(Auth::user());
         $clinicCount = count(ClinicDetails::get());
+        // dd($clinicCount);
  
 
         $doctors = DoctorDetails::select(array(
@@ -57,6 +58,7 @@ class UserController extends Controller
         $rt = ReceptionistDetails::select('clinic_id','user_id')->where('clinic_id',Auth::user()->id)->first();
                
         $appointmentsCount = count(DoctorAppointmentDetails::withTrashed()->get());  
+        
         
         $date = today()->format('Y-m-d');
           
@@ -176,6 +178,7 @@ class UserController extends Controller
             $past_appointment = count(DoctorAppointmentDetails::where('is_complete','=','1')->where('clinic_id',$user_id->id)->withTrashed()->get());
         }
 
+      
          if(Auth::user()->hasRole('Patient')){
 
             $user_id = PatientDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
@@ -213,7 +216,7 @@ class UserController extends Controller
                 //  echo "ddd";die;
                 if(Auth::user()->hasAnyRole(['Super Admin','Doctor','Receptionist','Clinic'])){
                     // dd('ddd');
-                 $this->data = [
+                 $this->data = array(
                 'title' => 'Dashboard',
                 'clinicCount' => $clinicCount,
                 'patients' => $patients,
@@ -224,7 +227,7 @@ class UserController extends Controller
                 'todays_appointment' => $todays_appointment,
                 'upcoming_appointment' => $upcoming_appointment,
                 'past_appointment' => $past_appointment,
-                 ]; 
+                 ); 
     
                 }
                 // dd($this->data);
@@ -531,8 +534,6 @@ class UserController extends Controller
         }else{
             return redirect()->back()->with('error','Subscription not set successfully');
         } 
-
-        
 
     }
 }
