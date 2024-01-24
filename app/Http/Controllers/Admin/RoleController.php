@@ -148,6 +148,7 @@ class RoleController extends Controller
         $permissions = Permission::select('id','name')->get();
 
         $rolePermissions = $role->permissions->pluck('id')->toArray();
+        // dd($rolePermissions);
 
         $this->data = array(
             'role' => $role,
@@ -173,6 +174,7 @@ class RoleController extends Controller
 
     public function update(UpdateRoleRequest $request, $id)
     {
+        // dd($request->all());
         $role = Role::findOrFail($id);
         $role->name = ucfirst($request->validated()['name']);
         $role->save();

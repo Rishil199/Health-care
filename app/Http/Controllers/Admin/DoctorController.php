@@ -46,13 +46,13 @@ class DoctorController extends Controller
             // }
             // // dd($doctors);
 
-            // if(Auth::user()->hasRole(['Clinic'])){
-            //     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            //     // dd($user_id);
-            //     $doctors = DoctorDetails::select(array(
-            //     'id','user_id','clinic_id','status','created_at'
-            //      ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
-            // }
+            if(Auth::user()->hasRole(['Clinic'])){
+                $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+                // dd($user_id->id);
+                $doctors = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+            }
 
 
             return Datatables::of($doctors)

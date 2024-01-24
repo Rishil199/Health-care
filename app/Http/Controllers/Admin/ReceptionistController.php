@@ -37,9 +37,9 @@ class ReceptionistController extends Controller
             if(Auth::user()->hasRole(['Clinic'])){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                 // dd($user_id);
-                // $receptionist = ReceptionistDetails::select(array(
-                // 'id','user_id','clinic_id','status','created_at'
-                //  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+                $receptionist = ReceptionistDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
                 //  dd($receptionist);
             }
 

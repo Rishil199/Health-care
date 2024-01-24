@@ -47,13 +47,15 @@ class PatientController extends Controller
                 if(Auth::user()->hasRole('Doctor')) {
                 // dd("dd");
                 $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-                // dd($user_id);
+                // dd($user_id->id);
                 $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
                 // dd($clinic_user_id);
                 $patients = PatientDetails::select(array(
                 'id','user_id','clinic_id','created_at','doctor_id'
                 ))->with('user')->where('doctor_id',$user_id->id)->get();
+                // $patients=Auth::user()->with('patients')->get();
                 // dd($patients);
+               
             }
              if(Auth::user()->hasRole('Receptionist')) {
                 // dd("dd");
@@ -405,7 +407,7 @@ class PatientController extends Controller
         if(Auth::user()->hasRole(['Receptionist'])){
             $patient->receptionist_id = isset($request['receptionist_id']) ? $request['receptionist_id'] : Auth::user()->id;
         }
-        $patient->doctor_id = isset($request['doctor_id']) ? $request['doctor_id'] : Auth::user()->id;
+        // $patient->doctor_id = isset($request['doctor_id']) ? $request['doctor_id'] : Auth::user()->id;
         $patient->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $patient->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
         $patient->save();
