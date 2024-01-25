@@ -8,7 +8,22 @@
          <div class="col-12">
             <div class="welcome-title">
                <div class="wt-lower">
-                       <p>Welcome to <b class="theme-black">Narola Care</b> {{$title}}</p>
+                 
+                       @if (Auth::user()->hasRole('Clinic'))
+                       {{-- @php var_dump($clinics);@endphp --}}
+                       <p><b style="color: black">Clinic name : {{Auth::user()->first_name}}</b> </p>
+                       @foreach($clinics as $clinic )
+                       @switch($clinic->is_main_branch)
+                       @case(1)
+                      <p><b style="color: black">Branch : Main Branch </b> </p>
+                        @break
+                        @case(0)
+                        <p><b style="color: black">Branch : Sub Branch</b> </p>
+                           @break
+                        @endswitch
+                        @endforeach
+                      @endif 
+                      <p>Welcome to <b class="theme-black">Narola Care</b> {{$title}}</p>
                </div>
             </div>
          </div>

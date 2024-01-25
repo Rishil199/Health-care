@@ -34,6 +34,8 @@ class UserController extends Controller
         //   dd(Auth::user());
         $clinicCount = count(ClinicDetails::get());
         // dd($clinicCount);
+        $clinics=ClinicDetails::where('user_id',Auth::user()->id)->get();
+        // dd($clinics);
  
     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
     // dd($user_id);
@@ -248,6 +250,7 @@ class UserController extends Controller
                  $this->data = array(
                 'title' => 'Dashboard',
                 'clinicCount' => $clinicCount,
+                'clinics'=>$clinics,
                 'patients' => $patients,
                 'receptionistCount' => $receptionistCount,
                 'doctors' => $doctors,

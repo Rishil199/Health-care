@@ -14,7 +14,7 @@ class GeneralSettings extends Model
         'end_time',
         'user_id',
         'duration',
-        'break_time'
+        // 'break_time'
 
     ];
 }
