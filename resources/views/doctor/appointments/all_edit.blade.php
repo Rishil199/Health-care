@@ -1,4 +1,14 @@
-{{-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> --}}
+{{-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+ --}}
+ <style>
+ .theme-prescrip {
+    margin-right: 580px;
+    font-weight: normal;
+    /* margin-top: 10px;  */
+}
+
+
+</style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="modal-content">
     <div class="modal-header">
@@ -33,7 +43,7 @@
                     <div class="form-group theme-form-group">
                         <label for="disease_name" class="theme-label">Prescription <span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <textarea class="form-control" id="disease_name" name="disease_name" type="text" placeholder="Prescription details" style="resize: none;" value="{{ $all_appointent->disease_name}}" required> {{ $all_appointent->disease_name }}</textarea>
+                            <textarea class="form-control" id="disease_name" name="disease_name" type="text" placeholder="Prescription details" style="resize: none;" value="{{ $all_appointent->disease_name}}" required> </textarea>
                         </div>
                     </div>
                 </div>
@@ -65,13 +75,16 @@
                                          hidden
                                         @else 
                                             {{ $tm['start'] == $all_appointent->next_start_time ? 'selected' : '' }}
-                                        @endif>{{ $tm['start'] }} - {{ $tm['end']}}</option>
+                                        @endif>{{ $tm['start'] }} - {{ $tm['end']}}</option>           
                                 @endforeach
                             </select>
+                        
                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
+                    {{-- <div class="text-left ml-0"> --}}
+                    <label for="prescription" class="theme-prescrip"><b>Prescription :</b> {{$all_appointent->disease_name}}</label>
                     <button class="btn btn-back mt-4 app_btn" id="validation-next" type="submit"><i class="lni lni-save"></i>Submit</button>
                 </div>
             </div>

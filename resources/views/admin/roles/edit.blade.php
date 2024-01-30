@@ -29,14 +29,14 @@
                         <label for="permission" class="permission theme-label">Permissions <span class="required">* </label>
                             <div class="theme-form-input">
                                 <div class="row">
-                                    @foreach($permission as $value)
+                                    @foreach($permission as $permission)
                                     <div class="col-3">
                                         <div class="custom-control custom-checkbox">
                                             <div class="theme-form-input">
-                                                <input class="custom-control-input permissions checkbox checkbox-outline-primary d-inline" id="permission-{{ $value->id }}" name="permission[]" type="checkbox" value={{ $value->id }} {{in_array($value->id, $rolePermissions) ? 'checked': '' }}
-                                                        />
+                                                <input class="custom-control-input permissions checkbox checkbox-outline-primary d-inline" id="permission-{{ $permission->name }}" name="permission[]" type="checkbox" value="{{ $permission->name }}" {{ in_array($permission->name, $rolePermissions) ? 'checked' : '' }} />
+    
                                             </div>
-                                            <label for="permission-{{ $value->id }}" class="custom-control-label theme-label">{{ ucfirst($value->name) }}</label>
+                                            <label for="permission-{{ $permission->name }}" class="custom-control-label theme-label">{{ ucfirst($permission->name) }}</label>
                                         </div>
                                     </div>
                                     @endforeach

@@ -42,5 +42,12 @@ class DatabaseSeeder extends Seeder
                     $user->assignRole($role);
                 }
             }
+            $this->call([
+                ClinicSeeder::class,
+                DoctorSeeder::class,
+                ReceptionistSeeder::class,
+                PatientSeeder::class
+            ]);
     }
 }
+

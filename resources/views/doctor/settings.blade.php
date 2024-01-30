@@ -60,9 +60,9 @@
             </div>
             <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group">
-                        <label  class="theme-label" for="break_time">Break Time (in Minute.)<span class="required">*</span></label>
+                        {{-- <label  class="theme-label" for="break_time">Break Time (in Minute.)<span class="required">*</span></label> --}}
                         <div class="theme-form-input">
-                            <input class="form-control" id="break_time" name="break_time" type="number" placeholder="break_time" value="{{  @$generalSettings->break_time}}"  required />
+                            {{-- <input class="form-control" id="break_time" name="break_time" type="number" placeholder="break_time" value="{{  @$generalSettings->break_time}}"  required /> --}}
                         @error('break_time')
                         <p class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>

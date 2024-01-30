@@ -31,31 +31,41 @@ class PatientController extends Controller
      */
 
     public function index(Request $request) {
-
+//  dd("dd");
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-       
+        // $patients = PatientDetails::select(array(
+        //     'id','user_id','clinic_id','created_at','doctor_id'
+        //     ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
+            // dd($patients);
         if ($request->ajax()) {
             
             if(Auth::user()->hasRole('Super Admin')){
-                  $patients = PatientDetails::select(array(
+                $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
-                ))->latest()->with('user')->get();  
-            }
-            if(Auth::user()->hasRole('Doctor')) {
+                    ))->latest()->with('user')->get();  
+                }
+                if(Auth::user()->hasRole('Doctor')) {
+                // dd("dd");
                 $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
                 // dd($user_id->id);
                 $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+                // dd($clinic_user_id);
                 $patients = PatientDetails::select(array(
                 'id','user_id','clinic_id','created_at','doctor_id'
-                ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
+                ))->with('user')->where('doctor_id',$user_id->id)->get();
+                // $patients=Auth::user()->with('patients')->get();
+                // dd($patients);
+               
             }
              if(Auth::user()->hasRole('Receptionist')) {
+                // dd("dd");
                     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
                     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id','receptionist_id')->where('clinic_id',$user_id->clinic_id)->first();
                     $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
-                 ))->latest()->with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-            }
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                    
+                }
 
             if(Auth::user()->hasRole('Clinic')) {
 
@@ -64,6 +74,7 @@ class PatientController extends Controller
                 $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
                 ))->latest()->with('user')->where('clinic_id',$clinic_details->id)->orWhere('receptionist_id',$user_id->id)->get();
+    
             }
 
             return Datatables::of($patients)
@@ -133,10 +144,12 @@ class PatientController extends Controller
                 ->rawColumns(['action','status','first_name','email'])
                 ->make(true);
         }
-
+    
         $this->data = array(
             'title' => 'Patients',
         );
+        // dd($this->data);
+        // dd($patients);
 
         return view('admin.patients.index', $this->data);
     }
@@ -154,6 +167,7 @@ class PatientController extends Controller
         $doctors = DoctorDetails::with('user')->select('id','user_id')->get();
 
         if(Auth::user()->hasRole(['Receptionist'])){    
+            // dd('dd')
             
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
 
@@ -163,8 +177,8 @@ class PatientController extends Controller
             'id','user_id','clinic_id','created_at'
             ))->latest()->with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
             
-            $doctors = DoctorDetails::with('user')->select('id','user_id','receptionist_id')->where('receptionist_id',Auth::user()->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-
+            $doctors = DoctorDetails::with('user')->select('id','user_id')->where('clinic_id',Auth::user()->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+              
         }
 
         if(Auth::user()->hasRole('Clinic')){
@@ -205,6 +219,7 @@ class PatientController extends Controller
      */
 
     public function store( StorePatientRequest $request ) {
+        // dd($request);
         $role = Role::where(['name' => 'Patient'])->first();
         $post_data = $request->validated();
 
@@ -270,6 +285,7 @@ class PatientController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
+        
         }
         return response()->json(
             [
@@ -291,16 +307,33 @@ class PatientController extends Controller
 
         if(Auth::user()->hasRole(['Clinic'])){
             
-            $user_id = PatientDetails::select('user_id','id')->where('user_id',$id)->first();
+            $user_id =PatientDetails::find($id);;
+            // dd($user_id);
             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$user_id->id)->with('user')->first();
         }
         if(Auth::user()->hasRole(['Receptionist'])){
              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
         }
         if(Auth::user()->hasRole(['Doctor'])){
-            $user_id = PatientDetails::select('user_id','id')->where('user_id',$id)->first();
-            $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$user_id->id)->with('user')->first();
+            // $user=Auth::user();
+            // dd($user);
+            $user=DoctorAppointmentDetails::select('user_id')->where('patient_id',$id)->first(); 
+             $user_id = PatientDetails::find($id);
+            //  dd($user_id);
+            if ($user)
+            {
+             
+             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user->user_id)->with('user')->first();
+              } 
+            else if ($user_id)
+            {
+                // dd($user_id);
+                $patient_name = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user_id->id)->with('user')->first();
+
+            }
+            //   else if()
         }
+
 
        
 
@@ -367,6 +400,7 @@ class PatientController extends Controller
 
     public function update(UpdatePatientRequest $request, $id)
     {
+     
         $clinic_id = 0;
         $latitude = 0;
         $logitude = 0;
@@ -388,7 +422,7 @@ class PatientController extends Controller
         if(Auth::user()->hasRole(['Receptionist'])){
             $patient->receptionist_id = isset($request['receptionist_id']) ? $request['receptionist_id'] : Auth::user()->id;
         }
-        $patient->doctor_id = isset($request['doctor_id']) ? $request['doctor_id'] : Auth::user()->id;
+        // $patient->doctor_id = isset($request['doctor_id']) ? $request['doctor_id'] : Auth::user()->id;
         $patient->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $patient->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
         $patient->save();
@@ -398,6 +432,7 @@ class PatientController extends Controller
             'email' => $request['email'],
             'phone_no' => $request['phone_no']],
         );
+        //    dd($patient);
         return response()->json(
              [
                'status' => true,
@@ -405,6 +440,7 @@ class PatientController extends Controller
              ]
         );
         return response()->json($response);
+        
     }
 
     /**

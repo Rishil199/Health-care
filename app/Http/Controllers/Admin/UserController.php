@@ -31,25 +31,53 @@ class UserController extends Controller
      */ 
 
     public function dashboard() {
-
+        //   dd(Auth::user());
         $clinicCount = count(ClinicDetails::get());
-        
-        $doctors = DoctorDetails::select(array(
+        // dd($clinicCount);
+        $clinics=ClinicDetails::where('user_id',Auth::user()->id)->get();
+        // dd($clinics);
+ 
+    $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+    // dd($user_id);
+    $dct = DoctorDetails::select('clinic_id','user_id')->where('user_id',Auth::user()->id)->first();
+    // dd($dct);
+        // dd($user_id);
+        if (Auth::user()->hasRole('Doctor')){
+            $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->get();
-
-        $dct = DoctorDetails::select('clinic_id','user_id')->where('user_id',Auth::user()->id)->first();
-        
+                 ))->latest()->with('user')->where('clinic_id',$dct->id)->get();
+        }
+        if (Auth::user()->hasRole('Clinic')){
+            $doctors = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+                //  dd($doctors);
+        }
+   
+            // dd($doctors);
+     
         if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Clinic']))
         {
-            $receptionistCount = count(ReceptionistDetails::where('clinic_id',@$dct->clinic_id)->get());
+            // dd(Auth::user()->hasRole('Receptionist'));
+            // echo "ddd";
+            if (Auth::user()->hasRole('Clinic')){
+            $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
+            }
+            if (Auth::user()->hasRole('Doctor')){
+                $receptionistCount = count(ReceptionistDetails::where('clinic_id',$dct->id)->get());
+                }
+          
+            // $receptionistCount = count(ReceptionistDetails::get());
+            // dd($receptionistCount);
         }
 
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+        // dd($clinic_details);
         $rct = ReceptionistDetails::select('clinic_id','user_id')->where('clinic_id',@$clinic_details->id)->first();
         $rt = ReceptionistDetails::select('clinic_id','user_id')->where('clinic_id',Auth::user()->id)->first();
                
         $appointmentsCount = count(DoctorAppointmentDetails::withTrashed()->get());  
+        
         
         $date = today()->format('Y-m-d');
           
@@ -60,22 +88,34 @@ class UserController extends Controller
         $past_appointment = count(DoctorAppointmentDetails::where('is_complete','=','1')->withTrashed()->get());
 
         if(Auth::user()->hasRole('Super Admin')) {
+            // dd(Auth::user());
+            // dd("dd");
             $appointments = DoctorAppointmentDetails::with('user')->latest()->get();
-
+            // dd($appointments);
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at'
             ))->latest()->with('user')->get();
-
+          //   dd($patients);
+            $doctors = DoctorDetails::select(array(
+                'id','user_id','created_at'
+            ))->latest()->with('user')->get();
+        //   dd($doctors);
             $receptionistCount = count(ReceptionistDetails::get());
+            // dd($receptionistCount);
         }
 
       
         if(Auth::user()->hasRole('Doctor')){
-            $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            $user=(Auth::user());
+            // dd($user);
+            $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',$user->id)->first();
+            // dd($user_id);
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+            // dd($clinic_user_id);
             $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at','doctor_id'
-                 ))->latest()->with('user')->where('doctor_id',$user_id->id)->orWhere('clinic_id',@$clinic_user_id->clinic_id)->get();
+                 ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
+                //  dd($patients);
             $appointments = DoctorAppointmentDetails::with('user')->where('doctor_id',$user_id->id)->latest()->get();
             $appointmentsCount = count(DoctorAppointmentDetails::where('doctor_id',$user_id->id)->withTrashed()->get()); 
           
@@ -97,55 +137,64 @@ class UserController extends Controller
         }
 
         if(Auth::user()->hasRole('Receptionist')){
+            // dd("ddd");
+            // dd(Auth::user()->hasRole('Receptionist'));
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-            // dd($user_id->clinic_id);
-            
+            // dd($user_id);
+    
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
-
+            // dd($clinic_user_id);
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id'
             ))->latest()->with('user')->where('user_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-            
+            // $patients = PatientDetails::select(array(
+            //     'id','user_id','created_at','doctor_id'
+            // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+            // dd($patients);
             $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',@$clinic_user_id->clinic_id)->latest()->get();
-           
+        //    dd($appointments);
             $appointmentsCount = count(DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',@$clinic_user_id->clinic_id)->withTrashed()->get());
-           
+        //    dd( $appointmentsCount);
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
                         ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
                 })->get()->count();
+                // dd($todays_appointment);
            
             $upcoming_appointment = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
                         ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
                 })->get()->count();
-           
+                // dd($upcoming_appointment);
             $past_appointment = DoctorAppointmentDetails::where('is_complete','=','1')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
                         ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
                 })
                 ->where('disease_name','!=','')->get()->count();
-           
-            $doctors = DoctorDetails::select(array(
-                'id','user_id','receptionist_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                // dd($past_appointment);
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            // ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
         }
+        // dd($doctors);
 
         if(Auth::user()->hasRole('Clinic')){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             
-            $doctors = DoctorDetails::select(array(
-                'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+            // dd($doctors);
             
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id'
             ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
             
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
+            // dd($receptionistCount);
             
             $appointments = DoctorAppointmentDetails::with('user')->where('clinic_id',$user_id->id)->latest()->get();
             $appointmentsCount = count(DoctorAppointmentDetails::where('clinic_id',$user_id->id)->withTrashed()->get());
@@ -154,14 +203,22 @@ class UserController extends Controller
             $past_appointment = count(DoctorAppointmentDetails::where('is_complete','=','1')->where('clinic_id',$user_id->id)->withTrashed()->get());
         }
 
+      
          if(Auth::user()->hasRole('Patient')){
 
             $user_id = PatientDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            // dd($user_id);
 
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id'
             ))->latest()->with('user')->where('id',$user_id->id)->get();
-            
+            //   dd($patients);
+
+            $doctors = DoctorDetails::select(array(
+                'id','user_id','created_at','clinic_id'
+            ))->latest()->with('user')->where('id',$user_id->id)->get();
+            // dd($doctors);
+
             $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
             
             $appointmentsCount = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
@@ -172,7 +229,7 @@ class UserController extends Controller
             
             $past_appointment = DoctorAppointmentDetails::where('is_complete', 1)->withTrashed()->with('user')->where('patient_id',Auth::user()->id)->count();
         }
-       
+    //   echo "dd";die;
 
         if(Auth::user()->hasRole('Patient')){
           $this->data = array(
@@ -186,10 +243,14 @@ class UserController extends Controller
             );   
         }
 
-        if(Auth::user()->hasAnyRole(['Super Admin','Doctor','Receptionist','Clinic'])){
+        // dd($patients);
+                //  echo "ddd";die;
+                if(Auth::user()->hasAnyRole(['Super Admin','Doctor','Receptionist','Clinic'])){
+                    // dd('ddd');
                  $this->data = array(
                 'title' => 'Dashboard',
                 'clinicCount' => $clinicCount,
+                'clinics'=>$clinics,
                 'patients' => $patients,
                 'receptionistCount' => $receptionistCount,
                 'doctors' => $doctors,
@@ -198,14 +259,14 @@ class UserController extends Controller
                 'todays_appointment' => $todays_appointment,
                 'upcoming_appointment' => $upcoming_appointment,
                 'past_appointment' => $past_appointment,
-            ); 
-        }
-       
+                 ); 
+    
+                }
+                // dd($this->data);
+                return view('admin.dashboard',$this->data);
+      
 
-        
-        
 
-        return view('admin.dashboard',$this->data);
     }
 
      /**
@@ -332,7 +393,7 @@ class UserController extends Controller
 
         $user = User::create($store_data);
 
-        $user->assignRole(Role::findfindOrFail($request->roles_type));
+        $user->assignRole(Role::findOrFail($request->roles_type));
    
         if($user) {
             Mail::to($user['email'])->send(new WelcomeMail($user,$request));
@@ -505,8 +566,6 @@ class UserController extends Controller
         }else{
             return redirect()->back()->with('error','Subscription not set successfully');
         } 
-
-        
 
     }
 }

@@ -61,7 +61,7 @@ class DoctorAppointmentDetails extends Model
         $booked_timeslots = array_unique($booked_timeslots);
        
         $general_time = GeneralSettings::select(array(
-            'start_time', 'end_time', 'duration', 'break_time'
+            'start_time', 'end_time', 'duration'
         ))->where(array(
             'user_id' => $user_id,
         ))->first();
@@ -76,7 +76,7 @@ class DoctorAppointmentDetails extends Model
         
         $duration = $general_time->duration ?? 10;
         
-        $break_time = $general_time->break_time ?? 10;
+       
         
         $all_day_time_slots = array();
 
@@ -86,7 +86,7 @@ class DoctorAppointmentDetails extends Model
             $start = $start_time;
             $end = date('H:i:s', strtotime("+$duration minutes", strtotime($start_time)));
 
-            $start_time = date('H:i:s', strtotime("+$break_time minutes +$duration minutes", strtotime($start_time)));
+            $start_time = date('H:i:s', strtotime(" +$duration minutes", strtotime($start_time)));
             
             if ($current_date == $date) {
                 if ( ( strtotime($start_time) < strtotime($end_time) ) && ( $current_time < $start_time ) ) {

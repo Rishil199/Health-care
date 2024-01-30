@@ -73,7 +73,7 @@
                         </svg>
                      </span>
                      <span class="svg-text">
-                     Add Receptionist
+                     Add Staff
                      </span>
                   </button>
                   </a>

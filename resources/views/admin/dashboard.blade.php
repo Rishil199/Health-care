@@ -8,7 +8,22 @@
          <div class="col-12">
             <div class="welcome-title">
                <div class="wt-lower">
-                  <p>Welcome to <b class="theme-black">Narola Care</b> {{$title}}</p>
+                 
+                       @if (Auth::user()->hasRole('Clinic'))
+                       {{-- @php var_dump($clinics);@endphp --}}
+                       <p>Clinic name :<b style="color: black"> {{Auth::user()->first_name}}</b> </p>
+                       @foreach($clinics as $clinic )
+                       @switch($clinic->is_main_branch)
+                       @case(1)
+                      <p>Branch : <b style="color: black">Main Branch </b> </p>
+                        @break
+                        @case(0)
+                        <p>Branch : <b style="color: black">Sub Branch </b> </p>
+                           @break
+                        @endswitch
+                        @endforeach
+                      @endif 
+                      <p>Welcome <b class="theme-black">{{Auth::user()->first_name}}</b> to the  {{$title}}</p>
                </div>
             </div>
          </div>
@@ -64,7 +79,7 @@
                                  <div class="doc-data-count">
                                     <a href="{{route('receptionists.index')}}">{{ $receptionistCount }}</a>
                                  </div>
-                                 <div class="doc-data-title">Receptionist </div>
+                                 <div class="doc-data-title">Staff </div>
                               </div>
                            </div>
                         </div>
@@ -370,6 +385,8 @@
                                           <tr>
                                              <td colspan="6" class="text-center">No Data Found</td>
                                           </tr>
+                                          {{-- @else 
+                                          <h2>data</h2> --}}
                                           @endif
                                        </tbody>
                                     </table>

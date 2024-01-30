@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use App\Notifications\CustomResetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -17,8 +19,8 @@ class User extends Authenticatable
     public const ROLE_SUPER_ADMIN = 'Super Admin';
     public const ROLE_CLINIC = 'Clinic';
     public const ROLE_DOCTOR = 'Doctor';
-    // public const ROLE_RECEPTIONIST = 'Receptionist';
-    // public const ROLE_PATIENT = 'Patient';
+    public const ROLE_RECEPTIONIST = 'Receptionist';
+    public const ROLE_PATIENT = 'Patient';
     /**
      * The attributes that are mass assignable.
      *
@@ -54,6 +56,19 @@ class User extends Authenticatable
 
     public function getFullNameAttribute() {
         return trim(ucwords($this->first_name . ' ' . $this->last_name));
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $authuser=Auth::user();
+        // dd($user);
+        $this->notify(new CustomResetPasswordNotification($token,$authuser));
     }
     
 }

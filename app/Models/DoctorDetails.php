@@ -19,7 +19,7 @@ class DoctorDetails extends Model
         'status',
         'latitude',
         'logitude',
-        'receptionist_id',
+        // 'receptionist_id',
 
     ];
 
