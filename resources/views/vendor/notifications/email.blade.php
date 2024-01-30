@@ -6,7 +6,7 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Hello!')
+{{-- # @lang('Hello!') --}}
 @endif
 @endif
 
@@ -24,10 +24,9 @@
         default => 'primary',
     };
 ?>
-URL:<a href ="{{$actionUrl}}" style="color : {{$color}};">
+<x-mail::button :url="$actionUrl" :color="$color">
 {{ $actionText }}
-</a>
-
+</x-mail::button>
 @endisset
 
 {{-- Outro Lines --}}
@@ -41,7 +40,7 @@ URL:<a href ="{{$actionUrl}}" style="color : {{$color}};">
 {{ $salutation }}
 @else
 @lang('Regards'),<br>
-{{ ('Narola Care') }}
+{{ ('Narola care') }}
 @endif
 
 {{-- Subcopy --}}

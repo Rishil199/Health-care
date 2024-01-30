@@ -629,7 +629,7 @@
                               </svg>
                            </span>
                            <span class="svg-text">
-                           Receptionist 
+                           Staff 
                            </span>
                         </a>
                      </li>

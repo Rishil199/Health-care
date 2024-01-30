@@ -14,6 +14,8 @@ class CustomResetPasswordNotification extends Notification
      * @var string
      */
     public $token;
+    protected $authuser;
+
 
     /**
      * The callback that should be used to create the reset password URL.
@@ -35,9 +37,10 @@ class CustomResetPasswordNotification extends Notification
      * @param  string  $token
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token,$authuser)
     {
         $this->token = $token;
+        $this->authuser=$authuser;
     }
 
     /**
@@ -63,7 +66,7 @@ class CustomResetPasswordNotification extends Notification
             return call_user_func(static::$toMailCallback, $notifiable, $this->token);
         }
 
-        return $this->buildMailMessage($this->resetUrl($notifiable));
+        return $this->buildMailMessage($this->resetUrl($notifiable),$notifiable);
     }
 
     /**
@@ -72,13 +75,15 @@ class CustomResetPasswordNotification extends Notification
      * @param  string  $url
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    protected function buildMailMessage($url)
+    protected function buildMailMessage($url,$notifiable)
     {
+        // dd($notifiable);
         return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification'))
-            ->line(Lang::get('You have been added by  in clinic care  as a  Please review below URL and login to the panel for manage your clinic details.'))
-            ->action(Lang::get('Reset Password'), $url)
-            ->line(Lang::get('Email :' ))
+            ->greeting(Lang::get('Hello '.$notifiable->first_name ))
+            ->line(Lang::get('You have been added by '.$this->authuser->first_name. ' as a ' .$notifiable->name.' Please review below URL and login to the panel for manage your clinic details.'))
+            ->action(Lang::get('Reset password'), $url)
+            ->line(Lang::get('Email : '.$notifiable->email))
             ->line(Lang::get('In case of any trouble, please contact your clinic admin.'));
     }
 

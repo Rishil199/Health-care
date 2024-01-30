@@ -121,7 +121,7 @@ class ReceptionistController extends Controller
         }
 
         $this->data = array(
-            'title' => 'Receptionist',
+            'title' => 'Staff',
         );
 
         return view('admin.receptionist.index', $this->data);

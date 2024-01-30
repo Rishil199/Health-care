@@ -219,6 +219,7 @@ class PatientController extends Controller
      */
 
     public function store( StorePatientRequest $request ) {
+        // dd($request);
         $role = Role::where(['name' => 'Patient'])->first();
         $post_data = $request->validated();
 
@@ -284,6 +285,7 @@ class PatientController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
+        
         }
         return response()->json(
             [
@@ -314,11 +316,24 @@ class PatientController extends Controller
         }
         if(Auth::user()->hasRole(['Doctor'])){
             // $user=Auth::user();
-            // dd($user->id);
-            $user_id = PatientDetails::find($id);
-            // dd($user_id);
-            $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$user_id->id)->with('user')->first();
+            // dd($user);
+            $user=DoctorAppointmentDetails::select('user_id')->where('patient_id',$id)->first(); 
+             $user_id = PatientDetails::find($id);
+            //  dd($user_id);
+            if ($user)
+            {
+             
+             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user->user_id)->with('user')->first();
+              } 
+            else if ($user_id)
+            {
+                // dd($user_id);
+                $patient_name = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user_id->id)->with('user')->first();
+
+            }
+            //   else if()
         }
+
 
        
 
