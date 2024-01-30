@@ -482,7 +482,6 @@ class DoctorController extends Controller
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id);
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
-            // dd($clinic_user_id);
             $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('doctor_id',$user_id->id)->orWhere('clinic_id',@$clinic_user_id->clinic_id)->get();
             // dd($appointments);
         }
@@ -1009,7 +1008,7 @@ class DoctorController extends Controller
 
         $all_appointent = DoctorAppointmentDetails::with('user')->find($id);
         $all_appointent->disease_name = $post_data['disease_name'];
-        $all_appointent->next_date = $post_data['next_date'];
+        $all_appointent->next_date = isset($post_data['next_date'])? $post_data['next_date']:null;
         $all_appointent->is_complete = $request->is_complete ?? 0;
         // dd($all_appointent);
         $all_appointent->time_start = isset($splitTime[0]) ? $splitTime[0] : $all_appointent->time_start;
