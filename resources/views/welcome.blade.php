@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="{{asset('assets/css/welcomestyle.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
-    <title>Narola Care</title>
+    <title>Narola care</title>
 </head>
 
 <body class="welcome-page">

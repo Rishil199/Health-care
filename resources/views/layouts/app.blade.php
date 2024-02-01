@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>{{ config('app.name', 'Laravel') }}</title>
+      <link rel="icon" href="{{ asset('favicon.ico') }}">
       <!-- Fonts -->
       <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
       <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
@@ -111,7 +112,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
                            <ul class="list-unstyled">
-                              @if(Auth::user()->hasAnyRole(['Clinic','Receptionist','Patient','Doctor']))
+                              @if(Auth::user()->hasAnyRole(['Hospital','Receptionist','Patient','Doctor']))
                               <li class="profile-list-item">
                                  <a class="dropdown-item  icon-text edit-user" href="{{ route('change-profile') }}">
                                     <div class="icon">
@@ -133,7 +134,7 @@
                                     </div>
                                  </a>
                               </li>
-                              @if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Clinic']))
+                              @if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Hospital']))
                               <li class="profile-list-item">
                                  <a href="javascript:void(0)" class="dropdown-item icon-text settings-add-btn" data-url="{{ route('settings.create')}}" data-toggle="addmodal" data-target="#myAddModal" id="settings-add-btn" >
                                     <div class="icon">
@@ -200,7 +201,7 @@
                   </div>
                </div>
                   <ul class="list-unstyled theme-scroll responsive">
-                     @if(Auth::user()->hasAnyRole(['Super Admin','Clinic','Doctor','Receptionist','Patient']))
+                     @if(Auth::user()->hasAnyRole(['Super Admin','Hospital','Doctor','Receptionist','Patient']))
                      <li>
                         <a href="{{route('admin_dashboard')}}">
                            <span class="svg-icon">
@@ -228,7 +229,7 @@
                         </a>
                      </li>
                      @endif
-                     @if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Clinic']))
+                     @if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Hospital']))
                      <li>
                         <a href="{{route('appointments.index')}}">
                            <span class="svg-icon">
@@ -460,12 +461,12 @@
                               </svg>
                            </span>
                            <span class="svg-text">
-                           Clinics
+                           Hospitals 
                            </span>
                         </a>
                      </li>
                      @endif
-                     @if(Auth::user()->hasAnyRole(['Super Admin','Clinic','Receptionist']))
+                     @if(Auth::user()->hasAnyRole(['Super Admin','Hospital','Receptionist']))
                      <li class="has-sublist">
                         <a href="{{route('doctors.index')}}">
                            <span class="svg-icon me-1">
@@ -575,12 +576,12 @@
                               </svg>
                            </span>
                            <span class="svg-text">
-                           Clinics
+                            Hospitals
                            </span>
                         </a>
                      </li>
                      @endif
-                     @if(Auth::user()->hasAnyRole(['Super Admin','Clinic']))
+                     @if(Auth::user()->hasAnyRole(['Super Admin','Hospital']))
                       <li class="has-sublist">
                         <a href="{{ route('receptionists.index')}}">
                            <span class="svg-icon">
@@ -634,7 +635,7 @@
                         </a>
                      </li>
                      @endif
-                     @if(Auth::user()->hasAnyRole(['Super Admin','Clinic','Doctor','Receptionist']))
+                     @if(Auth::user()->hasAnyRole(['Super Admin','Hospital','Doctor','Receptionist']))
                      <li class="has-sublist">
                         <a href="{{route('patients.index')}}">
                            <span class="svg-icon">
@@ -713,7 +714,7 @@
       <footer>
          <div class="container">
             <div class="row">
-               <div class="col-sm-6 copyright-text">2023 © Narola Care</div>
+               <div class="col-sm-6 copyright-text">{{date('Y')}} © Narola Care</div>
                <div class="col-sm-6 designed-text">Designed and Developed by Narola</div>
             </div>
          </div>

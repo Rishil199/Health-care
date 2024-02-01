@@ -65,7 +65,7 @@ class DoctorController extends Controller
         // dd($clinic_details);
         
         $doctors = DoctorDetails::select('id','user_id')->where('user_id',Auth::user()->id)->get();
-        if(Auth::user()->hasRole(['Clinic'])) {
+        if(Auth::user()->hasRole(['Hospital'])) {
             // dd('dd');
             $doctors = DoctorDetails::select('id','user_id')->where('clinic_id',$clinic_details->id)->get();
         }
@@ -80,7 +80,7 @@ class DoctorController extends Controller
 
                 $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
 
-                if(Auth::user()->hasRole(['Clinic'])){
+                if(Auth::user()->hasRole(['Hospital'])){
                 
                     $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',Auth::user()->id)->first();
                 }
@@ -105,7 +105,7 @@ class DoctorController extends Controller
                     ))->latest()->get();
                 }
 
-                if(Auth::user()->hasRole(['Clinic'])){
+                if(Auth::user()->hasRole(['Hospital'])){
                     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                     
                     $patients = PatientDetails::select(array(
@@ -161,7 +161,7 @@ class DoctorController extends Controller
                     'clinic_details' => $clinic_details,
                 );
 
-                if(Auth::user()->hasAnyRole(['Clinic','Receptionist'])){
+                if(Auth::user()->hasAnyRole(['Hospital','Receptionist'])){
                     $this->data = array(
                         'appointment_date' => $request->appointment_date,
                         'patients' => $patients,
@@ -242,7 +242,7 @@ class DoctorController extends Controller
         }
 
 
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id->id);
 
@@ -367,7 +367,7 @@ class DoctorController extends Controller
             'past_appointment' => $past_appointment,
         ); 
 
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
             $this->data = array(
                 'title' => 'Appointments',
                 'todays_appointment' => $todays_appointment,
@@ -486,7 +486,7 @@ class DoctorController extends Controller
             // dd($appointments);
         }
 
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id->id);
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
@@ -600,7 +600,7 @@ class DoctorController extends Controller
                 ->where('is_complete','=','0')->get();
         }
 
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $appointments = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('user')->withTrashed()->where('clinic_id',$user_id->id)->where('is_complete','=','0')->get();
         }
@@ -711,7 +711,7 @@ class DoctorController extends Controller
                     });
         }
 
-        if(Auth::user()->hasRole(['Clinic'])) {
+        if(Auth::user()->hasRole(['Hospital'])) {
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
             $appointments = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details->id)->where('is_complete','=','0')->get();
@@ -804,7 +804,9 @@ class DoctorController extends Controller
 
         if(Auth::user()->hasRole(['Doctor'])){
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            // dd($user_id);
              $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+            //  dd($clinic_user_id);
             $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('doctor_id',$user_id->id)
@@ -812,7 +814,7 @@ class DoctorController extends Controller
                 })->get();
         }
 
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
             $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details->id)->get();
@@ -1002,17 +1004,20 @@ class DoctorController extends Controller
      */
 
     public function update(UpdateAppointmentRequest $request, $id) {
+        // dd($request);
         $post_data = $request->validated();
         // dd($post_data);
         $splitTime = !empty($post_data['next_start_time']) ? explode('-', $post_data['next_start_time'], 2) :['',''];
 
         $all_appointent = DoctorAppointmentDetails::with('user')->find($id);
         $all_appointent->disease_name = $post_data['disease_name'];
+        // dd($all_appointent);
         $all_appointent->next_date = isset($post_data['next_date'])? $post_data['next_date']:null;
         $all_appointent->is_complete = $request->is_complete ?? 0;
         // dd($all_appointent);
         $all_appointent->time_start = isset($splitTime[0]) ? $splitTime[0] : $all_appointent->time_start;
         $all_appointent->time_end = isset($splitTime[1]) ?? $all_appointent->time_end;
+        // dd($all_appointent);
         $all_appointent->save();
 
         return response()->json(
@@ -1041,12 +1046,14 @@ class DoctorController extends Controller
     }
 
     public function changeStatus(UpdateAppointmentRequest $request){
+        // dd($request);
+
         $user_id = DoctorAppointmentDetails::with('user')->where('id',$request->id)->first();
         $post_data = $request->validated( $request->messages());
         $splitTime = $request->next_start_time ? explode('-', $request->next_start_time, 2) : null;
         $all_appointent = DoctorAppointmentDetails::with('user')->find($request->id);
         $all_appointent->disease_name = $post_data['disease_name'];
-        $all_appointent->is_complete = $post_data['is_complete'];
+        $all_appointent->is_complete = isset($post_data['is_complete'])? $post_data['is_complete']:null;
         $all_appointent->next_date =  $request->next_date ? date('Y/m/d', strtotime($request->next_date)) : null;
         $all_appointent->next_start_time =  @$splitTime[0] ? $splitTime[0] : $all_appointent->next_start_time;
         $all_appointent->next_end_time = @$splitTime[1] ? $splitTime[1] : $all_appointent->next_end_time;;
@@ -1068,6 +1075,7 @@ class DoctorController extends Controller
         if(Auth::user()->hasRole(['Patient'])){
             $date = today();
             $user_id = PatientDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            // dd($user_id);
             $all_appointment = DoctorAppointmentDetails::withTrashed()->where('patient_id',Auth::user()->id)->count();
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date', $date)->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->withTrashed()->count();
             
@@ -1082,6 +1090,7 @@ class DoctorController extends Controller
 
             if ( $request->load_view == 'true' ) {
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );
+                // dd($available_slots);
 
                 $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
 
@@ -1104,8 +1113,8 @@ class DoctorController extends Controller
             }
         }
 
-        $generalSettings = GeneralSettings::select('start_time','end_time','duration','break_time')->where('user_id',Auth::user()->id)->first();
-
+        $generalSettings = GeneralSettings::select('start_time','end_time','duration')->where('user_id',Auth::user()->id)->first();
+        // dd($generalSettings);
         $user_id = auth()->id();
         
         $date = today();
@@ -1149,10 +1158,11 @@ class DoctorController extends Controller
 
     public function fetchTimeSlots(Request $request)
     {
+        // dd($request);
         $clinic_id = ClinicDetails::where('user_id',$request->clinic_id)->first();
-        
-        $data['generalSettings'] = GeneralSettings::select('start_time','end_time','duration','break_time')->where('user_id',$request->clinic_id)->first();
-
+        // dd($clinic_id);
+        $data['generalSettings'] = GeneralSettings::select('start_time','end_time','duration')->where('user_id',$request->clinic_id)->first();
+        //  dd($data);
         $user_id = auth()->id();
         
         $date = today();
@@ -1162,6 +1172,7 @@ class DoctorController extends Controller
         $current_time = now()->toTimeString();
 
         $data['current_slots'] = DoctorAppointmentDetails::where('clinic_id',$clinic_id->id)->get();
+        // dd($data);
 
         $available_time_slots = DoctorAppointmentDetails::with('user')->select(array(
             'id', 'patient_id', 'time_start', 'time_end', 'appointment_date','clinic_id'
@@ -1179,7 +1190,7 @@ class DoctorController extends Controller
         $data['booked_timeslots'] = array_unique($booked_timeslots);
 
         $general_time = GeneralSettings::select(array(
-            'start_time', 'end_time', 'duration', 'break_time'
+            'start_time', 'end_time', 'duration'
         ))->where(array(
             'user_id' => $request->clinic_id,
         ))->first();
@@ -1194,17 +1205,17 @@ class DoctorController extends Controller
         
         $duration = $general_time->duration ?? 10;
         
-        $break_time = $general_time->break_time ?? 10;
+        // $break_time = $general_time->break_time ?? 10;
         
         $all_day_time_slots = array();
 
         $current_date = \Carbon\Carbon::now()->format('Y-m-d');
-        
+        $data['all_day_time_slots']=[];
         while(strtotime($start_time) <= strtotime($end_time)) {
             $start = $start_time;
             $end = date('H:i:s', strtotime("+$duration minutes", strtotime($start_time)));
 
-            $start_time = date('H:i:s', strtotime("+$break_time minutes +$duration minutes", strtotime($start_time)));
+            $start_time = date('H:i:s', strtotime("+$duration minutes", strtotime($start_time)));
 
             $cur_date = $request->appointment_date;
 
@@ -1226,10 +1237,12 @@ class DoctorController extends Controller
 
     public function fetchTimeSlotsDoctor(Request $request)
     {
+        // dd($request);
         $doctor_id = DoctorDetails::where('user_id',$request->doctor_id)->first();
+        // dd($doctor_id);
         
-        $data['generalSettings'] = GeneralSettings::select('start_time','end_time','duration','break_time')->where('user_id',$request->doctor_id)->first();
-
+        $data['generalSettings'] = GeneralSettings::select('id','start_time','end_time','duration')->where('user_id',$request->doctor_id)->first();
+        //  dd($data);
         $user_id = auth()->id();
         
         $date = today();
@@ -1256,7 +1269,7 @@ class DoctorController extends Controller
         $data['booked_timeslots'] = array_unique($booked_timeslots);
 
         $general_time = GeneralSettings::select(array(
-            'start_time', 'end_time', 'duration', 'break_time'
+            'start_time', 'end_time', 'duration'
         ))->where(array(
             'user_id' => $request->doctor_id,
         ))->first();
@@ -1271,17 +1284,19 @@ class DoctorController extends Controller
         
         $duration = $general_time->duration ?? 10;
         
-        $break_time = $general_time->break_time ?? 10;
+        // $break_time = $general_time->break_time ?? 10;
         
         $all_day_time_slots = array();
 
         $current_date = \Carbon\Carbon::now()->format('Y-m-d');
         
+        $data['all_day_time_slots']=[];
+
         while(strtotime($start_time) <= strtotime($end_time)) {
             $start = $start_time;
             $end = date('H:i:s', strtotime("+$duration minutes", strtotime($start_time)));
 
-            $start_time = date('H:i:s', strtotime("+$break_time minutes +$duration minutes", strtotime($start_time)));
+            $start_time = date('H:i:s', strtotime(" +$duration minutes", strtotime($start_time)));
 
             $cur_date = $request->appointment_date;
 

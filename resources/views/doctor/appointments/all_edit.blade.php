@@ -84,7 +84,8 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                     {{-- <div class="text-left ml-0"> --}}
-                    <label for="prescription" class="theme-prescrip"><b>Prescription :</b> {{$all_appointent->disease_name}}</label>
+                    <label for="prescription" class="theme-prescrip"><b>Prescription : {{$all_appointent->disease_name}}</b></label>
+                    {{-- <label for ="next-date" class="theme-prescrip"><b>Next Date :{{$all_appointent->next_date ? date('d-m-Y', strtotime($all_appointent->next_date )) : null }}</b></label> --}}
                     <button class="btn btn-back mt-4 app_btn" id="validation-next" type="submit"><i class="lni lni-save"></i>Submit</button>
                 </div>
             </div>

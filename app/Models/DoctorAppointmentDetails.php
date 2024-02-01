@@ -51,6 +51,7 @@ class DoctorAppointmentDetails extends Model
                 'appointment_date' => $date,
                 'created_by' => $user_id,
             ))->get();
+            // dd($available_time_slots);
 
         $booked_timeslots = [];
 

@@ -21,7 +21,9 @@
                 <select class="form-control form-select" name="event_name" id="clinic-dropdown">
                     <option value="">Select Clinic</option>
                     @foreach( $clinics as $clinic )
+                    @if($clinic->status==1)
                     <option value="{{ $clinic->user_id }}">{{ $clinic->user->fullName }}</option>
+                    @endif 
                     @endforeach
                 </select>
             </div>
@@ -43,7 +45,9 @@
                 <select class="form-control form-select" name="doctor_id" id="doctor_id">
                     <option value="">Select Doctor</option>
                     @foreach( $doctors as $doctor )
+                    @if($doctor->status==1)
                     <option value="{{ $doctor->id }}">{{ $doctor->user->fullName }}</option>
+                    @endif
                     @endforeach
                 </select>
             </div>

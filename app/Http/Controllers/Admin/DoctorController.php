@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DoctorDetails;
+use App\Models\PatientDetails;
 use App\Models\ReceptionistDetails;
 use App\Models\DoctorAppointmentDetails;
 use App\Models\User;
@@ -226,17 +227,18 @@ class DoctorController extends Controller
             $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $doctor->clinic_id = $clinic_id->id;
         }
-        if(Auth::user()->hasAnyRole(['Doctor','Super Admin'])){
+        if(Auth::user()->hasAnyRole(['Doctor','Super Admin','Hospital'])){
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $doctor->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
+        // dd($doctor);
         $doctor->save();
         
         $token = $request->_token;
 
         if($users) {
-            Mail::to($users['email'])->send(new WelcomeMail($users,$request));
+            // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
 
             Password::sendResetLink(
                 $request->only('email')
@@ -464,18 +466,34 @@ class DoctorController extends Controller
 
          if ($request->ajax()) {
             
-            $doctors = DoctorDetails::select(array(
-                'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->get();
-            return Datatables::of($doctors)
+            $authUser= Auth::user();
+            // dd($authUser->id);
+            $doctors= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
+            ->get();
+            // dd($doctors);
+
+            if($doctors->count()>0){
+            foreach($doctors as $doctor)
+             {
+                $doctordetails=DoctorDetails::select('user_id')->where('id',$doctor->doctor_id)->with('user')->get();
+                
+             }
+            }
+            // dd($doctordetails);
+            
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            // ))->latest()->with('user')->get();
+            // dd($doctors);
+            return Datatables::of($doctordetails)
                     ->editColumn('status',function($row){
-                            if($row->status == 1){
-                                $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked disabled></label></div>';
-                            }
-                            else{
-                                $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
-                            }
-                            return $status;
+                        $action = '<a href="#" class="view-details" data-id="' . $row->id . '"><i class="bi bi-eye-fill" style="color:black;"></i></a>';
+                            // if($row->status == 1){
+                            // }
+                            // else{
+                            //     $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
+                            // }
+                            return $action;
                         })->rawColumns(['status'])->make(true);
         }
 
@@ -491,7 +509,7 @@ class DoctorController extends Controller
             
             $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','status','created_at','is_main_branch','address'
-            ))->latest()->with('user')->where('is_main_branch',1)->get();
+            ))->latest()->with('user')->where([['is_main_branch',1],['status',1]])->get();
 
             return Datatables::of($clinics)
                     ->editColumn('status',function($row){

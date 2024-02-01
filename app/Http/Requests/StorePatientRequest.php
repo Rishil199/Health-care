@@ -37,7 +37,7 @@ class StorePatientRequest extends FormRequest
             ];
         }
 
-        if(Auth::user()->hasAnyRole(['Super Admin','Receptionist','Doctor','Clinic'])) {
+        if(Auth::user()->hasAnyRole(['Super Admin','Receptionist','Doctor','Hospital'])) {
             
             return [
                 'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',

@@ -225,7 +225,7 @@ class ClinicController extends Controller
 
     public function store( StoreClinicRequest $request ) {
 
-        $role = Role::where(['name' => 'Clinic'])->first();
+        $role = Role::where(['name' => 'Hospital'])->first();
         $post_data = $request->validated();
         $clinic_id = 0;
         $latitude = 0;
@@ -240,6 +240,7 @@ class ClinicController extends Controller
         $users->email = $request['email'];
         $users->phone_no = $request['phone_no'];
         $users->name = $role->name;
+        // dd($users);
         $users->assignRole(Role::findOrFail($role->id));
         $users->save();
         $uid=$users->id;
@@ -258,7 +259,7 @@ class ClinicController extends Controller
         $token = $request->_token;
 
         if($users) {
-            Mail::to($users['email'])->send(new WelcomeMail($users,$request));
+            // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
 
             Password::sendResetLink(
                 $request->only('email')

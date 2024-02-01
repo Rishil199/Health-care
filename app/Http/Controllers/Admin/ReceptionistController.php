@@ -34,7 +34,7 @@ class ReceptionistController extends Controller
             ))->latest()->with('user')->get();
             // dd($receptionist);
 
-            if(Auth::user()->hasRole(['Clinic'])){
+            if(Auth::user()->hasRole(['Hospital'])){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                 // dd($user_id);
                 $receptionist = ReceptionistDetails::select(array(
@@ -188,7 +188,7 @@ class ReceptionistController extends Controller
         $receptionist->qualification = $request['qualification'];
         $receptionist->experience = $request['experience'];
         $receptionist->user_id = $users['id'];
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist->clinic_id = $user_id->id;
         }
@@ -202,7 +202,7 @@ class ReceptionistController extends Controller
         $token = $request->_token;
 
         if($receptionist) {
-            Mail::to($users['email'])->send(new WelcomeMail($users,$request));
+            // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
             Password::sendResetLink(
                 $request->only('email')
             );

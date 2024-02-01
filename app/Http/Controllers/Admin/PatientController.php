@@ -67,14 +67,15 @@ class PatientController extends Controller
                     
                 }
 
-            if(Auth::user()->hasRole('Clinic')) {
+            if(Auth::user()->hasRole('Hospital')) {
 
                 $user_id = ClinicDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-
+                // dd($user_id);
                 $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
                 ))->latest()->with('user')->where('clinic_id',$clinic_details->id)->orWhere('receptionist_id',$user_id->id)->get();
-    
+              
+                // dd($patients);
             }
 
             return Datatables::of($patients)
@@ -181,7 +182,7 @@ class PatientController extends Controller
               
         }
 
-        if(Auth::user()->hasRole('Clinic')){
+        if(Auth::user()->hasRole('Hospital')){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $clinics = ClinicDetails::with('user')->select('id','user_id')->where('is_main_branch',1)->first();
             $doctors = DoctorDetails::with('user')->where('clinic_id',$user_id->id)->get();
@@ -265,7 +266,9 @@ class PatientController extends Controller
             $user_id = DoctorDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $patient->doctor_id = $request->doctor_id ?? $user_id->id;
         }
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(['Hospital'])){
+            // $user=Auth::user()->id;
+            // dd($user);
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $doctor_id = DoctorDetails::select('id','user_id')->where('user_id',$request->doctor_id)->first();
             $patient->clinic_id = $request->clinic_id ?? $user_id->id;
@@ -280,7 +283,7 @@ class PatientController extends Controller
         $token = $request->_token;
 
         if($users) {
-            Mail::to($users['email'])->send(new WelcomeMail($users,$request));
+            // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
 
             Password::sendResetLink(
                 $request->only('email')
@@ -302,10 +305,11 @@ class PatientController extends Controller
      */ 
 
     public function show(Request $request, $id) {
+        // dd($id);
 
         $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
-
-        if(Auth::user()->hasRole(['Clinic'])){
+        // dd($patient);
+        if(Auth::user()->hasRole(['Hospital'])){
             
             $user_id =PatientDetails::find($id);;
             // dd($user_id);
@@ -317,21 +321,22 @@ class PatientController extends Controller
         if(Auth::user()->hasRole(['Doctor'])){
             // $user=Auth::user();
             // dd($user);
-            $user=DoctorAppointmentDetails::select('user_id')->where('patient_id',$id)->first(); 
+            $user=DoctorAppointmentDetails::select('id','user_id')->where('patient_id',$id)->with('user')->first(); 
+            // dd($user);
              $user_id = PatientDetails::find($id);
             //  dd($user_id);
             if ($user)
             {
-             
-             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user->user_id)->with('user')->first();
-              } 
+        
+              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user->user_id)->with('user')->first();
+            //   dd($patient);
+              
+            } 
             else if ($user_id)
             {
-                // dd($user_id);
-                $patient_name = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user_id->id)->with('user')->first();
+                $patient_name = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user_id->user_id)->with('user')->first();
 
             }
-            //   else if()
         }
 
 
@@ -372,7 +377,7 @@ class PatientController extends Controller
         $clinics = ClinicDetails::with('user')->select('id','user_id')->where('is_main_branch',1)->get();
         $doctors = DoctorDetails::with('user')->select('id','user_id')->get();
 
-        if(Auth::user()->hasRole('Clinic')) {
+        if(Auth::user()->hasRole('Hospital')) {
             $doctors = DoctorDetails::with('user')->whereIn('clinic_id', $clinics->pluck('id')->toArray())->get();
         }
 
@@ -418,7 +423,7 @@ class PatientController extends Controller
         $patient->alchohol_consumption = $request['alchohol_consumption'];
         $patient->diet = $request['diet'];
         $patient->smoke = $request['smoke'];
-        $patient->clinic_id = isset($request['clinic_id']) ? $request['clinic_id'] : $clinic_id;
+        // $patient->clinic_id = isset($request['clinic_id']) ? $request['clinic_id'] : $clinic_id;
         if(Auth::user()->hasRole(['Receptionist'])){
             $patient->receptionist_id = isset($request['receptionist_id']) ? $request['receptionist_id'] : Auth::user()->id;
         }

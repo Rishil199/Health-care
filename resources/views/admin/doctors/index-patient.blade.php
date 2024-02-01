@@ -54,7 +54,7 @@
                      <th>Name</th>
                      <th>Email</th>
                      <th>Phone No.</th>
-                     <th>status</th>
+                     <th>View Details</th>
                   </thead>
                   <tbody>
                   </tbody>
