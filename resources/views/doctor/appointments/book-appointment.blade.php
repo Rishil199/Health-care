@@ -1,3 +1,4 @@
+
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
@@ -21,8 +22,10 @@
             <div class="theme-form-input">
                 <select class="form-control form-select" name="event_name" id="event_name">
                     <option value="">Select Patient</option>
+           
                     @foreach( $patients as $patient )
-                    <option value="{{ $patient->user_id }}">{{ $patient->user->fullName }}</option>
+             
+                    <option value="{{ $patient->user_id }}">{{ $patient->user->fullName }} - {{$patient->user->phone_no}}</option>
                     @endforeach
                 </select>
             </div>

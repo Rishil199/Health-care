@@ -469,32 +469,28 @@ class DoctorController extends Controller
             $authUser= Auth::user();
             // dd($authUser->id);
             $doctors= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
-            ->get();
-            // dd($doctors);
+            ->pluck('doctor_id');
 
-            if($doctors->count()>0){
-            foreach($doctors as $doctor)
-             {
-                $doctordetails=DoctorDetails::select('user_id')->where('id',$doctor->doctor_id)->with('user')->get();
-                
-             }
+            if($doctors){
+                $doctordetails=DoctorDetails::select('id','user_id')->whereIn('id',$doctors->all())->with('user')->get();             
             }
             // dd($doctordetails);
+           
+            // }
             
             // $doctors = DoctorDetails::select(array(
             //     'id','user_id','clinic_id','status','created_at'
             // ))->latest()->with('user')->get();
             // dd($doctors);
             return Datatables::of($doctordetails)
-                    ->editColumn('status',function($row){
-                        $action = '<a href="#" class="view-details" data-id="' . $row->id . '"><i class="bi bi-eye-fill" style="color:black;"></i></a>';
-                            // if($row->status == 1){
-                            // }
-                            // else{
-                            //     $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
-                            // }
+                    ->editColumn('action',function($row){
+                        $action = '<a href="javascript:void(0)" class="dropdown-item doctor-view" data-url="' . route('doctors.view',['id' => $row->id]) . '" data-id="' . $row->id . '" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
+                        <i class="bi bi-eye-fill bi-lg" style="color:black;"></i>
+                    </a>';
+  
+                     
                             return $action;
-                        })->rawColumns(['status'])->make(true);
+                        })->rawColumns(['action'])->make(true);
         }
 
         $this->data = array(
@@ -524,7 +520,7 @@ class DoctorController extends Controller
         }
 
         $this->data = array(
-            'title' => 'Clinics',
+            'title' => 'Hospitals',
         );
 
         return view('admin.patients.index-clinic', $this->data);

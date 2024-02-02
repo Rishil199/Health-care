@@ -97,14 +97,14 @@ class DoctorController extends Controller
                     ))->with(array(
                         'user' => function ( $query ) {
                             return $query->select(array(
-                                'id', 'first_name', 'last_name',
+                                'id', 'first_name', 'last_name','phone_no'
                             ));
                         }
                     ))->where(array(
                         'doctor_id' => $user_id->id,
                     ))->latest()->get();
                 }
-
+           
                 if(Auth::user()->hasRole(['Hospital'])){
                     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                     

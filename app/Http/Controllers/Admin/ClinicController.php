@@ -120,7 +120,7 @@ class ClinicController extends Controller
         }
 
         $this->data = array(
-            'title' => 'Clinics',
+            'title' => 'Hospitals',
         );
         return view('admin.clinics.index', $this->data);
     }

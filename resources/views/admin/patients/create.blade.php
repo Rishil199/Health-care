@@ -1,3 +1,17 @@
+
+<style>
+   .height-weight-field{
+      height: 40;
+      width: 80px;
+   }
+
+   .blood-field-size {
+      height: 45;
+      width: 150px;
+   }
+   
+   
+</style>
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
@@ -83,6 +97,96 @@
                   </div>
                </div>
             </div>
+            <div class="col-md-6 mb-3">
+               <div class="form-group theme-form-group">
+                   <div class="d-block ">
+                       <label class="theme-label" for="height">Height <span class="text-danger">*</span></label>
+                   </div>
+                   <div class="input-wrapper d-flex">
+                       <div class="theme-form-input ">
+                           <input class="form-control height-weight-field " type="text" name="height" placeholder="Height"
+                               required>
+                       </div>
+                       <div class="d-block">
+                           <label class="theme-label mt-2" for="weight" style="position: relative;
+                           bottom: 35px; margin-right: 10px;">Weight <span
+                                   class="text-danger">*</span></label>
+                       </div>
+                       <div class="input-wrapper d-flex">
+                           <div class="theme-form-input ">
+                               <input class="form-control height-weight-field " type="text" name="weight"
+                                   placeholder="weight" required>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+           <div class="col-md-6 mb-3">
+            <div class="form-group theme-form-group">
+                <div class="d-block ">
+                    <label class="theme-label" for="blood_group">Blood Group <span
+                            class="text-danger">*</span></label>
+                </div>
+                <div class="input-wrapper d-flex">
+                    <div class="theme-form-input ">
+                        <input class="form-control blood-field-size" type="text" name="blood_group"
+                            placeholder="Blood Group" required>
+                    </div>
+                    <div class="d-block">
+                        <label class="theme-label" for="BP" style="position: relative;
+                        bottom: 35px; text-align: right;">Blood Pressure<span
+                                class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-wrapper d-flex">
+                        <div class="theme-form-input ">
+                            <input class="form-control blood-field-size " type="text"
+                                name="blood_pressure" placeholder="Blood Pressure " required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="relation">Relation<span class="required">*</span></label>
+            <div class="theme-form-input">
+               <input class="form-control" id="relation" name="relation" type="text" placeholder="Realtion" required />
+            </div>
+         </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="relative_name">Relative Name <span class="required">*</span></label>
+            <div class="theme-form-input">
+               <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Relative Name" required />
+            </div>
+         </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="emergency_contact">Emergency contact <span class="required">*</span></label>
+            <div class="theme-form-input">
+               <input class="form-control" id="emergency_contact" name="emergency_contact" type="text" placeholder="Emergency contact" required />
+            </div>
+         </div>
+      </div>
+      
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+         <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" name="is_mediclaim_available" >
+            <label class="form-check-label" for="inlineCheckbox1" style="color: var(--theme-black-secondary); font-size: 14px;">Medical Insurance Available</label>
+          </div>
+         </div>
+         </div>
+
+
             @if(Auth::user()->hasRole('Super Admin'))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">

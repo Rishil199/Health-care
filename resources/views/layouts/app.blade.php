@@ -5,8 +5,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>{{ config('app.name', 'Laravel') }}</title>
-      <link rel="icon" href="{{ asset('favicon.ico') }}">
+      <link rel="icon" href="{{ asset('assets/favicon.png') }}">
       <!-- Fonts -->
+
       <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
       <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
       <link rel="stylesheet" href="{{ asset('assets/css/iconsfont.css') }}">

@@ -256,6 +256,16 @@ class PatientController extends Controller
         $patient->diet = $request['diet'] ?? '';
         $patient->smoke = $request['smoke'] ?? '';
         $patient->user_id = $users['id'];
+        $patient->height = $request['height'];
+        $patient->weight = $request['weight'];
+        $patient->blood_group = $request['blood_group'];
+        $patient->blood_pressure = $request['blood_pressure'];
+        $patient->is_mediclaim_available= $request['is_mediclaim_available'];
+        $patient->relation = $request['relation'];
+        $patient->relative_name = $request['relative_name'];
+        $patient->emergency_contact = $request['emergency_contact'];
+        // dd($patient);
+
         $patient->clinic_id = $request->clinic_id ? $clinic_id->id : Auth::user()->id;
         if(Auth::user()->hasRole(['Receptionist'])){
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
@@ -423,7 +433,7 @@ class PatientController extends Controller
         $patient->alchohol_consumption = $request['alchohol_consumption'];
         $patient->diet = $request['diet'];
         $patient->smoke = $request['smoke'];
-        // $patient->clinic_id = isset($request['clinic_id']) ? $request['clinic_id'] : $clinic_id;
+        $patient->clinic_id = isset($request['clinic_id']) ? $request['clinic_id'] : $clinic_id;
         if(Auth::user()->hasRole(['Receptionist'])){
             $patient->receptionist_id = isset($request['receptionist_id']) ? $request['receptionist_id'] : Auth::user()->id;
         }

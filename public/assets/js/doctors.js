@@ -36,7 +36,7 @@ if ( $('.doctors-patients-table').length ) {
                 }
             },
             { data: 'user.phone_no', name: 'user.phone_no' },
-            { data: 'status', name: 'status' },
+            { data: 'action', name: 'action' },
 
         ]
     });

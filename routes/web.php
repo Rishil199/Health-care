@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         //Hospital
-        Route::group(['prefix' => 'Hospital'], function() {
+        Route::group(['prefix' => 'hospital'], function() {
             Route::get('/', [ClinicController::class, 'index'])->name('clinics.index');
             Route::get('create', [ClinicController::class, 'create'])->name('clinics.create');
             Route::get('createBranch/{id}', [ClinicController::class, 'createBranch'])->name('clinics.createBranch');
@@ -112,7 +112,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('create', [DoctorController::class, 'create'])->name('doctors.create');
             Route::post('store', [DoctorController::class, 'store'])->name('doctors.store');
             Route::delete('delete', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-            // Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
+            Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
             Route::get('edit/{id}', [DoctorController::class, 'edit'])->name('doctors.edit');
             Route::put('update/{id}', [DoctorController::class, 'update'])->name('doctors.update'); 
             Route::get('changeStatus', [DoctorController::class, 'changeStatus'])->name('doctors.changeStatus');

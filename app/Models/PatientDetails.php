@@ -28,6 +28,15 @@ class PatientDetails extends Model
         'address',
         'latitude',
         'logitude',
+        'height',
+        'weight',
+        'blood_group',
+        'blood_pressure',
+        'is_mediclaim_available',
+        'relation',
+        'relative_name',
+        'emergency_contact'
+
     ];
 
     public function user(){
