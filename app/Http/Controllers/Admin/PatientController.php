@@ -65,6 +65,7 @@ class PatientController extends Controller
                     'id','user_id','clinic_id','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
                     
+                //  dd($patients);
                 }
 
             if(Auth::user()->hasRole('Hospital')) {

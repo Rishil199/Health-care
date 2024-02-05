@@ -2,7 +2,6 @@
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
-         {{-- {{ $appointment_date }}  --}}
     </div>
     <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close">
     <svg fill="#000000" width="20" height="20" version="1.1" id="lni_lni-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
@@ -13,14 +12,14 @@
     </svg>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body" id="myModal">
     <form action="" method="post" id="add-appointment-form" class="add-appointment-form">
     @csrf
         <div class="form-group theme-form-group">
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
-            <label class="theme-label" for="picker1">Select Patient <span class="text-danger">*</span></label>
+            <label class="theme-label" for="picker1" >Select Patient <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <select class="form-control form-select" name="event_name" id="event_name">
+                <select class="form-control form-select search-multiple" name="event_name" id="event_name" style="width: 750px; ">
                     <option value="">Select Patient</option>
            
                     @foreach( $patients as $patient )
@@ -76,3 +75,4 @@
       }
     });   
 </script>
+

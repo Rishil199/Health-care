@@ -87,6 +87,7 @@ class DoctorController extends Controller
 
                 if(Auth::user()->hasRole(['Receptionist'])){
                     $receptionist_details = ReceptionistDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+                //    dd($receptionist_details);
                 }
 
                 if(Auth::user()->hasRole(['Doctor'])){
@@ -113,12 +114,14 @@ class DoctorController extends Controller
                     ))->with(array(
                         'user' => function ( $query ) {
                             return $query->select(array(
-                                'id', 'first_name', 'last_name',
+                                'id', 'first_name', 'last_name','phone_no'
                             ));
                         }
                     ))->where(array(
                         'clinic_id' => $user_id->id,
                     ))->latest()->get();
+
+                    // dd($patients);
                 }
 
                 if(Auth::user()->hasRole(['Patient'])){
@@ -137,10 +140,14 @@ class DoctorController extends Controller
                 }
 
                 if(Auth::user()->hasRole(['Receptionist'])){
+                    // $user=Auth::user();
+                    // dd($user);
                     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
-                    $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
-                    $doctors = DoctorDetails::select('id','user_id','clinic_id','receptionist_id')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
-                    
+                    // dd($user_id);
+                    $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->id)->first();
+                    // dd($clinic_user_id);
+                    $doctors = DoctorDetails::select('id','user_id','clinic_id')->where('id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                    // dd($doctors);
                     $patients = PatientDetails::select(array(
                         'id', 'user_id',
                     ))->with(array(
@@ -153,7 +160,7 @@ class DoctorController extends Controller
                         'receptionist_id' => $user_id->id,
                     ))->orWhere('clinic_id',$user_id->clinic_id)->latest()->get();
                 }
-
+        //    dd($patients);
                 $this->data = array(
                     'appointment_date' => $request->appointment_date,
                     'patients' => $patients,

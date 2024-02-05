@@ -59,7 +59,7 @@ class UserController extends Controller
         if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Hospital']))
         {
             // dd(Auth::user()->hasRole('Receptionist'));
-            // echo "ddd";
+            // dd("dd");
             if (Auth::user()->hasRole('Hospital')){
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
             }
@@ -67,7 +67,7 @@ class UserController extends Controller
                 $receptionistCount = count(ReceptionistDetails::where('clinic_id',$dct->id)->get());
                 }
           
-            // $receptionistCount = count(ReceptionistDetails::get());
+            $receptionistCount = count(ReceptionistDetails::get());
             // dd($receptionistCount);
         }
 
@@ -138,7 +138,7 @@ class UserController extends Controller
 
         if(Auth::user()->hasRole('Receptionist')){
             // dd("ddd");
-            // dd(Auth::user()->hasRole('Receptionist'));
+            // dd(Auth::user());
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id);
     
@@ -146,7 +146,7 @@ class UserController extends Controller
             // dd($clinic_user_id);
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id'
-            ))->latest()->with('user')->where('user_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
             // $patients = PatientDetails::select(array(
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
@@ -175,9 +175,9 @@ class UserController extends Controller
                 })
                 ->where('disease_name','!=','')->get()->count();
                 // dd($past_appointment);
-            // $doctors = DoctorDetails::select(array(
-            //     'id','user_id','clinic_id','status','created_at'
-            // ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+            $doctors = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
         }
         // dd($doctors);
 

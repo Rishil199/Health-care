@@ -2,6 +2,9 @@
 @push('header_css')
 <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> --}}
+
 @endpush
 @section('content-breadcrumb')
 <li>
@@ -87,7 +90,7 @@
     </div>
     <div class="col-6">
         <div id='full_calendar_events'>
-            <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-target="myModal">
                <div class="modal-dialog">
                   <div class="modal-content">
                      
@@ -144,6 +147,7 @@
                             if ( resp ) {
                                 if ( resp.status ) {
                                     make_modal('book-appointment-modal', resp.data.view, true, 'modal-lg');
+                                    $('#event_name').select2();
                                 }
                             }
                         },
@@ -593,13 +597,22 @@ $(document).on('click', '.edit-patient',function(e) {
         });
     }
 });
-
-
-
 </script>
+
 
 <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
 <script src="{{ asset('assets/js/appointments.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+ 
+    $('#event_name').select2();
+    
+
+   });
+    </script> --}}
 
 
 @endpush
