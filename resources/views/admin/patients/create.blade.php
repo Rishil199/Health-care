@@ -107,12 +107,14 @@
                            <input class="form-control height-weight-field " type="text" name="height" placeholder="Height"
                                required>
                        </div>
-                       <div class="d-block">
-                           <label class="theme-label mt-2" for="weight" style="position: relative;
-                           bottom: 35px; margin-right: 10px;">Weight <span
-                                   class="text-danger">*</span></label>
-                       </div>
-                       <div class="input-wrapper d-flex">
+                       {{-- <div class="d-block">
+                        
+                       </div> --}}
+                       <label class="theme-label mt-2" for="weight" style="position: relative;
+                        bottom: 35px; margin-left: 37px;">Weight <span
+                                class="text-danger">*</span></label>
+                       <div class="input-wrapper d-flex" style="margin-left: -59px;">
+                        
                            <div class="theme-form-input ">
                                <input class="form-control height-weight-field " type="text" name="weight"
                                    placeholder="weight" required>

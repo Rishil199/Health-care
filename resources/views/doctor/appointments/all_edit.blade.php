@@ -38,34 +38,57 @@
                     <label for="appointment_date" class="theme-label">Appointment Date and Time : </label> <span class="fw-normal"> {{ date('d-m-Y', strtotime($all_appointent->appointment_date )) }} {{ date('H:i', strtotime($all_appointent->time_start))}} - {{ date('H:i', strtotime($all_appointent->time_end)) }} </span>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 mb-3">
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="form-group theme-form-group">
+                    <label for="Weight" class="theme-label">Weight <span class="required">*</span></label>
+                    <div class="theme-form-input">
+                        <input type="text" name="weight" class="form-control" style="width:260px;" placeholder="(In KG)">                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="form-group theme-form-group">
+                    <label for="Weight" class="theme-label">Blood Pressure <span class="required">*</span></label>
+                    <div class="theme-form-input">
+                        <input type="text" name="blood_pressure" class="form-control" style="width:260px; margin-left: 200px;" placeholder="119/70">    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="form-group theme-form-group">
+                    <label for="observation" class="theme-label">Observation <span class=""></span></label>
+                    <div class="theme-form-input">
+                        <input type="text" class="form-control" id="disease_name" name="disease_name" type="text" placeholder="Observation" style="width:260px;" value="" required>
+                    </div>
+                </div>
+            </div>
+
+                <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group">
-                        <label for="disease_name" class="theme-label">Prescription <span class="required">*</span></label>
+                        <label for="disease_name" class="theme-label">Prescription <span class=""></span></label>
                         <div class="theme-form-input">
-                            <textarea class="form-control" id="disease_name" name="disease_name" type="text" placeholder="Prescription details" style="resize: none;" value="{{ $all_appointent->disease_name}}" required> </textarea>
+                            <input type="text" class="form-control" id="disease_name" name="disease_name" type="text" placeholder="Prescription" style="width:260px;" value="" required>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 mb-3">
-                    <div class="form-group theme-form-group">
-                        <label for="is_complete" class="theme-label">Does It completed?</label>
-                        <div class="form-check form-switch form-switch-md ps-0">
-                            <label class="switch" for="is_complete">
-                                    <div class="form-check form-switch form-switch-md"><label class="switch"><input data-id={{$all_appointent->id}} class="toggle-class form-check-input" type="checkbox" id="is_complete" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive"  value="1" checked  disabled></label></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7 mb-3">
+        </div>
+                  <div class="row">
+                <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group d-flex justify-content-between">
-                        <div class="">
+                        <div class="me-3">
                             <label for="next_date" class="theme-label">Next Appointment Date</label>
                             <div class="theme-form-input">
                                 <input class="form-control" id='datepicker' name="next_date" type="text" placeholder="Next Appointment Date" value="{{$all_appointent->next_date ? date('d-m-Y', strtotime($all_appointent->next_date )) : null }}" />
                             </div>
                         </div>
-                        <div class="ms-2 me-5">
+                        <div class="ms-3">
                             <label for="next_date" class="theme-label">Timeslot</label>
                             <select name="next_start_time" id="next_start_time" class="form-select form-group">
                                 <option value=""> Select Time Slot </option>
@@ -82,6 +105,22 @@
                        </div>
                     </div>
                 </div>
+            </div>
+
+                <div class="col-md-5 mb-3">
+                    <div class="form-group theme-form-group">
+                        <label for="is_complete" class="theme-label">Does It completed?</label>
+                        <div class="form-check form-switch form-switch-md ps-0">
+                            <label class="switch" for="is_complete">
+                                    <div class="form-check form-switch form-switch-md"><label class="switch"><input data-id={{$all_appointent->id}} class="toggle-class form-check-input" type="checkbox" id="is_complete" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive"  value="1" checked  disabled></label></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
                 <div class="modal-footer justify-content-center">
                     {{-- <div class="text-left ml-0"> --}}
                     <label for="prescription" class="theme-prescrip"><b>Prescription : {{$all_appointent->disease_name}}</b></label>

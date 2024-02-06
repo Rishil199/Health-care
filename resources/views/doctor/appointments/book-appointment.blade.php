@@ -53,7 +53,26 @@
                         @endforeach
                     </select>                                  
                 </div>
+
+ <div class="row">
+     <div class="col-md-6">
+                <div class="theme-form-input">
+                    <label class="theme-label" for="Weight">Weight <span class="required">*</span></label>
+                    <div class="theme-form-input text-center">
+                <input type="text" name="weight" class="form-control" style="width:130px;" placeholder="(In KG)">                    
+                    </div>
             </div>
+        </div>
+        <div class="col-md-6">
+            <div class="theme-form-input">
+                <label class="theme-label" for="Weight" >Blood Pressure <span class="required">*</span></label>
+                <div class="theme-form-input text-center">
+            <input type="text" name="blood_pressure" class="form-control" style="width:130px; margin-left: 200px;" placeholder="119/70">                    
+                </div>
+        </div>
+        </div>
+    </div>
+
             <div class="text-center mt-2">
                <input type="submit" class="btn btn-primary create-appointment" id="create-appointment" value="Add" />
             </div>

@@ -6,7 +6,7 @@
 <div class="login-page">
    <div class="login-logo">
       <a href="">
-      <img src="{{ asset('assets/img/logo.png') }}" alt="Logo">
+      <img src="{{ asset('assets/img/narolacare_logo.png') }}" alt="Logo">
       </a>
    </div>
    <div class="login-wrapper">

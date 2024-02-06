@@ -46,6 +46,7 @@ class UserController extends Controller
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$dct->id)->get();
+                //  dd($doctors);
         }
         if (Auth::user()->hasRole('Hospital')){
             $doctors = DoctorDetails::select(array(
@@ -65,6 +66,7 @@ class UserController extends Controller
             }
             if (Auth::user()->hasRole('Doctor')){
                 $receptionistCount = count(ReceptionistDetails::where('clinic_id',$dct->id)->get());
+                // dd($receptionistCount);
                 }
           
             $receptionistCount = count(ReceptionistDetails::get());
@@ -117,6 +119,7 @@ class UserController extends Controller
                  ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
                 //  dd($patients);
             $appointments = DoctorAppointmentDetails::with('user')->where('doctor_id',$user_id->id)->latest()->get();
+            // dd($appointments);
             $appointmentsCount = count(DoctorAppointmentDetails::where('doctor_id',$user_id->id)->withTrashed()->get()); 
           
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()
@@ -217,9 +220,21 @@ class UserController extends Controller
             // $doctors = DoctorDetails::select(array(
             //     'id','user_id','created_at','clinic_id'
             // ))->latest()->with('user')->where('id',$user_id->id)->get();
-            $doctors = DoctorDetails::select(array(
-                'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->get();
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            // ))->latest()->with('user')->get();
+            // dd($doctors);
+
+            $authUser= Auth::user();
+            // dd($authUser->id);
+            $doctordetails= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
+            ->pluck('doctor_id');
+            // dd($doctors);
+
+            if($doctordetails){
+                $doctors=DoctorDetails::select('id','user_id')->whereIn('id',$doctordetails->all())->with('user')->get();   
+                // dd($doctordetails);          
+            }
             // dd($doctors);
 
             $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
