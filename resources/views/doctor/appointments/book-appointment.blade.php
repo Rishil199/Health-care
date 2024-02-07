@@ -1,4 +1,10 @@
 
+{{-- <style> 
+.select2-container {
+    z-index: 19999 !important;
+}
+
+</style> --}}
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
@@ -19,7 +25,7 @@
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1" >Select Patient <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <select class="form-control form-select search-multiple" name="event_name" id="event_name" style="width: 750px; ">
+                <select class="form-control form-select search-multiple" name="event_name" id="event_name" style="width: 750px; z-index: 19999;; ">
                     <option value="">Select Patient</option>
            
                     @foreach( $patients as $patient )
@@ -42,11 +48,11 @@
             <input type="hidden" name="clinic_id" value="{{@$clinic_details->id}}">
             <input type="hidden" name="receptionist_id" value="{{@$receptionist_details->id}}">
             <input type="hidden" name="created_by" value="{{Auth::user()->id}}">
-            <div class="theme-form-input">
+            <div class="theme-form-input mt-3">
                 <label class="theme-label" for="time_start">Time Slot <span class="required">*</span></label>
                 <div class="theme-form-input text-center">
                     <input type="hidden" id="modal-appointment-selected-date-for-check">
-                    <select name="time_start" id="time_start" class="form-select form-group">
+                    <select name="time_start" id="time_start" class="form-select form-group" style="width: 750px;">
                         <option value=""> Select Time Slot </option>
                         @foreach( $available_slots as $time )
                             <option id="{{ $time }}" value="{{ $time }}" >{{ $time }}</option> 
@@ -54,20 +60,20 @@
                     </select>                                  
                 </div>
 
- <div class="row">
+ <div class="row mt-3">
      <div class="col-md-6">
                 <div class="theme-form-input">
-                    <label class="theme-label" for="Weight">Weight <span class="required">*</span></label>
+                    <label class="theme-label" for="Weight" >Weight <span class="required">*</span></label>
                     <div class="theme-form-input text-center">
-                <input type="text" name="weight" class="form-control" style="width:130px;" placeholder="(In KG)">                    
+                <input type="text" name="weight" class="form-control" style="width:105px;" placeholder="(In KG)">                    
                     </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="theme-form-input">
-                <label class="theme-label" for="Weight" >Blood Pressure <span class="required">*</span></label>
-                <div class="theme-form-input text-center">
-            <input type="text" name="blood_pressure" class="form-control" style="width:130px; margin-left: 200px;" placeholder="119/70">                    
+                <label class="theme-label" for="blood_pressure" style="margin-left: -225px;" >Blood Pressure <span class="required">*</span></label>
+                <div class="theme-form-input" style="margin-left: -230px;">
+            <input type="text" name="blood_pressure" class="form-control" style="width:105px; " placeholder="119/70">                    
                 </div>
         </div>
         </div>
@@ -79,6 +85,7 @@
         </div>
     </form>
 </div>
+
 <script>
     $( "#add-appointment-form" ).validate({
       rules: {

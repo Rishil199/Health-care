@@ -111,7 +111,7 @@
                         
                        </div> --}}
                        <label class="theme-label mt-2" for="weight" style="position: relative;
-                        bottom: 35px; margin-left: 37px;">Weight <span
+                        bottom: 35px; margin-left: 25px;">Weight <span
                                 class="text-danger">*</span></label>
                        <div class="input-wrapper d-flex" style="margin-left: -59px;">
                         

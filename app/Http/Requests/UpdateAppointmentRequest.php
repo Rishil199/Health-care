@@ -26,8 +26,15 @@ class UpdateAppointmentRequest extends FormRequest
         return [
             'disease_name' => 'required',
             'is_complete' => 'sometimes',
-            // 'next_date' => 'required',
+            'next_date' => 'required',
+            'prescription'=>'required',
             'next_start_time' => 'sometimes',
+            // 'time_start' =>'sometimes',
+            // 'end_time'=>'sometimes',
+            'weight' =>'sometimes',
+            'blood_pressure'=>'sometimes',
+            'dietplan'=>'sometimes'
+
         ];
     }
 

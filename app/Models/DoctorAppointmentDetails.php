@@ -28,6 +28,10 @@ class DoctorAppointmentDetails extends Model
         'time_start',
         'time_end',
         'next_date',
+        'prescription',
+        'weight',
+        'blood_pressure',
+        'dietplan',
         'is_complete',
         'deleted_at'
     ];

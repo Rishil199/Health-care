@@ -2,9 +2,8 @@
 @push('header_css')
 <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> --}}
-
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />--}}
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
 @endpush
 @section('content-breadcrumb')
 <li>
@@ -102,6 +101,10 @@
 </div>
 @endsection
 @push('footer_js')
+
+
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> --}}
+
 <script>
 
 //form validation
@@ -602,17 +605,17 @@ $(document).on('click', '.edit-patient',function(e) {
 
 <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
 <script src="{{ asset('assets/js/appointments.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
 
 
-<script>
+{{-- <script>
     $(document).ready(function(){
  
     $('#event_name').select2();
     
 
    });
-    </script> --}}
+    </script>  --}}
 
 
 @endpush

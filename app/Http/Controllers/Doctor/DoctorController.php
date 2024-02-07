@@ -104,6 +104,7 @@ class DoctorController extends Controller
                     ))->where(array(
                         'doctor_id' => $user_id->id,
                     ))->latest()->get();
+                    // dd($patients);
                 }
            
                 if(Auth::user()->hasRole(['Hospital'])){
@@ -211,7 +212,7 @@ class DoctorController extends Controller
             
 
             $all_appointment = DoctorAppointmentDetails::where('doctor_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->withTrashed()->get()->count();
-
+        //  dd($all_appointment);
             $wheres = function ( $query ) use ( $date, $user_id, $clinic_user_id ) {
                 $query->where(array(
                     'appointment_date' => $date,
@@ -227,6 +228,7 @@ class DoctorController extends Controller
                     'doctor_id' => $user_id->id,
                 ))->orWhere('clinic_id', @$clinic_user_id->clinic_id);
             };
+            // dd($where);
            
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date', $date)->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
@@ -425,11 +427,13 @@ class DoctorController extends Controller
     }
 
     public function calendarEvents(Request $request) {
+        // dd($request);
         $splitTime = explode('-', $request->time_start, 2);
         if(Auth::user()->hasRole(['Doctor'])){
             $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             $doctor_main_id = $doctor_id->id;
             $doctor_main_clinicid = $doctor_id->clinic_id;
+            // dd($doctor_id);
 
         }
         else {
@@ -438,6 +442,7 @@ class DoctorController extends Controller
             $doctor_main_clinicid = $request->clinic_id ? $request->clinic_id : 0;
 
         }
+        // dd($doctor_main_clinicid);
         $event = DoctorAppointmentDetails::create([
           'patient_id' => $request->event_name,
           'user_id' => $request->event_name,
@@ -449,7 +454,10 @@ class DoctorController extends Controller
           'created_by' => $request->created_by,
           'time_start' => $splitTime[0],
           'time_end' => $splitTime[1],
+          'weight'=>$request->weight ?? null,
+          'blood_pressure'=>$request->blood_pressure ?? null
         ]);
+        // dd($request);
 
         if($request->disease_name != null){
             PatientDetails::create('disease_name',$request->disease_name);
@@ -605,7 +613,8 @@ class DoctorController extends Controller
                         ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
                 })
                 ->where('is_complete','=','0')->get();
-        }
+        
+            }
 
         if(Auth::user()->hasRole(['Hospital'])){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
@@ -624,6 +633,7 @@ class DoctorController extends Controller
                 })
                 ->where('is_complete','=','0')->get();
         }
+        // dd($appointments);
 
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
@@ -658,7 +668,7 @@ class DoctorController extends Controller
                                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
                                                  </svg>
                                               </span>
-                                              <span class="svg-text">Edit</span>
+                                              <span class="svg-text">Attend Patient</span>
                                            </a>
                                         </li>
                                         <li>
@@ -984,15 +994,18 @@ class DoctorController extends Controller
 
             $start_time = date('H:i:s',strtotime('+'.$break_time.'minutes'. '+'.$duration.' minutes',strtotime($start_time)));
                         
-            $i++;
+          
             
             if(strtotime($start_time) <= strtotime($end_time)){
                 $time[$i]['start'] = $start;
                 $time[$i]['end'] = $end;
             }
+            $i++;
+            // dd($time);
         } 
         
         $all_appointent = DoctorAppointmentDetails::with('user')->findOrFail($id);
+        // dd($all_appointent);
         $view = view('doctor.appointments.all_edit', compact('all_appointent','time','available_slot','current_time'))->render();
         
         $response = array(
@@ -1015,16 +1028,20 @@ class DoctorController extends Controller
         $post_data = $request->validated();
         // dd($post_data);
         $splitTime = !empty($post_data['next_start_time']) ? explode('-', $post_data['next_start_time'], 2) :['',''];
-
+    //    dd($splitTime);
         $all_appointent = DoctorAppointmentDetails::with('user')->find($id);
         $all_appointent->disease_name = $post_data['disease_name'];
+        $all_appointent->prescription = $post_data['prescription'];
+        $all_appointent->weight = $post_data['weight'];
+        $all_appointent->blood_pressure = $post_data['blood_pressure'];
+        $all_appointent->dietplan = $post_data['dietplan'];
         // dd($all_appointent);
         $all_appointent->next_date = isset($post_data['next_date'])? $post_data['next_date']:null;
         $all_appointent->is_complete = $request->is_complete ?? 0;
         // dd($all_appointent);
         $all_appointent->time_start = isset($splitTime[0]) ? $splitTime[0] : $all_appointent->time_start;
         $all_appointent->time_end = isset($splitTime[1]) ?? $all_appointent->time_end;
-        // dd($all_appointent);
+        dd($all_appointent);
         $all_appointent->save();
 
         return response()->json(
