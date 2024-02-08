@@ -45,7 +45,7 @@
                 <div class="form-group theme-form-group">
                     <label for="Weight" class="theme-label">Weight <span class="required">*</span></label>
                     <div class="theme-form-input">
-                        <input type="text" name="weight" class="form-control" style="width:260px;" placeholder="(In KG)">                    
+                        <input type="text" name="weight" class="form-control" style="width:260px;" placeholder="(In KG)" value="{{$all_appointent->weight}}">                    
                     </div>
                 </div>
             </div>
@@ -145,7 +145,9 @@
                     {{-- <label for ="next-date" class="theme-prescrip"><b>Next Date :{{$all_appointent->next_date ? date('d-m-Y', strtotime($all_appointent->next_date )) : null }}</b></label> --}}
                     <button class="btn btn-back mt-4 app_btn" id="validation-next" type="submit"><i class="lni lni-save"></i>Submit</button>
                     <div style="width:720px; height:380px; overflow:auto;" class="mt-1">
-                    <table class="table table-bordered" id="appointments_table">
+                        <p style="font-weight: 700;">Patient Medical history - </p>
+                       
+                    <table class="table table-bordered mt-2" id="appointments_table">
                         <thead>
                           <tr style="font-weight: normal;">
                             <th scope="col">Appointment Date</th>
@@ -154,24 +156,23 @@
                             <th scope="col">Prescription</th>
                             <th scope="col">Weight</th>
                             <th scope="col">Blood Pressure</th>
-                            <th scope="col">Dietplan</th>
+                            <th scope="col">Diestplan</th>
                             <th scope="col">Next date</th>
                           </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach($all_appointent as $appointent_detail) --}}
+                            @foreach($appointment_history as $history)
                           <tr style="font-weight:normal; ">
-                            {{-- <th scope="row"></th> --}}
-                            <td>{{$all_appointent->appointment_date}} </td>
-                            <td>{{$all_appointent->time_start }} - {{$all_appointent->time_start }}</td>
-                            <td>{{$all_appointent->disease_name}}</td>
-                            <td>{{$all_appointent->prescription}}</td>
-                            <td>{{$all_appointent->weight}}</td>
-                            <td>{{$all_appointent->blood_pressure}}</td>
-                            <td>{{$all_appointent->dietplan}}</td>
-                            <td>{{$all_appointent->next_date}}</td>
+                            <td>{{$history->appointment_date}} </td>
+                            <td>{{$history->time_start }} - {{$history->time_end }}</td>
+                            <td>{{$history->disease_name}}</td>
+                            <td>{{$history->prescription}}</td>
+                            <td>{{$history->weight}}</td>
+                            <td>{{$history->blood_pressure}}</td>
+                            <td>{{$history->dietplan}}</td>
+                            <td>{{$history->next_date }}</td>
                           </tr>
-                          {{-- @endforeach --}}
+                          @endforeach
                         </tbody>
                       </table>
                     </div>

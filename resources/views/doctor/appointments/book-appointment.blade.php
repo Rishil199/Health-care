@@ -63,7 +63,7 @@
  <div class="row mt-3">
      <div class="col-md-6">
                 <div class="theme-form-input">
-                    <label class="theme-label" for="Weight" >Weight <span class="required">*</span></label>
+                    <label class="theme-label" for="Weight" >Weight </label>
                     <div class="theme-form-input text-center">
                 <input type="text" name="weight" class="form-control" style="width:105px;" placeholder="(In KG)">                    
                     </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="col-md-6">
             <div class="theme-form-input">
-                <label class="theme-label" for="blood_pressure" style="margin-left: -225px;" >Blood Pressure <span class="required">*</span></label>
+                <label class="theme-label" for="blood_pressure" style="margin-left: -225px;" >Blood Pressure </label>
                 <div class="theme-form-input" style="margin-left: -230px;">
             <input type="text" name="blood_pressure" class="form-control" style="width:105px; " placeholder="119/70">                    
                 </div>

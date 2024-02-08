@@ -93,7 +93,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" style="resize: none;" required></textarea>
+                     <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" required></textarea>
                   </div>
                </div>
             </div>
@@ -104,7 +104,7 @@
                    </div>
                    <div class="input-wrapper d-flex">
                        <div class="theme-form-input ">
-                           <input class="form-control height-weight-field " type="text" name="height" placeholder="Height"
+                           <input class="form-control height-weight-field " type="text" name="height" placeholder="(In CM)"
                                required>
                        </div>
                        {{-- <div class="d-block">
@@ -117,7 +117,7 @@
                         
                            <div class="theme-form-input ">
                                <input class="form-control height-weight-field " type="text" name="weight"
-                                   placeholder="weight" required>
+                                   placeholder="(In KG)" required>
                            </div>
                        </div>
                    </div>
@@ -136,14 +136,13 @@
                             placeholder="Blood Group" required>
                     </div>
                     <div class="d-block">
-                        <label class="theme-label" for="BP" style="position: relative;
-                        bottom: 35px; text-align: right;">Blood Pressure<span
+                        <label class="theme-label" for="BP" >Blood Pressure<span
                                 class="text-danger">*</span></label>
                     </div>
                     <div class="input-wrapper d-flex">
                         <div class="theme-form-input ">
                             <input class="form-control blood-field-size " type="text"
-                                name="blood_pressure" placeholder="Blood Pressure " required>
+                                name="blood_pressure" placeholder="119/70 " required>
                         </div>
                     </div>
                 </div>
@@ -156,7 +155,7 @@
          <div class="form-group theme-form-group">
             <label class="theme-label" for="relation">Relation<span class="required">*</span></label>
             <div class="theme-form-input">
-               <input class="form-control" id="relation" name="relation" type="text" placeholder="Realtion" required />
+               <input class="form-control" id="relation" name="relation" type="text" placeholder="Enter Relation" required />
             </div>
          </div>
       </div>
@@ -165,7 +164,7 @@
          <div class="form-group theme-form-group">
             <label class="theme-label" for="relative_name">Relative Name <span class="required">*</span></label>
             <div class="theme-form-input">
-               <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Relative Name" required />
+               <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Enter Relative Name" required />
             </div>
          </div>
       </div>

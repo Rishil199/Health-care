@@ -88,7 +88,7 @@
     <div class="col-6">
         <div id='full_calendar_events'>
             <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog">
+               <div class="modal-dialog ">
                   <div class="modal-content">
                      
                   </div>
