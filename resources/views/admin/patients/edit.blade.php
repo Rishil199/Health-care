@@ -98,14 +98,107 @@
             @endif
 
 
-            <div class="col-md-6 mb-3">
+               {{-- Hieght --}}
+            <div class="col-md-3 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
+                   <div class="d-block">
+                       <label class="theme-label" for="height">Height <span class="text-danger">*</span></label>
+                   </div>
+                   <div class="input-wrapper d-flex">
+                       <div class="theme-form-input">
+                           <input class="form-control " type="text" name="height" placeholder="(In CM)" id="height" value="{{$patient->height}}" >
+                       </div>
+                   </div>
+               </div>
+           </div>
+     {{-- Weight --}}
+           <div class="col-md-3 mb-3">
+            <div class="form-group theme-form-group">
+                <div class="d-block">
+                    <label class="theme-label" for="weight">Weight <span class="text-danger">*</span></label>
+                </div>
+                <div class="input-wrapper d-flex">
+                    <div class="theme-form-input">
+                        <input class="form-control " type="text" name="weight" placeholder="(In KG)" value="{{$patient->weight}}" id="weight" >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       {{-- Address --}}
+       <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
+            <div class="theme-form-input">
+               <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" style="resize: none;" value="{{ $patient->address}}" required> {{ $patient->address}}</textarea>
+            </div>
+         </div>
+      </div>
+
+        {{-- Blood group  --}}
+        <div class="col-md-3 mb-3">
+         <div class="form-group theme-form-group">
+             <div class="d-block ">
+                 <label class="theme-label" for="blood_group">Blood Group <span
+                         class="text-danger">*</span></label>
+             </div>
+             <div class="input-wrapper d-flex">
+                 <div class="theme-form-input ">
+                     <input class="form-control " type="text" name="blood_group" value="{{$patient->blood_group}}"
+                         placeholder="Blood Group" id="blood_group" >
+                 </div>
+             </div>
+                 </div>
+         </div>
+         
+        {{-- Blood Pressure  --}}
+
+        <div class="col-md-3 mb-3">
+         <div class="form-group theme-form-group">
+                 <div class="d-block">
+                     <label class="theme-label" for="blood_pressure" >Blood Pressure<span
+                             class="text-danger">*</span></label>
+                 </div>
+                 <div class="input-wrapper d-flex">
+                     <div class="theme-form-input ">
+                         <input class="form-control " type="text"
+                             name="blood_pressure" placeholder="119/70" id="blood_pressure" value="{{$patient->blood_pressure}}" >
+                     </div>
+                 </div>
+                 </div>
+             </div>
+
+               {{--  Relation --}}
+             <div class="col-md-6 mb-3">
+               <div class="form-group theme-form-group">
+                  <label class="theme-label" for="relation">Relation<span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" style="resize: none;" value="{{ $patient->address}}" required> {{ $patient->address}}</textarea>
+                     <input class="form-control" id="relation" name="relation" type="text" placeholder="Enter Relation" value="{{$patient->relation}}"  />
                   </div>
                </div>
             </div>
+
+            {{-- Relative name --}}
+            <div class="col-md-6 mb-3">
+               <div class="form-group theme-form-group">
+                  <label class="theme-label" for="relative_name">Relative Name <span class="required">*</span></label>
+                  <div class="theme-form-input">
+                     <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Enter Relative Name" value="{{$patient->relative_name}}"  />
+                  </div>
+               </div>
+            </div>
+
+            {{-- Emergency Contact --}}
+            <div class="col-md-6 mb-3">
+               <div class="form-group theme-form-group">
+                  <label class="theme-label" for="emergency_contact">Emergency contact <span class="required">*</span></label>
+                  <div class="theme-form-input">
+                     <input class="form-control" id="emergency_contact" name="emergency_contact" type="text" placeholder="Emergency contact" value="{{$patient->emergency_contact}}" />
+                  </div>
+               </div>
+            </div>
+
+          {{--Disease --}}  
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="disease_name">Disease Name <span class="text-danger">*</span></label>
@@ -114,6 +207,8 @@
                   </div>
                </div>
             </div>
+
+            {{-- Prescription --}}
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="prescription">Prescription <span class="text-danger">*</span></label>
@@ -122,7 +217,9 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-12 mb-3">
+
+            {{-- Allergies --}}
+            <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="allergies">Allergies </label>
                   <div class="theme-form-input">
@@ -130,6 +227,8 @@
                   </div>
                </div>
             </div>
+
+            {{--Exercise  --}}
             <div class="col-md-8 mb-3">
                <div class="form-group theme-form-group">
                   <div class="d-block ">
@@ -227,7 +326,7 @@
          <div class="modal-footer justify-content-center">
               <button type="submit" value="Update" id="validation-next" class="btn btn-back mt-4">
                   <i class="lni lni-save"></i>
-                  Update
+                  Save
               </button>
          </div>
          </div>

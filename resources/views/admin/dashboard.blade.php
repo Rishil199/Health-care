@@ -11,23 +11,20 @@
 
                             @if (Auth::user()->hasRole('Hospital'))
                                 {{-- @php var_dump($clinics);@endphp --}}
-                                <p class="mb-2"style="text-transform: uppercase; font-weight: bold;">Hospital name :<b
-                                        style="color: black"> {{ Auth::user()->first_name }}</b> </p>
+                                <p class="text-uppercase text-dark mb-2">Hospital name : {{ Auth::user()->first_name }} </p>
                                 @foreach ($clinics as $clinic)
                                     @switch($clinic->is_main_branch)
                                         @case(1)
-                                            <p class="mb-2" style="text-transform: uppercase; font-weight: bold;">Branch : <b
-                                                    style="color: black">Main Branch </b> </p>
+                                            <p class="mb-2 text-uppercase text-dark">Branch : Main Branch  </p>
                                         @break
 
                                         @case(0)
-                                            <p class="mb-2" style="text-transform: uppercase; font-weight: bold;">Branch : <b
-                                                    style="color: black">Sub Branch </b> </p>
+                                            <p class="mb-2 text-uppercase text-dark">Branch : Sub Branch </p>
                                         @break
                                     @endswitch
                                 @endforeach
                             @endif
-                            <p style="font-weight:900; text-transform: uppercase; color: black;">Welcome to the
+                            <p class="text-uppercase text-dark">Welcome to the
                                 {{ $title }} {{ Auth::user()->first_name }}</p>
                         </div>
                     </div>

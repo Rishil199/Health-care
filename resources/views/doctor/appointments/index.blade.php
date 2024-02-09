@@ -514,7 +514,7 @@ function validateFormAppointment( $form ) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'edit-all_appointment-modal edit-apmt', resp.data.view, true );
+                        make_modal( 'edit-all_appointment-modal edit-apmt', resp.data.view, true, 'modal-xl' );
                         validateFormAppointment( $('.edit-all-appointments-form') );
                     }
                 }

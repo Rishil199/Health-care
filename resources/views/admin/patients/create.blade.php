@@ -1,17 +1,3 @@
-
-<style>
-   .height-weight-field{
-      height: 40;
-      width: 80px;
-   }
-
-   .blood-field-size {
-      height: 45;
-      width: 150px;
-   }
-   
-   
-</style>
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
@@ -97,34 +83,33 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-3 mb-3">
                <div class="form-group theme-form-group">
-                   <div class="d-block ">
+                   <div class="d-block">
                        <label class="theme-label" for="height">Height <span class="text-danger">*</span></label>
                    </div>
                    <div class="input-wrapper d-flex">
-                       <div class="theme-form-input ">
-                           <input class="form-control height-weight-field " type="text" name="height" placeholder="(In CM)"
-                               required>
-                       </div>
-                       {{-- <div class="d-block">
-                        
-                       </div> --}}
-                       <label class="theme-label mt-2" for="weight" style="position: relative;
-                        bottom: 35px; margin-left: 25px;">Weight <span
-                                class="text-danger">*</span></label>
-                       <div class="input-wrapper d-flex" style="margin-left: -59px;">
-                        
-                           <div class="theme-form-input ">
-                               <input class="form-control height-weight-field " type="text" name="weight"
-                                   placeholder="(In KG)" required>
-                           </div>
+                       <div class="theme-form-input">
+                           <input class="form-control " type="text" name="height" placeholder="(In CM)" id="height" required>
                        </div>
                    </div>
                </div>
            </div>
+           <div class="col-md-3 mb-3">
+               <div class="form-group theme-form-group">
+                   <div class="d-block">
+                       <label class="theme-label" for="weight">Weight <span class="text-danger">*</span></label>
+                   </div>
+                   <div class="input-wrapper d-flex">
+                       <div class="theme-form-input">
+                           <input class="form-control " type="text" name="weight" placeholder="(In KG)" id="weight" required>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           
 
-           <div class="col-md-6 mb-3">
+           <div class="col-md-3 mb-3">
             <div class="form-group theme-form-group">
                 <div class="d-block ">
                     <label class="theme-label" for="blood_group">Blood Group <span
@@ -132,22 +117,28 @@
                 </div>
                 <div class="input-wrapper d-flex">
                     <div class="theme-form-input ">
-                        <input class="form-control blood-field-size" type="text" name="blood_group"
-                            placeholder="Blood Group" required>
+                        <input class="form-control " type="text" name="blood_group"
+                            placeholder="Blood Group" id="blood_group" required>
                     </div>
+                </div>
+                    </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+            <div class="form-group theme-form-group">
                     <div class="d-block">
-                        <label class="theme-label" for="BP" >Blood Pressure<span
+                        <label class="theme-label" for="blood_pressure" >Blood Pressure<span
                                 class="text-danger">*</span></label>
                     </div>
                     <div class="input-wrapper d-flex">
                         <div class="theme-form-input ">
-                            <input class="form-control blood-field-size " type="text"
-                                name="blood_pressure" placeholder="119/70 " required>
+                            <input class="form-control " type="text"
+                                name="blood_pressure" placeholder="119/70" id="blood_pressure" required>
                         </div>
                     </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+   
 
      
 
@@ -182,7 +173,7 @@
          <div class="form-group theme-form-group">
          <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" name="is_mediclaim_available" >
-            <label class="form-check-label" for="inlineCheckbox1" style="color: var(--theme-black-secondary); font-size: 14px;">Medical Insurance Available</label>
+            <label class="form-check-label text-secondary fs-6" for="inlineCheckbox1">Medical Insurance Available</label>
           </div>
          </div>
          </div>
@@ -354,7 +345,7 @@
              <div class="modal-footer justify-content-center">
                  <button type="submit" value="Add" id="validation-next" class="btn btn-back mt-4">
                      <i class="lni lni-save"></i>
-                     Add
+                     Save
                  </button>
              </div>
          </div>

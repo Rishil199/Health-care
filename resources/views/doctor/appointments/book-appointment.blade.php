@@ -1,10 +1,14 @@
 
-{{-- <style> 
-.select2-container {
+<style> 
+.select-box {
+    width:-750px;
     z-index: 19999 !important;
 }
+/* .book-appointment {
+    modal-xl;
+} */
 
-</style> --}}
+</style>
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
@@ -25,7 +29,7 @@
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1" >Select Patient <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <select class="form-control form-select search-multiple" name="event_name" id="event_name" style="width: 750px; z-index: 19999;; ">
+                <select class="form-control form-select search-multiple select-box" name="event_name" id="event_name">
                     <option value="">Select Patient</option>
            
                     @foreach( $patients as $patient )
@@ -52,7 +56,7 @@
                 <label class="theme-label" for="time_start">Time Slot <span class="required">*</span></label>
                 <div class="theme-form-input text-center">
                     <input type="hidden" id="modal-appointment-selected-date-for-check">
-                    <select name="time_start" id="time_start" class="form-select form-group" style="width: 750px;">
+                    <select name="time_start" id="time_start" class="form-select form-group select-box">
                         <option value=""> Select Time Slot </option>
                         @foreach( $available_slots as $time )
                             <option id="{{ $time }}" value="{{ $time }}" >{{ $time }}</option> 
@@ -60,27 +64,28 @@
                     </select>                                  
                 </div>
 
- <div class="row mt-3">
-     <div class="col-md-6">
-                <div class="theme-form-input">
-                    <label class="theme-label" for="Weight" >Weight </label>
-                    <div class="theme-form-input text-center">
-                <input type="text" name="weight" class="form-control" style="width:105px;" placeholder="(In KG)">                    
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="theme-form-input">
+                            <label class="theme-label" for="Weight">Weight</label>
+                            <div class="theme-form-input text-center">
+                                <input type="text" name="weight" class="form-control " placeholder="(In KG)">
+                            </div>
+                        </div>
                     </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="theme-form-input">
-                <label class="theme-label" for="blood_pressure" style="margin-left: -225px;" >Blood Pressure </label>
-                <div class="theme-form-input" style="margin-left: -230px;">
-            <input type="text" name="blood_pressure" class="form-control" style="width:105px; " placeholder="119/70">                    
+                    <div class="col-md-6">
+                        <div class="theme-form-input">
+                            <label class="theme-label " for="blood_pressure">Blood Pressure</label>
+                            <div class="theme-form-input">
+                                <input type="text" name="blood_pressure" class="form-control " placeholder="119/70">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-        </div>
-        </div>
-    </div>
+                
 
-            <div class="text-center mt-2">
-               <input type="submit" class="btn btn-primary create-appointment" id="create-appointment" value="Add" />
+            <div class="text-center mt-4">
+               <input type="submit" class="btn btn-primary create-appointment" id="create-appointment" value="Save" />
             </div>
         </div>
     </form>

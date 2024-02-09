@@ -339,13 +339,14 @@ class PatientController extends Controller
             if ($user)
             {
         
-              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user->user_id)->with('user')->first();
+              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude','height','weight','blood_group','blood_pressure','relation','relative_name','emergency_contact')->where('user_id',$user->user_id)->with('user')->first();
             //   dd($patient);
               
             } 
             else if ($user_id)
             {
-                $patient_name = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$user_id->user_id)->with('user')->first();
+                $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude','height','weight','blood_group','blood_pressure','relation','relative_name','emergency_contact')->where('user_id',$user_id->user_id)->with('user')->first();
+                // dd($patient);
 
             }
         }
@@ -434,6 +435,14 @@ class PatientController extends Controller
         $patient->alchohol_consumption = $request['alchohol_consumption'];
         $patient->diet = $request['diet'];
         $patient->smoke = $request['smoke'];
+        $patient->height = $request['height'];
+        $patient->weight = $request['weight'];
+        $patient->blood_group = $request['blood_group'];
+        $patient->blood_pressure = $request['blood_pressure'];
+        $patient->is_mediclaim_available= $request['is_mediclaim_available'];
+        $patient->relation = $request['relation'];
+        $patient->relative_name = $request['relative_name'];
+        $patient->emergency_contact = $request['emergency_contact'];
         $patient->clinic_id = isset($request['clinic_id']) ? $request['clinic_id'] : $clinic_id;
         if(Auth::user()->hasRole(['Receptionist'])){
             $patient->receptionist_id = isset($request['receptionist_id']) ? $request['receptionist_id'] : Auth::user()->id;
