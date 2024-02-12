@@ -25,6 +25,16 @@
 <div class="modal-body" id="myModal">
     <form action="" method="post" id="add-appointment-form" class="add-appointment-form">
     @csrf
+    
+
+    <div class="col-md-6 mb-1">
+        <div class="form-group theme-form-group">
+            <label for="appointment_date" class="theme-label">Selected Date  : </label> <span
+                class="fw-normal">{{\Carbon\Carbon::parse($selected_date)->format('d-m-Y') }}</span>
+        </div>
+    </div>
+
+
         <div class="form-group theme-form-group">
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1" >Select Patient <span class="text-danger">*</span></label>

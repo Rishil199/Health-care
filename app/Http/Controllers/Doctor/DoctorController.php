@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use Auth;
 use DateTime;
 use DataTables;
+use Carbon\Carbon;
 use App\Mail\PrescriptionMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -72,8 +73,12 @@ class DoctorController extends Controller
   
 
         if ( $request->ajax() ) {
+            
             if ( $request->load_view == 'true' ) {
                 
+                $selected_date=$request->appointment_date;
+                // dd($selected_date);
+
                 $current_time = now()->toTimeString();
                 
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );
@@ -104,7 +109,7 @@ class DoctorController extends Controller
                     ))->where(array(
                         'doctor_id' => $user_id->id,
                     ))->latest()->get();
-                    // dd($patients);
+                    // dd($selected_date);
                 }
            
                 if(Auth::user()->hasRole(['Hospital'])){
@@ -167,6 +172,7 @@ class DoctorController extends Controller
                     'patients' => $patients,
                     'available_slots' => $available_slots,
                     'clinic_details' => $clinic_details,
+                    'selected_date' =>  $selected_date
                 );
 
                 if(Auth::user()->hasAnyRole(['Hospital','Receptionist'])){
@@ -206,6 +212,8 @@ class DoctorController extends Controller
         $available_slot = [];
 
         if(Auth::user()->hasRole(['Doctor'])){
+     
+
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
 
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
@@ -249,6 +257,7 @@ class DoctorController extends Controller
                     $query->where('doctor_id',$user_id->id)
                         ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
                 })->get()->count();
+                
         }
 
 
@@ -395,7 +404,8 @@ class DoctorController extends Controller
                 'upcoming_appointment' => $upcoming_appointment,
                 'all_appointment' =>$all_appointment,
                 'past_appointment' => $past_appointment,
-                'doctors' => $doctors
+                'doctors' => $doctors,
+               
             ); 
         }
 
@@ -525,6 +535,10 @@ class DoctorController extends Controller
                 return $row->user?->phone_no;
                 // dd($row);
             })
+            ->addColumn('appointment_date',function($row){
+                return date('d-m-Y',strtotime($row->appointment_date));
+                // dd($row->appointment_date);
+            })
             ->addColumn('created_by', function($row) {
                 $created_by = User::select('id','first_name','last_name','name')->where('id',$row->created_by)->first();
                 return $created_by->first_name . ' - ' . $created_by->name; 
@@ -591,6 +605,8 @@ class DoctorController extends Controller
         // dd($request);
         $date = today()->format('Y-m-d');
         // dd($date);
+        // $date=Carbon::createFromFormat('Y-m-d',$d)->format('d-m-Y');
+        // dd($date);
          if ( $request->load_view == '1' ) {
             $this->data = [];
             $view =  view('doctor.appointments.todays_appointment', $this->data)->render();
@@ -605,6 +621,7 @@ class DoctorController extends Controller
         }
         
         $appointments = DoctorAppointmentDetails::whereDate('appointment_date','=',$date)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->get();
+        // dd($appointments);
      
 
         if(Auth::user()->hasRole(['Doctor'])){
@@ -616,7 +633,7 @@ class DoctorController extends Controller
                         ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
                 })
                 ->where('is_complete','=','0')->get();
-//   dd($appointments);
+        //    dd($appointments);
   
             }
 
@@ -642,6 +659,9 @@ class DoctorController extends Controller
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
                 return $row->user->phone_no;
+            })
+            ->addColumn('appointment_date', function($row) {
+                return date('d-m-Y' , strtotime( $row->appointment_date)) ;
             })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
@@ -753,6 +773,10 @@ class DoctorController extends Controller
             ->addColumn('phone_no', function($row) {
                 return $row->user->phone_no;
             })
+
+            ->addColumn('appointment_date', function($row) {
+                return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
             }) 
@@ -854,6 +878,9 @@ class DoctorController extends Controller
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
                 return $row->user->phone_no;
+            })
+            ->addColumn('appointment_date', function($row) {
+                return date('d-m-Y' , strtotime( $row->appointment_date)) ;
             })
            ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
@@ -1121,6 +1148,8 @@ class DoctorController extends Controller
         $clinics = ClinicDetails::where('is_main_branch',1)->get();
       
         if ( $request->ajax() ) {
+
+            // dd($request->appointment_date);
 
             if ( $request->load_view == 'true' ) {
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );

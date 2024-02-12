@@ -31,7 +31,7 @@ $(document).on('click', '.btn-add-receptionists',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-receptionists-modal', resp.data.view, true );
+                        make_modal( 'add-receptionists-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add-receptionists-form') );
                          if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker();
@@ -188,7 +188,7 @@ $(document).on('click', '.receptionists-view',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-branch-modal', resp.data.view, true );
+                        make_modal( 'add-branch-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add_branch_form') );
                     }
                 }
@@ -216,7 +216,7 @@ $(document).on('click', '.edit-receptionists',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-edit-receptionists-modal', resp.data.view, true );
+                        make_modal( 'add-edit-receptionists-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('#update-receptionists-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker();

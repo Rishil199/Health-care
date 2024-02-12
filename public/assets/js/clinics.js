@@ -258,7 +258,7 @@ $(document).on('click', '.add-main-branch',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-main-branch-modal', resp.data.view, true );
+                        make_modal( 'add-main-branch-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add_branch_form') );
                     }
                 }
@@ -285,7 +285,7 @@ $(document).on('click', '.edit-branch',function(e) {
             complete: function(response) {
                 let resp = response.responseJSON;
                     if ( resp.status ) {
-                        make_modal( 'add-edit-branch-modal', resp.data.view, true );
+                        make_modal( 'add-edit-branch-modal', resp.data.view, true,  'modal-lg' );
                         validateForm( $('#update_clinic_form') );
                     }
             },

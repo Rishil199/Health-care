@@ -35,6 +35,11 @@
    {{$title}}
    </span>
 </li>
+<style>
+.cursor-pointer{
+  cursor: pointer;
+}
+</style>
 @endsection
 @section('content-body')
 <div class="container">
@@ -48,7 +53,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('all_appointment') }}" id="all_appointment" data-total={{ $all_appointment }} class="appointment-view all-appointment-btn">{{ $all_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">All Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">All Appointments</div>
                     </div>
                 </div>
             </div>
@@ -59,7 +64,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('todays_appointment') }}" class="appointment-view todays-appointment-btn">{{ $todays_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Today's Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Today's Appointments</div>
                     </div>
                 </div>
             </div>
@@ -70,7 +75,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('upcoming_appointment') }}" class="appointment-view upcoming-appointment-btn">{{ $upcoming_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Upcoming Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Upcoming Appointments</div>
                     </div>
                 </div>
             </div>
@@ -81,7 +86,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('past_appointment') }}" class="appointment-view past-appointment-btn">{{ $past_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Completed Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Completed Appointments</div>
                     </div>
                 </div>
             </div>
@@ -99,8 +104,8 @@
         </div>
     </div>
 </div>
-@endsection
 @push('footer_js')
+@endsection
 
 
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> --}}
@@ -150,7 +155,7 @@
                             if ( resp ) {
                                 if ( resp.status ) {
                                     make_modal('book-appointment-modal', resp.data.view, true, 'modal-lg');
-                                    $('#event_name').select2();
+                                    // $('#event_name').select2();
                                 }
                             }
                         },
@@ -313,6 +318,7 @@
                                         { data: 'user.phone_no', name: 'phone_no' },
                                         { 'render': function(data, type, full, meta)
                                             {
+                                          
                                                 return  full.appointment_date + ' ' + full.time_start;
                                             } 
                                          },
@@ -566,7 +572,7 @@ if ( add_view_url ) {
             let resp = response.responseJSON;
             if ( resp ) {
                 if ( resp.status ) {
-                    make_modal( 'add-branch-modal', resp.data.view, true );
+                    make_modal( 'add-branch-modal', resp.data.view, true, 'modal-lg' );
                     validateForm( $('.add_branch_form') );
                 }
             }
@@ -600,6 +606,15 @@ $(document).on('click', '.edit-patient',function(e) {
         });
     }
 });
+
+$(document).ready(function(){
+    $('#full_calendar_events').click(function(){
+        
+    });
+});
+
+
+
 </script>
 
 

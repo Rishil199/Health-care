@@ -7,6 +7,10 @@
         font-weight: normal;
         /* margin-top: 10px;  */
     }
+
+    .table-font{
+        font-weight: normal;
+    }
 </style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="modal-content">
@@ -156,44 +160,42 @@
 
 
             <div class="modal-footer justify-content-center">
-                {{-- <div class="text-left ml-0"> --}}
-                {{-- <label for="prescription" class="theme-prescrip"><b>Prescription : {{$all_appointent->disease_name}}</b></label> --}}
-                {{-- <label for ="next-date" class="theme-prescrip"><b>Next Date :{{$all_appointent->next_date ? date('d-m-Y', strtotime($all_appointent->next_date )) : null }}</b></label> --}}
-                <button class="btn btn-back mt-4 app_btn" id="validation-next" type="submit"><i
-                        class="lni lni-save"></i>Save</button>
-                <div>
-                    <h5>Patient medical history -</h5>
-
-                    <table class="table table-bordered " id="appointments_table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Appointment Date</th>
-                                <th scope="col">Appointment Time</th>
-                                <th scope="col">Observation</th>
-                                <th scope="col">Prescription</th>
-                                <th scope="col">Weight</th>
-                                <th scope="col">Blood Pressure</th>
-                                <th scope="col">Diestplan</th>
-                                <th scope="col">Next date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($appointment_history as $history)
-                                <tr >
-                                    <td>{{ $history->appointment_date  }} </td>
-                                    <td>{{ $history->time_start }} - {{ $history->time_end }}  </td>
-                                    <td>{{ $history->disease_name !== null && $history->disease_name !== '' ? $history->disease_name : '-'}}</td>
-                                    <td>{{ $history->prescription ?? '-'}}</td>
-                                    <td>{{ $history->weight ?? '-' }}</td>
-                                    <td>{{ $history->blood_pressure ?? '-' }}</td>
-                                    <td>{{ $history->dietplan ?? '-' }}</td>
-                                    <td>{{ $history->next_date ?? '-' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                <button class="btn btn-back mt-4 app_btn" id="validation-next" type="submit"><i class="lni lni-save"></i>Save</button>
             </div>
+            
+
+                <h5>Patient medical history -</h5>
+            
+            <div class="table-responsive">
+                <table class="table table-bordered" id="appointments_table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Appointment Date</th>
+                            <th scope="col">Appointment Time</th>
+                            <th scope="col">Observation</th>
+                            <th scope="col">Prescription</th>
+                            <th scope="col">Weight</th>
+                            <th scope="col">Blood Pressure</th>
+                            <th scope="col">Diet Plan</th>
+                            <th scope="col">Next Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($appointment_history as $history)
+                        <tr class="table-font">
+                            <td>{{ \Carbon\Carbon::parse($history->appointment_date)->format('d-m-Y')}}</td>
+                            <td>{{ $history->time_start }} - {{ $history->time_end }}</td>
+                            <td>{{ $history->disease_name !==null && $history->disease_name !=='' ? $history->disease_name:'-'}}</td>
+                            <td>{{ $history->prescription ?? '-'}}</td>
+                            <td>{{ $history->weight ?? '-' }}</td>
+                            <td>{{ $history->blood_pressure ?? '-' }}</td>
+                            <td>{{ $history->dietplan ?? '-' }}</td>
+                            <td>{{ $history->next_date ? \Carbon\Carbon::parse($history->next_date)->format('d-m-Y') : '-' }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>            
         </form>
     </div>
 </div>

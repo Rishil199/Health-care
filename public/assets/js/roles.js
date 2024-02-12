@@ -133,7 +133,7 @@ $(document).on('click', '.edit-role',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'edit-role-modal', resp.data.view, true );
+                        make_modal( 'edit-role-modal', resp.data.view, true,'modal-lg' );
                         validateForm( $('.edit_roles_form') );
                     } else {
                         alert('Something went wrong, please try again.');
@@ -163,7 +163,7 @@ $(document).on('click', '.role-add-btn',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-role-modal', resp.data.view, true );
+                        make_modal( 'add-role-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add_role_form') );
                     } else {
                         alert('Something went wrong, please try again.');

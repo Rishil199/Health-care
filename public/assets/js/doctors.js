@@ -56,7 +56,7 @@ $(document).on('click', '.btn-add-doctors',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-doctors-modal', resp.data.view, true );
+                        make_modal( 'add-doctors-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add-doctors-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker({
@@ -243,7 +243,7 @@ $(document).on('click', '.doctor-view',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-branch-modal', resp.data.view, true );
+                        make_modal( 'add-branch-modal', resp.data.view, true ,'modal-lg' );
                         validateForm( $('.add_branch_form') );
                     }
                 }
@@ -270,7 +270,7 @@ $(document).on('click', '.edit-doctor',function(e) {
             complete: function(response) {
                 let resp = response.responseJSON;
                     if ( resp.status ) {
-                        make_modal( 'add-edit-doctor-modal', resp.data.view, true );
+                        make_modal( 'add-edit-doctor-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('#update-doctors-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker({

@@ -117,7 +117,7 @@ $(document).on('click', '.permission-add-btn',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-permission-modal', resp.data.view, true );
+                        make_modal( 'add-permission-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add_permissions_form') );
                     }
                 }
