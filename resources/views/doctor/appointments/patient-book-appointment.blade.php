@@ -14,6 +14,15 @@
 <div class="modal-body">
     <form action="" method="post" id="add-patient-appointment-form" class="add-patient-appointment-form">
     @csrf
+
+    <div class="col-md-6 mb-1">
+        <div class="form-group theme-form-group">
+            <label for="appointment_date" class="theme-label">Selected Date  : </label> <span
+                class="fw-normal">{{\Carbon\Carbon::parse($selected_date)->format('d-m-Y') }}</span>
+        </div>
+    </div>
+
+
         <div class="form-group theme-form-group">
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1">Select Clinic <span class="text-danger">*</span></label>
@@ -30,7 +39,7 @@
             @if(Auth::user()->hasRole(['Patient']))
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="picker1">Select Doctor</label>
+                  <label class="theme-label mt-3" for="picker1">Select Doctor</label>
                   <div class="theme-form-input">
                      <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
                      </select>

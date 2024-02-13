@@ -125,7 +125,7 @@
                 <div class="modal-footer justify-content-center">
                     <button type="submit" value="Add" id="validation-next" class="btn btn-back mt-4">
                         <i class="lni lni-save"></i>
-                        Add
+                        Save 
                     </button>
                 </div>
             </div>

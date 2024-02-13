@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button class="btn btn-back mt-4" id="validation-next" type="submit"><i class="lni lni-save"></i>Update</button>
+                        <button class="btn btn-back mt-4" id="validation-next" type="submit"><i class="lni lni-save"></i>Save</button>
                     </div>
                 </div>
             </div>

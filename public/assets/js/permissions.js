@@ -89,7 +89,7 @@ $(document).on('click', '.edit-permission',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'edit-permission-modal', resp.data.view, true );
+                        make_modal( 'edit-permission-modal', resp.data.view, true,'modal-lg' );
                         validateForm( $('.edit-permissions-form') );
                     }
                 }

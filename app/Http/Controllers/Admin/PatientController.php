@@ -328,6 +328,12 @@ class PatientController extends Controller
         }
         if(Auth::user()->hasRole(['Receptionist'])){
              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
+             if(!$patient)
+             {
+                $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$id)->with('user')->first();
+                // dd($patient);
+             }
+
         }
         if(Auth::user()->hasRole(['Doctor'])){
             // $user=Auth::user();

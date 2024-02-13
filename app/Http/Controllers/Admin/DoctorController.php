@@ -474,6 +474,7 @@ class DoctorController extends Controller
             if($doctors){
                 $doctordetails=DoctorDetails::select('id','user_id')->whereIn('id',$doctors->all())->with('user')->get();             
             }
+
             // dd($doctordetails);
            
             // }

@@ -64,7 +64,8 @@ class DoctorController extends Controller
         // dd($user_id);
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',$user_id)->first();
         // dd($clinic_details);
-        
+       $selected_date=$request->appointment_date;
+
         $doctors = DoctorDetails::select('id','user_id')->where('user_id',Auth::user()->id)->get();
         if(Auth::user()->hasRole(['Hospital'])) {
             // dd('dd');
@@ -76,8 +77,8 @@ class DoctorController extends Controller
             
             if ( $request->load_view == 'true' ) {
                 
-                $selected_date=$request->appointment_date;
-                // dd($selected_date);
+  
+                // dd($doctors);
 
                 $current_time = now()->toTimeString();
                 
@@ -183,6 +184,7 @@ class DoctorController extends Controller
                         'doctors' => $doctors,
                         'clinic_details' => $clinic_details,
                         'receptionist_details'=> $receptionist_details,
+                        'selected_date' =>  $selected_date
                     );
 
                 }
@@ -1143,6 +1145,9 @@ class DoctorController extends Controller
             $upcoming_appointment = DoctorAppointmentDetails::where('appointment_date','>',$date)->where('patient_id',Auth::user()->id)->withTrashed()->where('is_complete','=','0')->count();
             
             $past_appointment = DoctorAppointmentDetails::where('is_complete',1)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
+
+            $selected_date=$request->appointment_date;
+            // dd($selected_date);
         }
 
         $clinics = ClinicDetails::where('is_main_branch',1)->get();
@@ -1160,7 +1165,8 @@ class DoctorController extends Controller
                 $this->data = array(
                     'appointment_date' => $request->appointment_date,
                     'available_slots' => $available_slots,
-                    'clinics' => $clinics
+                    'clinics' => $clinics,
+                    'selected_date' =>  $selected_date
                 );
 
                 $view = view('doctor.appointments.patient-book-appointment', $this->data)->render();
