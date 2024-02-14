@@ -21,7 +21,7 @@ class PermissionController extends Controller
      */
 
     public function index(Request $request) {
-        // dd("dd");
+
         if ($request->ajax()) {
             $permissions = Permission::select('id','name','created_at')->latest()->get();
             return Datatables::of($permissions)

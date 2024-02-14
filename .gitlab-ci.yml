@@ -12,5 +12,5 @@ deploy_production:
     # - git config git-ftp.server.port "$FTP_PORT"
     - git config git-ftp.password "$FTP_DEPLOY_PASSWORD"
     - git config git-ftp.user "$FTP_DEPLOY_USER"
-    - git ftp init
+    # - git ftp init
     - git ftp push --remote-root /$FTP_PROJECT/ -vv --syncroot $CI_PROJECT_DIR --user $FTP_DEPLOY_USER --passwd $FTP_DEPLOY_PASSWORD ftp://$FTP_DEPLOY_HOST:$FTP_PORT

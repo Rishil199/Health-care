@@ -26,13 +26,13 @@ class ClinicController extends Controller
      */
 
     public function index(Request $request) {
-        // dd("dd");
+        
         if ($request->ajax()) {
             
             $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','status','created_at','is_main_branch'
             ))->latest()->where('is_main_branch',1)->with('user')->get();
-            // dd($clinics);
+           
 
             return Datatables::of($clinics)
                 ->editColumn('status',function($row){
@@ -240,11 +240,9 @@ class ClinicController extends Controller
         $users->email = $request['email'];
         $users->phone_no = $request['phone_no'];
         $users->name = $role->name;
-        // dd($users);
         $users->assignRole(Role::findOrFail($role->id));
         $users->save();
         $uid=$users->id;
-        // dd($uid);
         
         //store clinic details
         $clinic->address = $post_data['address'];

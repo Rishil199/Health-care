@@ -26,21 +26,17 @@ class ReceptionistController extends Controller
      */
 
     public function index(Request $request) {
-    // dd("dd");
         if ($request->ajax()) {
            
             $receptionist = ReceptionistDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->get();
-            // dd($receptionist);
 
             if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-                // dd($user_id);
                 $receptionist = ReceptionistDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
-                //  dd($receptionist);
             }
 
             return Datatables::of($receptionist)
