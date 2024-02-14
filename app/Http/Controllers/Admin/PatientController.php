@@ -318,13 +318,21 @@ class PatientController extends Controller
     public function show(Request $request, $id) {
         // dd($id);
 
-        $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
+        $patient = PatientDetails::select('id','clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
         // dd($patient);
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
-            
-            $user_id =PatientDetails::find($id);;
+            // dd($id);
+            $user_id =PatientDetails::find($id);
             // dd($user_id);
+            if($user_id){
+
             $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$user_id->id)->with('user')->first();
+            dd($patient);
+            
+            }
+        $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('user_id',$id)->with('user')->first();
+       
+            
         }
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();

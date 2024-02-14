@@ -265,16 +265,19 @@ class DoctorController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            // dd($user_id->id);
+            // dd($user_id);   
 
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            // dd($receptionist_details->id);
+            // dd($receptionist_details);
             $all_appointment = DoctorAppointmentDetails::where('clinic_id',$user_id->id)
                 ->when($receptionist_details, function ($query) use ($receptionist_details) {
                     $query->orWhere('receptionist_id', $receptionist_details->id);
                 })
                 ->withTrashed()
-                ->get()->count();
+                ->get()->count()
+                ;
+
+                // dd($all_appointment);
             
             $wheres = array(
                 'appointment_date' => $date,
@@ -297,25 +300,30 @@ class DoctorController extends Controller
                         });
                 })
                 ->where('is_complete','=','0')->count();
-            
+            // dd($todays_appointment);
             $upcoming_appointment = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()
-                ->where(function ( $query ) use ($receptionist_details, $user_id) {
-                    $query
-                        ->when($receptionist_details, function ( $query ) use ($receptionist_details){
-                            $query->orWhere('receptionist_id', $receptionist_details->id);
-                        })
-                        ->where('clinic_id', $user_id->id);
-                })
-                ->where('is_complete','=','0')->count();
+            ->where(function ( $query ) use ($receptionist_details, $user_id) {
+                $query
+                    ->where('clinic_id', $user_id->id)
+                    ->when($receptionist_details, function ( $query ) use ($receptionist_details) {
+                        $query->orWhere('receptionist_id', $receptionist_details->id);
+                    });
+            })
+            ->where('is_complete','=','0')->count();
+                //  dd($upcoming_appointment);
+                // $upcoming_appointment_sql = $upcoming_appointment->toSql();
+                // dd($upcoming_appointment_sql);
             
             $past_appointment = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($receptionist_details, $user_id) {
                     $query
-                        ->when($receptionist_details, function ( $query ) use ($receptionist_details) {
-                            $query->orWhere('receptionist_id', $receptionist_details->id);
-                        })
-                        ->where('clinic_id', $user_id->id);
+                    ->where('clinic_id', $user_id->id)
+                    ->when($receptionist_details, function ( $query ) use ($receptionist_details) {
+                        $query->orWhere('receptionist_id', $receptionist_details->id);
+                    });
                 })->get()->count();
+
+                // dd($past_appointment);
 
 
         }
@@ -397,6 +405,7 @@ class DoctorController extends Controller
                 'past_appointment' => $past_appointment,
                 'doctors' => $doctors
             ); 
+            // dd($todays_appointment);
         }
         
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
