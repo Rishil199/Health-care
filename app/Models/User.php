@@ -67,7 +67,6 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $authuser=Auth::user();
-        // dd($user);
         $this->notify(new CustomResetPasswordNotification($token,$authuser));
     }
     

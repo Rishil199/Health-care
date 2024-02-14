@@ -14,7 +14,6 @@ use Spatie\Permission\Models\Role;
 class ClinicController extends Controller
 {
     public function dashboard() {
-            //  dd(Auth::check());
         $clinicCount = count(ClinicDetails::get());
         $receptionistCount = count(ReceptionistDetails::get());
 

@@ -55,7 +55,7 @@ class DoctorAppointmentDetails extends Model
                 'appointment_date' => $date,
                 'created_by' => $user_id,
             ))->get();
-            // dd($available_time_slots);
+           
 
         $booked_timeslots = [];
 
@@ -96,7 +96,7 @@ class DoctorAppointmentDetails extends Model
             if ($current_date == $date) {
                 if ( ( strtotime($start_time) < strtotime($end_time) ) && ( $current_time < $start_time ) ) {
                     $all_day_time_slots[] = "$start-$end";
-                    // dd($all_day_time_slots);
+
                 }
             } else {
                 if ( ( strtotime($start_time) <= strtotime($end_time) ) ) {

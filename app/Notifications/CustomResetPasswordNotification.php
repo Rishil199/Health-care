@@ -77,7 +77,6 @@ class CustomResetPasswordNotification extends Notification
      */
     protected function buildMailMessage($url,$notifiable)
     {
-        // dd($notifiable);
         return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification'))
             ->greeting(Lang::get('Hello '.$notifiable->first_name ))
