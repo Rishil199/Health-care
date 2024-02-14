@@ -15,8 +15,8 @@ function make_modal ( $className, $html = null, $open_modal = false, $dialogSize
     $className = ( $className !== '' ) ? $className : 'custom-modal1';
     let id_name = $className.split(' ')[0];
     $modalHtml += `<div class="modal theme-modal fade ${$className}" id="${id_name}" role="document" data-bs-backdrop="static" data-keyboard="false">`;
-        $modalHtml += `<div class="modal-dialog ${dialogClass} modal-dialog-centered modal-lg" role="document">`;
-            $modalHtml += '<div class="modal-content append-wrapper">';
+        $modalHtml += `<div class="modal-dialog ${dialogClass} modal-dialog-centered" role="document">`;
+            $modalHtml += '<div class="modal-content append-wrapper ">';
                 $modalHtml += ( $html ) ? $html : '';
             $modalHtml += '</div>';
         $modalHtml += '</div>';

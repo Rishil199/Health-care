@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DoctorDetails;
+use App\Models\PatientDetails;
 use App\Models\ReceptionistDetails;
 use App\Models\DoctorAppointmentDetails;
 use App\Models\User;
@@ -46,12 +47,14 @@ class DoctorController extends Controller
             // }
             // // dd($doctors);
 
-            if(Auth::user()->hasRole(['Clinic'])){
+            if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                 // dd($user_id->id);
                 $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+
+                //  dd($doctors);
             }
 
 
@@ -149,7 +152,7 @@ class DoctorController extends Controller
 
         $clinics = ClinicDetails::select('user_id','id')->where('is_main_branch',1)->with('user')->get();
 
-        if(Auth::user()->hasRole(['Receptionist'])){
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             $receptionist_details = ReceptionistDetails::select('user_id','id','clinic_id')->where('user_id',Auth::user()->id)->with('user')->first();
             $clinics = ClinicDetails::select('user_id','id')->where('is_main_branch',1)->where('id',$receptionist_details->clinic_id)->with('user')->get();
         }
@@ -213,7 +216,7 @@ class DoctorController extends Controller
         $doctor->expertice = $post_data['expertice'];
         $doctor->user_id = $users['id'];
         // dd($doctor);
-         if(Auth::user()->hasRole(['Receptionist'])){
+         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // dd("ddd");
             $clinic_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             // dd($clinic_id);
@@ -222,21 +225,24 @@ class DoctorController extends Controller
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id->clinic_id;
             // dd($doctor);
         }
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $doctor->clinic_id = $clinic_id->id;
         }
-        if(Auth::user()->hasAnyRole(['Doctor','Super Admin'])){
+
+
+        if(Auth::user()->hasAnyRole([ User::ROLE_DOCTOR ,User::ROLE_SUPER_ADMIN ,User::ROLE_CLINIC ])){
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $doctor->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
+        // dd($doctor);
         $doctor->save();
         
         $token = $request->_token;
 
         if($users) {
-            Mail::to($users['email'])->send(new WelcomeMail($users,$request));
+            // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
 
             Password::sendResetLink(
                 $request->only('email')
@@ -336,7 +342,7 @@ class DoctorController extends Controller
         $doctor->experience = $request->validated()['experience'];
         $doctor->expertice = $request->validated()['expertice'];
         $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
-        if(Auth::user()->hasRole(['Receptionist'])){
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
@@ -464,19 +470,32 @@ class DoctorController extends Controller
 
          if ($request->ajax()) {
             
-            $doctors = DoctorDetails::select(array(
-                'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->get();
-            return Datatables::of($doctors)
-                    ->editColumn('status',function($row){
-                            if($row->status == 1){
-                                $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked disabled></label></div>';
-                            }
-                            else{
-                                $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
-                            }
-                            return $status;
-                        })->rawColumns(['status'])->make(true);
+            $authUser= Auth::user();
+            // dd($authUser->id);
+            $doctors= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
+            ->pluck('doctor_id');
+
+            if($doctors){
+                $doctordetails=DoctorDetails::select('id','user_id')->whereIn('id',$doctors->all())->with('user')->get();             
+            }
+
+            // dd($doctordetails);
+           
+            // }
+            
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            // ))->latest()->with('user')->get();
+            // dd($doctors);
+            return Datatables::of($doctordetails)
+                    ->editColumn('action',function($row){
+                        $action = '<a href="javascript:void(0)" class="dropdown-item doctor-view" data-url="' . route('doctors.view',['id' => $row->id]) . '" data-id="' . $row->id . '" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
+                        <i class="bi bi-eye-fill bi-lg" style="color:black;"></i>
+                    </a>';
+  
+                     
+                            return $action;
+                        })->rawColumns(['action'])->make(true);
         }
 
         $this->data = array(
@@ -491,7 +510,7 @@ class DoctorController extends Controller
             
             $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','status','created_at','is_main_branch','address'
-            ))->latest()->with('user')->where('is_main_branch',1)->get();
+            ))->latest()->with('user')->where([['is_main_branch',1],['status',1]])->get();
 
             return Datatables::of($clinics)
                     ->editColumn('status',function($row){
@@ -506,7 +525,7 @@ class DoctorController extends Controller
         }
 
         $this->data = array(
-            'title' => 'Clinics',
+            'title' => 'Hospitals',
         );
 
         return view('admin.patients.index-clinic', $this->data);

@@ -38,7 +38,7 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button class="btn btn-back" id="validation-next" type="submit" value="Add"> <i class="lni lni-save"></i>
-                        Add 
+                        Save 
                     </button>
                 </div>
             </div>

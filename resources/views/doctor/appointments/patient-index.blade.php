@@ -88,7 +88,7 @@
     <div class="col-6">
         <div id='full_calendar_events'>
             <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog">
+               <div class="modal-dialog ">
                   <div class="modal-content">
                      
                   </div>
@@ -125,7 +125,7 @@
             selectHelper: true,
             select: function (calendar_date, allDay,start,end,cell) {
                 let appointment_date = $.fullCalendar.formatDate(calendar_date, "Y-MM-DD");
-                console.log(appointment_date);
+                // console.log(appointment_date);
                 // console.log('appointment_dates ', calendar_date, moment(calendar_date).format('YYYY/MM/DD hh:mm'))
                 if (moment().format('YYYY-MM-DD') === calendar_date.format('YYYY-MM-DD') || calendar_date.isAfter(moment())) {
                     let $this = $(this);

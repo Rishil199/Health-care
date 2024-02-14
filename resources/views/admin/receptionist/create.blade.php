@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
@@ -56,7 +57,7 @@
                   </div>
                </div>
             </div>
-            @if(Auth::user()->hasRole(['Super Admin']))
+            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Clinic</label>
@@ -125,7 +126,7 @@
                 <div class="modal-footer justify-content-center">
                     <button type="submit" value="Add" id="validation-next" class="btn btn-back mt-4">
                         <i class="lni lni-save"></i>
-                        Add
+                        Save 
                     </button>
                 </div>
             </div>

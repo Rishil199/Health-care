@@ -42,12 +42,13 @@ class UserController extends Controller
     $dct = DoctorDetails::select('clinic_id','user_id')->where('user_id',Auth::user()->id)->first();
     // dd($dct);
         // dd($user_id);
-        if (Auth::user()->hasRole('Doctor')){
+        if (Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$dct->id)->get();
+                //  dd($doctors);
         }
-        if (Auth::user()->hasRole('Clinic')){
+        if (Auth::user()->hasRole(User::ROLE_CLINIC)){
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
@@ -56,18 +57,20 @@ class UserController extends Controller
    
             // dd($doctors);
      
-        if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Clinic']))
+        if(Auth::user()->hasAnyRole([User::ROLE_DOCTOR,User::ROLE_RECEPTIONIST,User::ROLE_CLINIC]))
         {
             // dd(Auth::user()->hasRole('Receptionist'));
-            // echo "ddd";
-            if (Auth::user()->hasRole('Clinic')){
+            // dd("dd");
+            
+            if (Auth::user()->hasRole(User::ROLE_CLINIC)){
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
             }
-            if (Auth::user()->hasRole('Doctor')){
+            if (Auth::user()->hasRole(User::ROLE_DOCTOR)){
                 $receptionistCount = count(ReceptionistDetails::where('clinic_id',$dct->id)->get());
+                // dd($receptionistCount);
                 }
           
-            // $receptionistCount = count(ReceptionistDetails::get());
+            $receptionistCount = count(ReceptionistDetails::get());
             // dd($receptionistCount);
         }
 
@@ -87,7 +90,7 @@ class UserController extends Controller
         
         $past_appointment = count(DoctorAppointmentDetails::where('is_complete','=','1')->withTrashed()->get());
 
-        if(Auth::user()->hasRole('Super Admin')) {
+        if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)) {
             // dd(Auth::user());
             // dd("dd");
             $appointments = DoctorAppointmentDetails::with('user')->latest()->get();
@@ -105,7 +108,7 @@ class UserController extends Controller
         }
 
       
-        if(Auth::user()->hasRole('Doctor')){
+        if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $user=(Auth::user());
             // dd($user);
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',$user->id)->first();
@@ -117,6 +120,7 @@ class UserController extends Controller
                  ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
                 //  dd($patients);
             $appointments = DoctorAppointmentDetails::with('user')->where('doctor_id',$user_id->id)->latest()->get();
+            // dd($appointments);
             $appointmentsCount = count(DoctorAppointmentDetails::where('doctor_id',$user_id->id)->withTrashed()->get()); 
           
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()
@@ -136,9 +140,9 @@ class UserController extends Controller
                 ->where('disease_name','!=','')->get()->count();
         }
 
-        if(Auth::user()->hasRole('Receptionist')){
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // dd("ddd");
-            // dd(Auth::user()->hasRole('Receptionist'));
+            // dd(Auth::user());
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id);
     
@@ -146,7 +150,7 @@ class UserController extends Controller
             // dd($clinic_user_id);
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id'
-            ))->latest()->with('user')->where('user_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
             // $patients = PatientDetails::select(array(
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
@@ -175,13 +179,13 @@ class UserController extends Controller
                 })
                 ->where('disease_name','!=','')->get()->count();
                 // dd($past_appointment);
-            // $doctors = DoctorDetails::select(array(
-            //     'id','user_id','clinic_id','status','created_at'
-            // ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+            $doctors = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
         }
         // dd($doctors);
 
-        if(Auth::user()->hasRole('Clinic')){
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             
             // $doctors = DoctorDetails::select(array(
@@ -204,7 +208,7 @@ class UserController extends Controller
         }
 
       
-         if(Auth::user()->hasRole('Patient')){
+         if(Auth::user()->hasRole(User::ROLE_PATIENT)){
 
             $user_id = PatientDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id);
@@ -214,9 +218,24 @@ class UserController extends Controller
             ))->latest()->with('user')->where('id',$user_id->id)->get();
             //   dd($patients);
 
-            $doctors = DoctorDetails::select(array(
-                'id','user_id','created_at','clinic_id'
-            ))->latest()->with('user')->where('id',$user_id->id)->get();
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','created_at','clinic_id'
+            // ))->latest()->with('user')->where('id',$user_id->id)->get();
+            // $doctors = DoctorDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at'
+            // ))->latest()->with('user')->get();
+            // dd($doctors);
+
+            $authUser= Auth::user();
+            // dd($authUser->id);
+            $doctordetails= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
+            ->pluck('doctor_id');
+            // dd($doctors);
+
+            if($doctordetails){
+                $doctors=DoctorDetails::select('id','user_id')->whereIn('id',$doctordetails->all())->with('user')->get();   
+                // dd($doctordetails);          
+            }
             // dd($doctors);
 
             $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
@@ -231,7 +250,7 @@ class UserController extends Controller
         }
     //   echo "dd";die;
 
-        if(Auth::user()->hasRole('Patient')){
+        if(Auth::user()->hasRole(User::ROLE_PATIENT)){
           $this->data = array(
                 'title' => 'Dashboard',
                 'doctors' => $doctors,
@@ -245,7 +264,7 @@ class UserController extends Controller
 
         // dd($patients);
                 //  echo "ddd";die;
-                if(Auth::user()->hasAnyRole(['Super Admin','Doctor','Receptionist','Clinic'])){
+                if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN,User::ROLE_DOCTOR,User::ROLE_RECEPTIONIST,User::ROLE_CLINIC])){
                     // dd('ddd');
                  $this->data = array(
                 'title' => 'Dashboard',
@@ -396,7 +415,7 @@ class UserController extends Controller
         $user->assignRole(Role::findOrFail($request->roles_type));
    
         if($user) {
-            Mail::to($user['email'])->send(new WelcomeMail($user,$request));
+            // Mail::to($user['email'])->send(new WelcomeMail($user,$request));
 
             Password::sendResetLink(
                 $request->only('email')

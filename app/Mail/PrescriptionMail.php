@@ -32,6 +32,7 @@ class PrescriptionMail extends Mailable
      */
     public function build()
     {
+        // dd("Hello");
         return $this->subject('Prescription Mail')
                     ->view('admin.emails.prescriptionemail');
     }

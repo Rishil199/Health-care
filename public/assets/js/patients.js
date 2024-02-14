@@ -30,7 +30,7 @@ $(document).on('click', '.btn-add-patients',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-patients-modal', resp.data.view, true );
+                        make_modal( 'add-patients-modal', resp.data.view, true,'modal-xl' );
                         validateForm( $('.add-patients-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker({
@@ -176,7 +176,7 @@ $(document).on('click', '.patient-view',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-branch-modal', resp.data.view, true );
+                        make_modal( 'add-branch-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add_branch_form') );
                     }
                 }
@@ -202,7 +202,7 @@ $(document).on('click', '.edit-patient',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-edit-patient-modal', resp.data.view, true );
+                        make_modal( 'add-edit-patient-modal', resp.data.view, true, 'modal-xl' );
                         validateForm( $('#update-patients-form') );
                         validateForm( $('#edit-patients-form') );
                         if ( $("#datepicker").length ) {

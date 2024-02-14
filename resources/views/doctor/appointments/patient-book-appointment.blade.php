@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
@@ -14,6 +15,15 @@
 <div class="modal-body">
     <form action="" method="post" id="add-patient-appointment-form" class="add-patient-appointment-form">
     @csrf
+
+    <div class="col-md-6 mb-1">
+        <div class="form-group theme-form-group">
+            <label for="appointment_date" class="theme-label">Selected Date  : </label> <span
+                class="fw-normal">{{\Carbon\Carbon::parse($selected_date)->format('d-m-Y') }}</span>
+        </div>
+    </div>
+
+
         <div class="form-group theme-form-group">
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1">Select Clinic <span class="text-danger">*</span></label>
@@ -21,14 +31,16 @@
                 <select class="form-control form-select" name="event_name" id="clinic-dropdown">
                     <option value="">Select Clinic</option>
                     @foreach( $clinics as $clinic )
+                    @if($clinic->status==1)
                     <option value="{{ $clinic->user_id }}">{{ $clinic->user->fullName }}</option>
+                    @endif 
                     @endforeach
                 </select>
             </div>
-            @if(Auth::user()->hasRole(['Patient']))
+            @if(Auth::user()->hasRole(User::ROLE_PATIENT))
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="picker1">Select Doctor</label>
+                  <label class="theme-label mt-3" for="picker1">Select Doctor</label>
                   <div class="theme-form-input">
                      <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
                      </select>
@@ -36,14 +48,16 @@
                </div>
             </div>
             @endif
-            @if(Auth::user()->hasAnyRole(['Clinic','Receptionist']))
+            @if(Auth::user()->hasAnyRole([User::ROLE_CLINIC,User::ROLE_RECEPTIONIST]))
             <div class="col-md-6 mb-3">
             <label class="theme-label" for="picker1">Select Doctor <span class="text-danger">*</span></label>
             <div class="theme-form-input">
                 <select class="form-control form-select" name="doctor_id" id="doctor_id">
                     <option value="">Select Doctor</option>
                     @foreach( $doctors as $doctor )
+                    @if($doctor->status==1)
                     <option value="{{ $doctor->id }}">{{ $doctor->user->fullName }}</option>
+                    @endif
                     @endforeach
                 </select>
             </div>
@@ -64,7 +78,7 @@
                        </select>                                  
                 </div>
             </div> --}}
-           @if(Auth::user()->hasRole(['Patient']))
+           @if(Auth::user()->hasRole(User::ROLE_PATIENT))
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="time_start">Time Slot</label>

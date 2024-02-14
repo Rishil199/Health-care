@@ -28,6 +28,10 @@ class DoctorAppointmentDetails extends Model
         'time_start',
         'time_end',
         'next_date',
+        'prescription',
+        'weight',
+        'blood_pressure',
+        'dietplan',
         'is_complete',
         'deleted_at'
     ];
@@ -51,6 +55,7 @@ class DoctorAppointmentDetails extends Model
                 'appointment_date' => $date,
                 'created_by' => $user_id,
             ))->get();
+            // dd($available_time_slots);
 
         $booked_timeslots = [];
 

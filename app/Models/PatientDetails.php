@@ -28,9 +28,22 @@ class PatientDetails extends Model
         'address',
         'latitude',
         'logitude',
+        'height',
+        'weight',
+        'blood_group',
+        'blood_pressure',
+        'is_mediclaim_available',
+        'relation',
+        'relative_name',
+        'emergency_contact'
+
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    // public function doctor(){
+    //     return $this->belongsTo(DoctorDetails::class);
+    // }
 }

@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
@@ -79,11 +80,107 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" style="resize: none;" required></textarea>
+                     <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" required></textarea>
                   </div>
                </div>
             </div>
-            @if(Auth::user()->hasRole('Super Admin'))
+            <div class="col-md-3 mb-3">
+               <div class="form-group theme-form-group">
+                   <div class="d-block">
+                       <label class="theme-label" for="height">Height <span class="text-danger">*</span></label>
+                   </div>
+                   <div class="input-wrapper d-flex">
+                       <div class="theme-form-input">
+                           <input class="form-control " type="text" name="height" placeholder="(In CM)" id="height" required>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-md-3 mb-3">
+               <div class="form-group theme-form-group">
+                   <div class="d-block">
+                       <label class="theme-label" for="weight">Weight <span class="text-danger">*</span></label>
+                   </div>
+                   <div class="input-wrapper d-flex">
+                       <div class="theme-form-input">
+                           <input class="form-control " type="text" name="weight" placeholder="(In KG)" id="weight" required>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           
+
+           <div class="col-md-3 mb-3">
+            <div class="form-group theme-form-group">
+                <div class="d-block ">
+                    <label class="theme-label" for="blood_group">Blood Group <span
+                            class="text-danger">*</span></label>
+                </div>
+                <div class="input-wrapper d-flex">
+                    <div class="theme-form-input ">
+                        <input class="form-control " type="text" name="blood_group"
+                            placeholder="Blood Group" id="blood_group" required>
+                    </div>
+                </div>
+                    </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+            <div class="form-group theme-form-group">
+                    <div class="d-block">
+                        <label class="theme-label" for="blood_pressure" >Blood Pressure<span
+                                class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-wrapper d-flex">
+                        <div class="theme-form-input ">
+                            <input class="form-control " type="text"
+                                name="blood_pressure" placeholder="119/70" id="blood_pressure" required>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+   
+
+     
+
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="relation">Relation<span class="required">*</span></label>
+            <div class="theme-form-input">
+               <input class="form-control" id="relation" name="relation" type="text" placeholder="Enter Relation" required />
+            </div>
+         </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="relative_name">Relative Name <span class="required">*</span></label>
+            <div class="theme-form-input">
+               <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Enter Relative Name" required />
+            </div>
+         </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+            <label class="theme-label" for="emergency_contact">Emergency contact <span class="required">*</span></label>
+            <div class="theme-form-input">
+               <input class="form-control" id="emergency_contact" name="emergency_contact" type="text" placeholder="Emergency contact" required />
+            </div>
+         </div>
+      </div>
+      
+      <div class="col-md-6 mb-3">
+         <div class="form-group theme-form-group">
+         <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" name="is_mediclaim_available" >
+            <label class="form-check-label text-secondary fs-6" for="inlineCheckbox1">Medical Insurance Available</label>
+          </div>
+         </div>
+         </div>
+
+
+            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Clinic</label>
@@ -98,7 +195,7 @@
                </div>
             </div>
             @endif
-            @if(Auth::user()->hasAnyRole(['Super Admin']))
+            @if(Auth::user()->hasAnyRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Doctor</label>
@@ -113,7 +210,7 @@
                </div>
             </div>
             @endif
-            @if(Auth::user()->hasAnyRole(['Receptionist','Clinic']))
+            @if(Auth::user()->hasAnyRole([User::ROLE_RECEPTIONIST, User::ROLE_CLINIC]))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Doctor</label>
@@ -249,7 +346,7 @@
              <div class="modal-footer justify-content-center">
                  <button type="submit" value="Add" id="validation-next" class="btn btn-back mt-4">
                      <i class="lni lni-save"></i>
-                     Add
+                     Save
                  </button>
              </div>
          </div>

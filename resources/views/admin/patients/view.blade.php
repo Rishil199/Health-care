@@ -39,22 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
-                        <label class="theme-label" for="address">Address:</label>
-                        <div class="theme-form-input">
-                            <input type="text" id="address" class="form-control" value="{{ $patient->address }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
-                        <label class="theme-label" for="birth_date">Admit Date:</label>
-                        <div class="theme-form-input">
-                            <input type="text" id="admit_date" class="form-control" value="{{ $patient->admit_date ? date('d/m/Y', strtotime($patient->admit_date)) : '' }}" disabled>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-md-6">
                     <div class="theme-form-group mb-3">
                         <label class="theme-label" for="gender">Gender:</label>
@@ -63,6 +48,89 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="theme-form-group mb-3">
+                        <label class="theme-label" for="address">Address:</label>
+                        <div class="theme-form-input">
+                            <input type="text" id="address" class="form-control" value="{{ $patient->address }}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="form-group theme-form-group">
+                        <div class="d-block">
+                            <label class="theme-label" for="height">Height </label>
+                        </div>
+                        <div class="input-wrapper d-flex">
+                            <div class="theme-form-input">
+                                <input class="form-control " type="text" name="height"  id="height" value="{{ $patient->height}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="form-group theme-form-group">
+                        <div class="d-block">
+                            <label class="theme-label" for="weight">Weight </label>
+                        </div>
+                        <div class="input-wrapper d-flex">
+                            <div class="theme-form-input">
+                                <input class="form-control " type="text" name="weight" value="{{ $patient->weight}}" id="weight" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="theme-form-group mb-3">
+                        <label class="theme-label" for="birth_date">Admit Date:</label>
+                        <div class="theme-form-input">
+                            <input type="text" id="admit_date" class="form-control" value="{{ $patient->admit_date ? date('d/m/Y', strtotime($patient->admit_date)) : '' }}" disabled>
+                        </div>
+                    </div>
+                </div>
+            
+
+                <div class="col-md-3 mb-3">
+                    <div class="form-group theme-form-group">
+                        <div class="d-block ">
+                            <label class="theme-label" for="blood_group">Blood Group </label>
+                        </div>
+                        <div class="input-wrapper d-flex">
+                            <div class="theme-form-input ">
+                                <input class="form-control " type="text" name="blood_group"
+                                    value="{{$patient->blood_group}}" id="blood_group" disabled>
+                            </div>
+                        </div>
+                            </div>
+                    </div>
+
+
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group theme-form-group">
+                                <div class="d-block">
+                                    <label class="theme-label" for="blood_pressure" >Blood Pressure</label>
+                                </div>
+                                <div class="input-wrapper d-flex">
+                                    <div class="theme-form-input ">
+                                        <input class="form-control " type="text"
+                                            name="blood_pressure" value="{{ $patient->blood_pressure}} " id="blood_pressure" disabled>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                    
+
+
+
+
+
+
                 <div class="col-md-6">
                     <div class="theme-form-group mb-3">
                         <label class="theme-label" for="disease_name">Disease Name:</label>

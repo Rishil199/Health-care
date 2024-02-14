@@ -82,8 +82,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('update/{id}', [RoleController::class, 'update'])->name('roles.update'); 
         });
 
-        //clinic
-        Route::group(['prefix' => 'clinic'], function() {
+        //Hospital
+        Route::group(['prefix' => 'hospital'], function() {
             Route::get('/', [ClinicController::class, 'index'])->name('clinics.index');
             Route::get('create', [ClinicController::class, 'create'])->name('clinics.create');
             Route::get('createBranch/{id}', [ClinicController::class, 'createBranch'])->name('clinics.createBranch');
@@ -105,14 +105,14 @@ Route::group(['middleware' => 'auth'], function () {
         
     });
 
-      Route::middleware(['role:Super Admin|Clinic|Receptionist'])->group(function () {
+      Route::middleware(['role:Super Admin|Hospital|Receptionist'])->group(function () {
      //doctors
         Route::group(['prefix' => 'doctors'], function() {
             Route::get('/', [DoctorController::class, 'index'])->name('doctors.index');
             Route::get('create', [DoctorController::class, 'create'])->name('doctors.create');
             Route::post('store', [DoctorController::class, 'store'])->name('doctors.store');
             Route::delete('delete', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-            // Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
+            Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
             Route::get('edit/{id}', [DoctorController::class, 'edit'])->name('doctors.edit');
             Route::put('update/{id}', [DoctorController::class, 'update'])->name('doctors.update'); 
             Route::get('changeStatus', [DoctorController::class, 'changeStatus'])->name('doctors.changeStatus');
@@ -122,7 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-        Route::middleware(['role:Super Admin|Clinic'])->group(function () {
+        Route::middleware(['role:Super Admin|Hospital'])->group(function () {
         //receptionist
         Route::group(['prefix' => 'receptionist'], function() {
             Route::get('/', [ReceptionistController::class, 'index'])->name('receptionists.index');
@@ -137,7 +137,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
     // Routes available to super admin and doctor
-    Route::middleware(['role:Super Admin|Doctor|Receptionist|Clinic'])->group(function () {
+    Route::middleware(['role:Super Admin|Doctor|Receptionist|Hospital'])->group(function () {
          
         //patients
         Route::group(['prefix' => 'patients'], function() {
@@ -154,7 +154,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
         });
-        Route::middleware(['role:Doctor|Receptionist|Clinic'])->group(function () {
+        Route::middleware(['role:Doctor|Receptionist|Hospital'])->group(function () {
             Route::get('/appointments', [MainDoctorController::class, 'appointments'])->name('appointments.index');
             Route::get('/all_appointment', [MainDoctorController::class, 'all_appointment'])->name('all_appointment');
             Route::get('/todays_appointment', [MainDoctorController::class, 'todays_appointment'])->name('todays_appointment');
@@ -174,14 +174,14 @@ Route::group(['middleware' => 'auth'], function () {
         });
         });
 
-        Route::middleware(['role:Doctor|Receptionist|Clinic|Super Admin|Patient'])->group(function () {
+        Route::middleware(['role:Doctor|Receptionist|Hospital|Super Admin|Patient'])->group(function () {
             Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
         });
 
 
         Route::middleware(['role:Patient'])->group(function () {
-            Route::get('/doctorsListing', [DoctorController::class, 'doctorsListing'])->name('doctorslisting.index');
-            Route::get('/clinicsListing', [DoctorController::class, 'clinicsListing'])->name('clinicsListing.index');
+            Route::get('/doctor', [DoctorController::class, 'doctorsListing'])->name('doctorslisting.index');
+            Route::get('/hospitals', [DoctorController::class, 'clinicsListing'])->name('clinicsListing.index');
             Route::get('/patient_appointments', [MainDoctorController::class, 'patientAppointments'])->name('patient_appointments.index');
             Route::post('/patient_appointment_calender', [MainDoctorController::class, 'patientcalendarEvents'])->name('patient_appointment_calender');
             Route::post('fetchDoctors', [MainDoctorController::class, 'fetchDoctors'])->name('appointments.fetchDoctors');

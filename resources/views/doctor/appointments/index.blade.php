@@ -2,6 +2,8 @@
 @push('header_css')
 <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />--}}
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
 @endpush
 @section('content-breadcrumb')
 <li>
@@ -33,6 +35,11 @@
    {{$title}}
    </span>
 </li>
+<style>
+.cursor-pointer{
+  cursor: pointer;
+}
+</style>
 @endsection
 @section('content-body')
 <div class="container">
@@ -46,7 +53,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('all_appointment') }}" id="all_appointment" data-total={{ $all_appointment }} class="appointment-view all-appointment-btn">{{ $all_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">All Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">All Appointments</div>
                     </div>
                 </div>
             </div>
@@ -57,7 +64,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('todays_appointment') }}" class="appointment-view todays-appointment-btn">{{ $todays_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Today's Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Today's Appointments</div>
                     </div>
                 </div>
             </div>
@@ -68,7 +75,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('upcoming_appointment') }}" class="appointment-view upcoming-appointment-btn">{{ $upcoming_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Upcoming Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Upcoming Appointments</div>
                     </div>
                 </div>
             </div>
@@ -79,7 +86,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('past_appointment') }}" class="appointment-view past-appointment-btn">{{ $past_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Completed Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Completed Appointments</div>
                     </div>
                 </div>
             </div>
@@ -87,7 +94,7 @@
     </div>
     <div class="col-6">
         <div id='full_calendar_events'>
-            <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-target="myModal">
                <div class="modal-dialog">
                   <div class="modal-content">
                      
@@ -97,8 +104,12 @@
         </div>
     </div>
 </div>
-@endsection
 @push('footer_js')
+@endsection
+
+
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> --}}
+
 <script>
 
 //form validation
@@ -144,6 +155,7 @@
                             if ( resp ) {
                                 if ( resp.status ) {
                                     make_modal('book-appointment-modal', resp.data.view, true, 'modal-lg');
+                                    // $('#event_name').select2();
                                 }
                             }
                         },
@@ -306,6 +318,7 @@
                                         { data: 'user.phone_no', name: 'phone_no' },
                                         { 'render': function(data, type, full, meta)
                                             {
+                                          
                                                 return  full.appointment_date + ' ' + full.time_start;
                                             } 
                                          },
@@ -507,7 +520,7 @@ function validateFormAppointment( $form ) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'edit-all_appointment-modal edit-apmt', resp.data.view, true );
+                        make_modal( 'edit-all_appointment-modal edit-apmt', resp.data.view, true, 'modal-xl' );
                         validateFormAppointment( $('.edit-all-appointments-form') );
                     }
                 }
@@ -559,7 +572,7 @@ if ( add_view_url ) {
             let resp = response.responseJSON;
             if ( resp ) {
                 if ( resp.status ) {
-                    make_modal( 'add-branch-modal', resp.data.view, true );
+                    make_modal( 'add-branch-modal', resp.data.view, true, 'modal-lg' );
                     validateForm( $('.add_branch_form') );
                 }
             }
@@ -594,12 +607,30 @@ $(document).on('click', '.edit-patient',function(e) {
     }
 });
 
+$(document).ready(function(){
+    $('#full_calendar_events').click(function(){
+        
+    });
+});
+
 
 
 </script>
 
+
 <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
 <script src="{{ asset('assets/js/appointments.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
+
+
+{{-- <script>
+    $(document).ready(function(){
+ 
+    $('#event_name').select2();
+    
+
+   });
+    </script>  --}}
 
 
 @endpush
