@@ -25,7 +25,7 @@ class StorePatientRequest extends FormRequest
     public function rules()
     {
         
-        if(Auth::user()->hasRole('Super Admin')) {
+        if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)) {
             return [
                 'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
                 'email' => 'required|email|unique:users,email',
@@ -36,8 +36,8 @@ class StorePatientRequest extends FormRequest
                 'clinic_id' => 'required',
             ];
         }
-
-        if(Auth::user()->hasAnyRole(['Super Admin','Receptionist','Doctor','Hospital'])) {
+        
+        if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN,User::ROLE_RECEPTIONIST,User::ROLE_DOCTOR,User::ROLE_CLINIC])) {
             
             return [
                 'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',

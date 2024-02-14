@@ -47,12 +47,14 @@ class DoctorController extends Controller
             // }
             // // dd($doctors);
 
-            if(Auth::user()->hasRole(['Clinic'])){
+            if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                 // dd($user_id->id);
                 $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+
+                //  dd($doctors);
             }
 
 
@@ -150,7 +152,7 @@ class DoctorController extends Controller
 
         $clinics = ClinicDetails::select('user_id','id')->where('is_main_branch',1)->with('user')->get();
 
-        if(Auth::user()->hasRole(['Receptionist'])){
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             $receptionist_details = ReceptionistDetails::select('user_id','id','clinic_id')->where('user_id',Auth::user()->id)->with('user')->first();
             $clinics = ClinicDetails::select('user_id','id')->where('is_main_branch',1)->where('id',$receptionist_details->clinic_id)->with('user')->get();
         }
@@ -214,7 +216,7 @@ class DoctorController extends Controller
         $doctor->expertice = $post_data['expertice'];
         $doctor->user_id = $users['id'];
         // dd($doctor);
-         if(Auth::user()->hasRole(['Receptionist'])){
+         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // dd("ddd");
             $clinic_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             // dd($clinic_id);
@@ -223,11 +225,13 @@ class DoctorController extends Controller
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id->clinic_id;
             // dd($doctor);
         }
-        if(Auth::user()->hasRole(['Clinic'])){
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $doctor->clinic_id = $clinic_id->id;
         }
-        if(Auth::user()->hasAnyRole(['Doctor','Super Admin','Hospital'])){
+
+
+        if(Auth::user()->hasAnyRole([ User::ROLE_DOCTOR ,User::ROLE_SUPER_ADMIN ,User::ROLE_CLINIC ])){
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
@@ -338,7 +342,7 @@ class DoctorController extends Controller
         $doctor->experience = $request->validated()['experience'];
         $doctor->expertice = $request->validated()['expertice'];
         $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
-        if(Auth::user()->hasRole(['Receptionist'])){
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;

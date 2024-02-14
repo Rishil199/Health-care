@@ -42,13 +42,13 @@ class UserController extends Controller
     $dct = DoctorDetails::select('clinic_id','user_id')->where('user_id',Auth::user()->id)->first();
     // dd($dct);
         // dd($user_id);
-        if (Auth::user()->hasRole('Doctor')){
+        if (Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$dct->id)->get();
                 //  dd($doctors);
         }
-        if (Auth::user()->hasRole('Hospital')){
+        if (Auth::user()->hasRole(User::ROLE_CLINIC)){
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
@@ -57,14 +57,15 @@ class UserController extends Controller
    
             // dd($doctors);
      
-        if(Auth::user()->hasAnyRole(['Doctor','Receptionist','Hospital']))
+        if(Auth::user()->hasAnyRole([User::ROLE_DOCTOR,User::ROLE_RECEPTIONIST,User::ROLE_CLINIC]))
         {
             // dd(Auth::user()->hasRole('Receptionist'));
             // dd("dd");
-            if (Auth::user()->hasRole('Hospital')){
+            
+            if (Auth::user()->hasRole(User::ROLE_CLINIC)){
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
             }
-            if (Auth::user()->hasRole('Doctor')){
+            if (Auth::user()->hasRole(User::ROLE_DOCTOR)){
                 $receptionistCount = count(ReceptionistDetails::where('clinic_id',$dct->id)->get());
                 // dd($receptionistCount);
                 }
@@ -89,7 +90,7 @@ class UserController extends Controller
         
         $past_appointment = count(DoctorAppointmentDetails::where('is_complete','=','1')->withTrashed()->get());
 
-        if(Auth::user()->hasRole('Super Admin')) {
+        if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)) {
             // dd(Auth::user());
             // dd("dd");
             $appointments = DoctorAppointmentDetails::with('user')->latest()->get();
@@ -107,7 +108,7 @@ class UserController extends Controller
         }
 
       
-        if(Auth::user()->hasRole('Doctor')){
+        if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $user=(Auth::user());
             // dd($user);
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',$user->id)->first();
@@ -139,7 +140,7 @@ class UserController extends Controller
                 ->where('disease_name','!=','')->get()->count();
         }
 
-        if(Auth::user()->hasRole('Receptionist')){
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // dd("ddd");
             // dd(Auth::user());
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
@@ -184,7 +185,7 @@ class UserController extends Controller
         }
         // dd($doctors);
 
-        if(Auth::user()->hasRole('Hospital')){
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             
             // $doctors = DoctorDetails::select(array(
@@ -207,7 +208,7 @@ class UserController extends Controller
         }
 
       
-         if(Auth::user()->hasRole('Patient')){
+         if(Auth::user()->hasRole(User::ROLE_PATIENT)){
 
             $user_id = PatientDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             // dd($user_id);
@@ -249,7 +250,7 @@ class UserController extends Controller
         }
     //   echo "dd";die;
 
-        if(Auth::user()->hasRole('Patient')){
+        if(Auth::user()->hasRole(User::ROLE_PATIENT)){
           $this->data = array(
                 'title' => 'Dashboard',
                 'doctors' => $doctors,
@@ -263,7 +264,7 @@ class UserController extends Controller
 
         // dd($patients);
                 //  echo "ddd";die;
-                if(Auth::user()->hasAnyRole(['Super Admin','Doctor','Receptionist','Hospital'])){
+                if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN,User::ROLE_DOCTOR,User::ROLE_RECEPTIONIST,User::ROLE_CLINIC])){
                     // dd('ddd');
                  $this->data = array(
                 'title' => 'Dashboard',

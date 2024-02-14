@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
@@ -36,7 +37,7 @@
                     @endforeach
                 </select>
             </div>
-            @if(Auth::user()->hasRole(['Patient']))
+            @if(Auth::user()->hasRole(User::ROLE_PATIENT))
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label mt-3" for="picker1">Select Doctor</label>
@@ -47,7 +48,7 @@
                </div>
             </div>
             @endif
-            @if(Auth::user()->hasAnyRole(['Clinic','Receptionist']))
+            @if(Auth::user()->hasAnyRole([User::ROLE_CLINIC,User::ROLE_RECEPTIONIST]))
             <div class="col-md-6 mb-3">
             <label class="theme-label" for="picker1">Select Doctor <span class="text-danger">*</span></label>
             <div class="theme-form-input">
@@ -77,7 +78,7 @@
                        </select>                                  
                 </div>
             </div> --}}
-           @if(Auth::user()->hasRole(['Patient']))
+           @if(Auth::user()->hasRole(User::ROLE_PATIENT))
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="time_start">Time Slot</label>

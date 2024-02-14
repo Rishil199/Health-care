@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 @extends('layouts.app')
 @push('header_css')
 @endpush
@@ -9,7 +10,7 @@
                     <div class="welcome-title">
                         <div class="wt-lower">
 
-                            @if (Auth::user()->hasRole('Hospital'))
+                            @if (Auth::user()->hasRole(User::ROLE_CLINIC))
                                 {{-- @php var_dump($clinics);@endphp --}}
                                 <p class="text-uppercase text-dark mb-2">Hospital name : {{ Auth::user()->first_name }} </p>
                                 @foreach ($clinics as $clinic)
@@ -42,7 +43,8 @@
                         <div class="row">
                             <div class="col-xl-3 col-lg-3 doctors-data-left">
                                 <div class="row">
-                                    @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Patient']))
+                                    {{--  User::ROLE_DOCTOR ,User::ROLE_SUPER_ADMIN ,User::ROLE_CLINIC --}}
+                                    @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_RECEPTIONIST, User::ROLE_PATIENT]))
                                         <div class="col-lg-12 col-sm-4">
                                             <div class="doc-data-card doctor">
                                                 <div class="doc-data-img"><img
@@ -50,10 +52,10 @@
                                                 </div>
                                                 <div class="doc-data">
                                                     <div class="doc-data-count">
-                                                        @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Doctor', 'Receptionist']))
+                                                        @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                             <a href="{{ route('doctors.index') }}">{{ count($doctors) }}</a>
                                                         @endif
-                                                        @if (Auth::user()->hasRole(['Patient']))
+                                                        @if (Auth::user()->hasRole(User::ROLE_PATIENT))
                                                             <a
                                                                 href="{{ route('doctorslisting.index') }}">{{ count($doctors) }}</a>
                                                         @endif
@@ -63,7 +65,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Doctor']))
+                                    @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                         <div class="col-lg-12 col-sm-4">
                                             <div class="doc-data-card patient">
                                                 <div class="doc-data-img"><img
@@ -78,7 +80,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital']))
+                                    @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC]))
                                         <div class="col-lg-12 col-sm-4">
                                             <div class="doc-data-card receptionist">
                                                 <div class="doc-data-img"><img
@@ -102,7 +104,7 @@
                                         <div class="theme-card">
                                             <div class="theme-card-fig">
                                                 <span class="theme-card-fig-title">Appointments</span>
-                                                @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Patient', 'Doctor', 'Receptionist']))
+                                                @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC,User::ROLE_PATIENT, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                     <span class="theme-card-fig-count">{{ $appointmentsCount }}</span>
                                                 @endif
                                             </div>
@@ -131,7 +133,7 @@
                                         <div class="theme-card dark">
                                             <div class="theme-card-fig">
                                                 <span class="theme-card-fig-title">Today's Appointments</span>
-                                                @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Patient', 'Doctor', 'Receptionist']))
+                                                @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_PATIENT, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                     <span class="theme-card-fig-count">{{ $todays_appointment }}</span>
                                                 @endif
                                             </div>
@@ -142,7 +144,7 @@
                                         <div class="theme-card">
                                             <div class="theme-card-fig">
                                                 <span class="theme-card-fig-title">Completed Appointments</span>
-                                                @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Patient', 'Doctor', 'Receptionist']))
+                                                @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_PATIENT, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                     <span class="theme-card-fig-count">{{ $past_appointment }}</span>
                                                 @endif
                                             </div>
@@ -153,7 +155,7 @@
                                         <div class="theme-card dark">
                                             <div class="theme-card-fig">
                                                 <span class="theme-card-fig-title">Upcoming Appointments</span>
-                                                @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Patient', 'Doctor', 'Receptionist']))
+                                                @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC,User::ROLE_PATIENT, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                     <span class="theme-card-fig-count">{{ $upcoming_appointment }}</span>
                                                 @endif
                                             </div>
@@ -171,7 +173,7 @@
                                     </div>
                                     <div class="theme-tab">
                                         <ul class="nav nav-tabs" id="latestUserTab" role="tablist">
-                                            @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Doctor', 'Patient']))
+                                            @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC,User::ROLE_PATIENT, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn active" id="doc-tab" data-bs-toggle="tab"
                                                         data-bs-target="#doc-tab-pane" type="button" role="tab"
@@ -267,7 +269,7 @@
                                                     </button>
                                                 </li>
                                             @endif
-                                            @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Patient']))
+                                            @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_PATIENT, User::ROLE_RECEPTIONIST]))
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn" id="recipt-tab" data-bs-toggle="tab"
                                                         data-bs-target="#recipt-tab-pane" type="button" role="tab"
@@ -304,7 +306,7 @@
                                                     </button>
                                                 </li>
                                             @endif
-                                            @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Doctor']))
+                                            @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_PATIENT, User::ROLE_RECEPTIONIST]))
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn" id="patient-tab" data-bs-toggle="tab"
                                                         data-bs-target="#patient-tab-pane" type="button" role="tab"
@@ -333,14 +335,14 @@
                                                 </li>
                                             @endif
                                         </ul>
-                                        @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Doctor', 'Patient']))
+                                        @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_PATIENT, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                             <div class="tab-content" id="latestUserTabContent">
                                                 <div class="tab-pane fade show active" id="doc-tab-pane" role="tabpanel"
                                                     aria-labelledby="doc-tab" tabindex="0">
                                                     <div class="table-responsive">
                                                         <table class="table theme-table sr-table">
                                                             <thead class="table-dark">
-                                                                @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Doctor']))
+                                                                @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_RECEPTIONIST, User::ROLE_DOCTOR]))
                                                                     <th>Name</th>
                                                                 @else
                                                                     <th>Name</th>
@@ -379,7 +381,7 @@
                                                     </div>
                                                 </div>
                                         @endif
-                                        @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Patient']))
+                                        @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_RECEPTIONIST, User::ROLE_PATIENT]))
                                             <div class="tab-pane fade" id="recipt-tab-pane" role="tabpanel"
                                                 aria-labelledby="recipt-tab" tabindex="0">
                                                 <div class="table-responsive">
@@ -433,7 +435,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if (Auth::user()->hasAnyRole(['Super Admin', 'Hospital', 'Receptionist', 'Doctor']))
+                                        @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_RECEPTIONIST, User::ROLE_DOCTOR]))
                                             <div class="tab-pane fade" id="patient-tab-pane" role="tabpanel"
                                                 aria-labelledby="patient-tab" tabindex="0">
                                                 <div class="table-responsive">

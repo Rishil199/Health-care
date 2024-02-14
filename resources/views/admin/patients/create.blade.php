@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
@@ -179,7 +180,7 @@
          </div>
 
 
-            @if(Auth::user()->hasRole('Super Admin'))
+            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Clinic</label>
@@ -194,7 +195,7 @@
                </div>
             </div>
             @endif
-            @if(Auth::user()->hasAnyRole(['Super Admin']))
+            @if(Auth::user()->hasAnyRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Doctor</label>
@@ -209,7 +210,7 @@
                </div>
             </div>
             @endif
-            @if(Auth::user()->hasAnyRole(['Receptionist','Clinic']))
+            @if(Auth::user()->hasAnyRole([User::ROLE_RECEPTIONIST, User::ROLE_CLINIC]))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="picker1">Select Doctor</label>

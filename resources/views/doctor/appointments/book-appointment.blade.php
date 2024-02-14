@@ -1,4 +1,4 @@
-
+@use ('App\Models\User')
 <style> 
 .select-box {
     width:-750px;
@@ -48,7 +48,7 @@
                     @endforeach
                 </select>
             </div>
-            @if(Auth::user()->hasAnyRole(['Clinic','Receptionist']))
+            @if(Auth::user()->hasAnyRole([User::ROLE_CLINIC, User::ROLE_RECEPTIONIST]))
             <label class="theme-label mt-3" for="picker1">Select Doctor <span class="text-danger">*</span></label>
             <div class="theme-form-input">
                 <select class="form-control form-select" name="doctor_id" id="doctor_id">

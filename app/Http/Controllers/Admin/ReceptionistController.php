@@ -34,7 +34,7 @@ class ReceptionistController extends Controller
             ))->latest()->with('user')->get();
             // dd($receptionist);
 
-            if(Auth::user()->hasRole(['Hospital'])){
+            if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                 // dd($user_id);
                 $receptionist = ReceptionistDetails::select(array(
@@ -188,11 +188,11 @@ class ReceptionistController extends Controller
         $receptionist->qualification = $request['qualification'];
         $receptionist->experience = $request['experience'];
         $receptionist->user_id = $users['id'];
-        if(Auth::user()->hasRole(['Hospital'])){
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist->clinic_id = $user_id->id;
         }
-        if(Auth::user()->hasRole(['Super Admin'])){
+        if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)){
            $receptionist->clinic_id = $request->clinic_id;
         }
         $receptionist->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
