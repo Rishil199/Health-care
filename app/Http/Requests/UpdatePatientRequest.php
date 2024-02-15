@@ -40,7 +40,11 @@ class UpdatePatientRequest extends FormRequest
             'exercise' => 'required',
             'alchohol_consumption' => 'required',
             'diet' => 'required',
-            'smoke' => 'required',
+            'height'=>'required|numeric',
+            'weight'=>'required|numeric',
+            'emergency_contact' => 'required|digits:10|numeric'
+
+
         ];
     }
 }

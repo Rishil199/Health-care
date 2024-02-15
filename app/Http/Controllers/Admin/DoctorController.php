@@ -36,15 +36,15 @@ class DoctorController extends Controller
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->get();
 
-            // if(Auth::user()->hasRole(['Receptionist'])){
+            if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
         
-            //     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+                $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
 
-            //     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
-            //    
-            //     $doctors = DoctorDetails::with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+               
+                $doctors = DoctorDetails::with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
          
-            // }
+            }
    
 
             if(Auth::user()->hasRole(User::ROLE_CLINIC)){
@@ -219,8 +219,10 @@ class DoctorController extends Controller
             $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id->clinic_id;
         }
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
-            $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            $doctor->clinic_id = $clinic_id->id;
+            $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->pluck('id')->first();
+
+            $doctor->clinic_id = $clinic_id;
+    
         }
 
 
@@ -229,6 +231,7 @@ class DoctorController extends Controller
         }
         $doctor->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $doctor->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
+
         $doctor->save();
         
         $token = $request->_token;
@@ -330,7 +333,7 @@ class DoctorController extends Controller
         $doctor->degree = $request->validated()['degree'];
         $doctor->experience = $request->validated()['experience'];
         $doctor->expertice = $request->validated()['expertice'];
-        $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
+        // $doctor->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
             // $doctor->receptionist_id = $request->receptionist_id ?? Auth::user()->id;
         }

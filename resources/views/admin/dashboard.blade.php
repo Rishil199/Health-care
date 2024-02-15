@@ -11,7 +11,6 @@
                         <div class="wt-lower">
 
                             @if (Auth::user()->hasRole(User::ROLE_CLINIC))
-                                {{-- @php var_dump($clinics);@endphp --}}
                                 <p class="text-uppercase text-dark mb-2">Hospital name : {{ Auth::user()->first_name }} </p>
                                 @foreach ($clinics as $clinic)
                                     @switch($clinic->is_main_branch)
@@ -43,7 +42,6 @@
                         <div class="row">
                             <div class="col-xl-3 col-lg-3 doctors-data-left">
                                 <div class="row">
-                                    {{--  User::ROLE_DOCTOR ,User::ROLE_SUPER_ADMIN ,User::ROLE_CLINIC --}}
                                     @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_RECEPTIONIST, User::ROLE_PATIENT]))
                                         <div class="col-lg-12 col-sm-4">
                                             <div class="doc-data-card doctor">
@@ -306,7 +304,7 @@
                                                     </button>
                                                 </li>
                                             @endif
-                                            @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_PATIENT, User::ROLE_RECEPTIONIST]))
+                                            @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn" id="patient-tab" data-bs-toggle="tab"
                                                         data-bs-target="#patient-tab-pane" type="button" role="tab"

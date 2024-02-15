@@ -47,7 +47,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="phone_no">Phone No. <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="phone_no" name="phone_no" type="text" placeholder="Patient Phone No." required />
+                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Patient Phone No." required />
                   </div>
                </div>
             </div>
@@ -165,7 +165,7 @@
          <div class="form-group theme-form-group">
             <label class="theme-label" for="emergency_contact">Emergency contact <span class="required">*</span></label>
             <div class="theme-form-input">
-               <input class="form-control" id="emergency_contact" name="emergency_contact" type="text" placeholder="Emergency contact" required />
+               <input class="form-control" id="emergency_contact" name="emergency_contact" type="tel" placeholder="Emergency contact" required />
             </div>
          </div>
       </div>

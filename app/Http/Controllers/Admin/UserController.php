@@ -161,6 +161,7 @@ class UserController extends Controller
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+
         }
      
 

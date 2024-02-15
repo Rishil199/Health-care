@@ -151,7 +151,7 @@ class DoctorController extends Controller
                     ))->with(array(
                         'user' => function ( $query ) {
                             return $query->select(array(
-                                'id', 'first_name', 'last_name',
+                                'id', 'first_name', 'last_name','phone_no'
                             ));
                         }
                     ))->where(array(
@@ -748,8 +748,8 @@ class DoctorController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)) {
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            $appointments = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details->id)->where('is_complete','=','0')->get();
+            $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id?->id)->first();
+            $appointments = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->where('is_complete','=','0')->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
@@ -856,7 +856,7 @@ class DoctorController extends Controller
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details->id)->get();
+            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){

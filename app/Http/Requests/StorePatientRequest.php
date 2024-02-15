@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;
 
@@ -45,7 +45,9 @@ class StorePatientRequest extends FormRequest
                 'phone_no' => 'required|digits:10|numeric',
                 'address' => 'required',
                 'gender' => 'required',
-                // 'doctor_id' => 'required',
+                'height'=>'required|numeric',
+                'weight'=>'required|numeric',
+                'emergency_contact' => 'required|digits:10|numeric'
             ];
         }
     }
