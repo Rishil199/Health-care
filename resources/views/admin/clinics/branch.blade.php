@@ -9,9 +9,9 @@
 @endif
     <div class="col-md-6">
         <div class="form-group">
-            <label for="name" class="theme-label">Clinic Name <span class="text-danger">*</span></label>
+            <label for="name" class="theme-label">Hospital Name <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Clinic Name" required />
+                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Hospital Name" required />
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="email">Email <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <input class="form-control" id="email" name="email" type="email" placeholder="Clinic Email" required />
+                <input class="form-control" id="email" name="email" type="email" placeholder="Hospital Email" required />
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             <label for="phone_no" class="theme-label">Phone No. <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <input class="form-control" id="phone_no" name="tel" type="text" placeholder="Clinic Phone No." required />
+                <input class="form-control" id="phone_no" name="tel" type="text" placeholder="Hospital Phone No." required />
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             <label for="address" class="theme-label">Address <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <textarea class="form-control" id="address" name="address" type="text" placeholder="Clinic Address" style="resize: none;" required></textarea>
+                <textarea class="form-control" id="address" name="address" type="text" placeholder="Hospital Address" style="resize: none;" required></textarea>
             </div>
         </div>
     </div>

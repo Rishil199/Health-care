@@ -13,14 +13,14 @@
         <div class="form-row col-12">
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
-                    <label for="name">Clinic Name <span class="text-danger">*</span></label>
-                    <input class="form-control" id="name" name="name" value="{{ $clinic->user->first_name}}" type="text" placeholder="Clinic Name" required />
+                    <label for="name">Hospital Name <span class="text-danger">*</span></label>
+                    <input class="form-control" id="name" name="name" value="{{ $clinic->user->first_name}}" type="text" placeholder="Hospital Name" required />
                 </div>
             </div>
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="email">Email <span class="text-danger">*</span></label>
-                    <input class="form-control" id="email" name="email" type="email" value="{{ $clinic->user->email}}" placeholder="Clinic Email" readonly />
+                    <input class="form-control" id="email" name="email" type="email" value="{{ $clinic->user->email}}" placeholder="Hospital Email" readonly />
                 </div>
             </div>
         </div>
@@ -28,13 +28,13 @@
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="phone_no">Phone No. <span class="text-danger">*</span></label>
-                    <input class="form-control" id="phone_no" name="phone_no" value="{{ $clinic->phone_no}}" type="tel" placeholder="Clinic Phone No." required />
+                    <input class="form-control" id="phone_no" name="phone_no" value="{{ $clinic->phone_no}}" type="tel" placeholder="Hospital Phone No." required />
                 </div>
             </div>
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="address">Address <span class="text-danger">*</span></label>
-                    <textarea name="address" class="form-control" id="address" name="address" type="text" placeholder="Clinic Address" value="{{ $clinic->address}}" style="resize: none;" required>{{ $clinic->address}}</textarea>
+                    <textarea name="address" class="form-control" id="address" name="address" type="text" placeholder="Hospital Address" value="{{ $clinic->address}}" style="resize: none;" required>{{ $clinic->address}}</textarea>
                 </div>
             </div>
         </div>

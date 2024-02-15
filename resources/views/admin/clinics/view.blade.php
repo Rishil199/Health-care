@@ -57,11 +57,11 @@
     <div class="row mb-4">
         <div class="col-md-12 mb-3">
             <div class="card text-left">
-                <h4 class="card-header">Main Clinic Detail</h4>
+                <h4 class="card-header">Main Hospital Detail</h4>
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item">
-                           <strong>Clinic Name:</strong> <span>{{ @$main_clinic->user->first_name }}</span>
+                           <strong>Hospital Name:</strong> <span>{{ @$main_clinic->user->first_name }}</span>
                         </li>
                         <li class="list-group-item">
                            <strong>Email:</strong> <a href="mailto:{{ @$main_clinic->user->email }}">{{ @$main_clinic->user->email }}</a>

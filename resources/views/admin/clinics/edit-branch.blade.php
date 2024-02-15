@@ -20,9 +20,9 @@
          <div class="row">
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="name">Clinic Name <span class="required">*</span></label>
+                  <label class="theme-label" for="name">Hospital Name <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Clinic Name" value="{{ $clinic->user->first_name}}" />
+                     <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Hospital Name" value="{{ $clinic->user->first_name}}" />
                   </div>
                </div>
             </div>
@@ -30,7 +30,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="email">Email <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="email" name="email" type="email" placeholder="Clinic Email" value="{{ $clinic->user->email}}" readonly />
+                     <input class="form-control" id="email" name="email" type="email" placeholder="Hospital Email" value="{{ $clinic->user->email}}" readonly />
                   </div>
                </div>
             </div>
@@ -38,7 +38,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="phone_no">Phone No. <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Clinic Phone No." value="{{ $clinic->user->phone_no}}" />
+                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Hospital Phone No." value="{{ $clinic->user->phone_no}}" />
                   </div>
                </div>
             </div>
