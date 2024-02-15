@@ -28,7 +28,7 @@
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="phone_no">Phone No. <span class="text-danger">*</span></label>
-                    <input class="form-control" id="phone_no" name="phone_no" value="{{ $clinic->phone_no}}" type="text" placeholder="Clinic Phone No." required />
+                    <input class="form-control" id="phone_no" name="phone_no" value="{{ $clinic->phone_no}}" type="tel" placeholder="Clinic Phone No." required />
                 </div>
             </div>
             <div class="col-md-6 form-group mb-3">

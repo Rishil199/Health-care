@@ -37,6 +37,7 @@ class ReceptionistController extends Controller
                 $receptionist = ReceptionistDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+
             }
 
             return Datatables::of($receptionist)

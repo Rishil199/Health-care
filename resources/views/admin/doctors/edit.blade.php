@@ -50,7 +50,7 @@
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="phone_no">Phone No. <span class="text-danger">*</span></label>
                      <div class="theme-form-input">
-                        <input class="form-control" id="phone_no" name="phone_no" type="text" placeholder="Doctor Phone No." value="{{ $doctor->user->phone_no}}" />
+                        <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Doctor Phone No." value="{{ $doctor->user->phone_no}}" />
                      </div>
                   </div>
                </div>

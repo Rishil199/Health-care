@@ -45,7 +45,7 @@
                               <div class="form-group theme-form-group">
                                  <label class="theme-label" for="phone_no">Phone No <span class="required">*</span></label>
                                  <div class="theme-form-input">
-                                    <input class="form-control" id="phone_no" name="phone_no" type="phone_no" placeholder="Last Name" value="{{ $users->phone_no}}" />
+                                    <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Last Name" value="{{ $users->phone_no}}" />
                                  </div>
                                  @error('phone_no')
                                 <div class="mb-3"><span class="text-danger">{{ $message }}</span></div>
