@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="theme-form-group mb-3">
-                        <label class="theme-label" for="clinic">Clinic Name:</label>
+                        <label class="theme-label" for="clinic">Hospital Name:</label>
                         <div class="theme-form-input">
                             <input type="text" id="clinic" class="form-control" value="{{ $clinic->user->first_name }}" disabled>
                         </div>

@@ -6,7 +6,7 @@
         <div class="table-responsive">
             <table class="table theme-table sr-table todays-patient-appointments-table" id="todays-patient-appointments-table" name="todays-patient-appointments" name="Appointment">
                 <thead class="table-dark">
-                    <th>Clinic Name</th>
+                    <th>Hospital Name</th>
                     <th>Phone No.</th>
                     <th>Appointment Date</th>
                     <th>Created By</th>

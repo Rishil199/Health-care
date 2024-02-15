@@ -72,7 +72,7 @@
                      </svg>
                   </span>
                   <span class="svg-text">
-                  Add Clinic
+                  Add Hospital
                   </span>
                </button>
                </a>

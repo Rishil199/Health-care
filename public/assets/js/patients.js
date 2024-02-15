@@ -230,6 +230,7 @@ if ( $('.clinics-patients-table').length ) {
                 {
                     return full.user.first_name + ' ' + full.user.last_name;
                 },
+
                 
             },
             {
@@ -238,6 +239,7 @@ if ( $('.clinics-patients-table').length ) {
                     return '<a href="mailto:' + full.user.email + '?">' + full.user.email + '</a>';
                 }
             },
+            
             { data: 'user.phone_no', name: 'user.phone_no' },
             { data: 'address', name: 'address' },
             { data: 'status', name: 'status' },

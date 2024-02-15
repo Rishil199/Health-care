@@ -26,10 +26,10 @@
 
         <div class="form-group theme-form-group">
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
-            <label class="theme-label" for="picker1">Select Clinic <span class="text-danger">*</span></label>
+            <label class="theme-label" for="picker1">Select Hospital <span class="text-danger">*</span></label>
             <div class="theme-form-input">
                 <select class="form-control form-select" name="event_name" id="clinic-dropdown">
-                    <option value="">Select Clinic</option>
+                    <option value="">Select Hospital</option>
                     @foreach( $clinics as $clinic )
                     @if($clinic->status==1)
                     <option value="{{ $clinic->user_id }}">{{ $clinic->user->fullName }}</option>

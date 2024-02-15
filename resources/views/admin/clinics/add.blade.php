@@ -13,8 +13,8 @@
             @if($type == "clinic")
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
-                    <label for="name">Clinic Name <span class="text-danger">*</span></label>
-                    <input class="form-control" id="name" name="name[]" type="text" placeholder="Clinic Name" required />
+                    <label for="name">Hospital Name <span class="text-danger">*</span></label>
+                    <input class="form-control" id="name" name="name[]" type="text" placeholder="Hospital Name" required />
                 </div>
             </div>
             @endif
@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <div class="form-label label-title d-block">
                         <label for="clinic">
-                            Select Clinic 
+                            Select Hospital 
                             <span class="text-danger">*</span>
                         </label>
                     </div>
@@ -40,7 +40,7 @@
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="email">Email <span class="text-danger">*</span></label>
-                    <input class="form-control" id="email" name="email[]" type="email" placeholder="Clinic Email" required />
+                    <input class="form-control" id="email" name="email[]" type="email" placeholder="Hospital Email" required />
                 </div>
             </div>
         </div>
@@ -48,13 +48,13 @@
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="phone_no">Phone No. <span class="text-danger">*</span></label>
-                    <input class="form-control" id="phone_no" name="phone_no[]" type="text" placeholder="Clinic Phone No." required />
+                    <input class="form-control" id="phone_no" name="phone_no[]" type="text" placeholder="Hospital Phone No." required />
                 </div>
             </div>
             <div class="col-md-6 form-group mb-3">
                 <div class="form-group">
                     <label for="address">Address <span class="text-danger">*</span></label>
-                    <textarea class="form-control" id="address" name="address[]" type="text" placeholder="Clinic Address" style="resize: none;" required></textarea>
+                    <textarea class="form-control" id="address" name="address[]" type="text" placeholder="Hospital Address" style="resize: none;" required></textarea>
                 </div>
             </div>
         </div>
