@@ -118,7 +118,7 @@
                                         {{ $tm['start'] }} - {{ $tm['end'] }}
                                         {{-- <option id="{{ $time }}" value="{{ $time }}" >{{ $time }}</option>  --}}
                                         {{-- @if (in_array($tm['start'] . '-' . $tm['end'], $available_slot) || $tm['start'] < $current_time) disabled @endif
-                                        {{ @$all_appointent->next_start_time == ($tm['start'] . ' - ' . $tm['end']) ? 'selected' : '' }}>
+                                        {{ $all_appointent?->next_start_time == ($tm['start'] . ' - ' . $tm['end']) ? 'selected' : '' }}>
                                         {{ $tm['start'] }} - {{ $tm['end'] }} --}}
                                     </option>
                                 @endforeach

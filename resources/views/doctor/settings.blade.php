@@ -21,7 +21,7 @@
                     <div class="form-group theme-form-group">
                         <label  class="theme-label " for="start_time">Start Time<span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <input class="form-control " id="start_time" name="start_time" type="text" placeholder="Start Time" value="{{ date('H:i A', strtotime(@$generalSettings->start_time )) ? date('H:i A', strtotime(@$generalSettings->start_time )) : ' '}}" required />
+                            <input class="form-control " id="start_time" name="start_time" type="text" placeholder="Start Time" value="{{ date('H:i A', strtotime($generalSettings?->start_time )) ? date('H:i A', strtotime($generalSettings?->start_time )) : ' '}}" required />
                             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                         </div>
                         @error('start_time')
@@ -35,7 +35,7 @@
                     <div class="form-group theme-form-group ">
                         <label  class="theme-label " for="end_time">End Time<span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <input class="form-control " id="end_time" name="end_time" type="text" placeholder="End Time"  value="{{ date('H:i A', strtotime(@$generalSettings->end_time )) ? date('H:i A', strtotime(@$generalSettings->end_time )) : ' '}}" required />
+                            <input class="form-control " id="end_time" name="end_time" type="text" placeholder="End Time"  value="{{ date('H:i A', strtotime($generalSettings->end_time )) ? date('H:i A', strtotime($generalSettings->end_time )) : ' '}}" required />
                             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                         </div>
                         @error('end_time')
@@ -49,7 +49,7 @@
                     <div class="form-group theme-form-group">
                         <label  class="theme-label" for="duration">Duration (in Minute.)<span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <input class="form-control" id="duration" name="duration" type="number" placeholder="Duration" value="{{  @$generalSettings->duration}}"  required />
+                            <input class="form-control" id="duration" name="duration" type="number" placeholder="Duration" value="{{  $generalSettings?->duration}}"  required />
                         @error('duration')
                         <p class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
                     <div class="form-group theme-form-group">
                         {{-- <label  class="theme-label" for="break_time">Break Time (in Minute.)<span class="required">*</span></label> --}}
                         <div class="theme-form-input">
-                            {{-- <input class="form-control" id="break_time" name="break_time" type="number" placeholder="break_time" value="{{  @$generalSettings->break_time}}"  required /> --}}
+                            {{-- <input class="form-control" id="break_time" name="break_time" type="number" placeholder="break_time" value="{{  $generalSettings?->break_time}}"  required /> --}}
                         @error('break_time')
                         <p class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>

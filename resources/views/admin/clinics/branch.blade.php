@@ -27,7 +27,7 @@
         <div class="form-group">
             <label for="phone_no" class="theme-label">Phone No. <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <input class="form-control" id="phone_no" name="tel" type="text" placeholder="Hospital Phone No." required />
+                <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Hospital Phone No." required />
             </div>
         </div>
     </div>

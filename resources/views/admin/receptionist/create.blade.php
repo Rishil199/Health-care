@@ -2,7 +2,7 @@
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
-            <strong>Add New Receptionist </strong>
+            <strong>Add New Staff </strong>
         </div>
         <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close">
             <svg fill="#000000" width="20" height="20" version="1.1" id="lni_lni-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
@@ -21,7 +21,7 @@
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="first_name">First Name <span class="required">*</span></label>
                         <div class="theme-form-input">
-                           <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Receptionist First Name" />
+                           <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Staff First Name" />
                         </div>
                   </div>
                </div>
@@ -29,7 +29,7 @@
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="last_name">Last Name <span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Receptionist Last Name" />
+                            <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Staff Last Name" />
                         </div>
                   </div>
                </div>
@@ -37,7 +37,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="email">Email <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="email" name="email" type="email" placeholder="Receptionist Email" required />
+                     <input class="form-control" id="email" name="email" type="email" placeholder="Staff Email" required />
                   </div>
                </div>
             </div>
@@ -45,7 +45,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="phone_no">Phone No. <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Receptionist Phone No." required />
+                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Staff Phone No." required />
                   </div>
                </div>
             </div>
@@ -65,7 +65,7 @@
                      <select class="form-control form-select" name="clinic_id">
                         <option value="">Select Clinic</option>
                         @foreach($clinics as $value)
-                        <option value="{{ $value->id }}">{{ @$value->user->first_name }}</option>
+                        <option value="{{ $value->id }}">{{ $value?->user?->first_name }}</option>
                         @endforeach
                      </select>
                   </div>
@@ -110,7 +110,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="qualification">Qualification <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="qualification" name="qualification" type="text" placeholder="Receptionist Qualification" required />
+                     <input class="form-control" id="qualification" name="qualification" type="text" placeholder="Staff Qualification" required />
                   </div>
                </div>
             </div>
@@ -118,7 +118,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="experience">Experience <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="experience" name="experience" type="text" placeholder="Receptionist Experience" required />
+                     <input class="form-control" id="experience" name="experience" type="text" placeholder="Staff Experience" required />
                   </div>
                </div>
             </div>

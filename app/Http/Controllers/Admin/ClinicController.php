@@ -569,13 +569,13 @@ class ClinicController extends Controller
             fputcsv($file, $columns);
 
             foreach ($clinics as $clinic) {
-                $row['Id']  = @$clinic->id;
-                $row['Name']  = @$clinic->user->first_name;
-                $row['Email']  = @$clinic->user->email;
-                $row['Contact No.']  = @$clinic->user->phone_no;
-                $row['Status'] =  $clinic->status == 0 ? 'In Active' : 'Active';
-                $row['Address']  = $clinic->address;
-                $row['Branch Type']  = $clinic->is_main_branch == 0 ? 'Sub Branch' : 'Main Branch' ;
+                $row['Id']  = $clinic?->id;
+                $row['Name']  = $clinic?->user?->first_name;
+                $row['Email']  = $clinic?->user?->email;
+                $row['Contact No.']  = $clinic?->user?->phone_no;
+                $row['Status'] =  $clinic?->status == 0 ? 'In Active' : 'Active';
+                $row['Address']  = $clinic?->address;
+                $row['Branch Type']  = $clinic?->is_main_branch == 0 ? 'Sub Branch' : 'Main Branch' ;
 
                 fputcsv($file, array($row['Id'],$row['Name'],$row['Email'],$row['Contact No.'],$row['Status'],$row['Address'],$row['Branch Type']));
             }            fclose($file);
