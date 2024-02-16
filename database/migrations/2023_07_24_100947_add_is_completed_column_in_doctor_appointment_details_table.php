@@ -14,6 +14,10 @@ class AddIsCompletedColumnInDoctorAppointmentDetailsTable extends Migration
     public function up()
     {
         Schema::table('doctor_appointment_details', function (Blueprint $table) {
+            if (Schema::hasColumn('doctor_appointment_details', 'is_complete')) {
+                $table->dropColumn('is_complete');
+            }
+    
             $table->integer('is_complete')->unsigned()->default(0);
         });
     }
