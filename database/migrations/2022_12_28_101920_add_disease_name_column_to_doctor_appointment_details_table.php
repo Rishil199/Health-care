@@ -18,7 +18,6 @@ class AddDiseaseNameColumnToDoctorAppointmentDetailsTable extends Migration
             $table->time('time_start');
             $table->time('time_end');
             $table->integer('patient_id');
-            $table->foreign('patient_id')->references('id')->on('patient_details');
             $table->string('next_end_time', 50)->nullable();
             $table->string('next_start_time', 50)->nullable();
             $table->integer('clinic_id')->nullable();

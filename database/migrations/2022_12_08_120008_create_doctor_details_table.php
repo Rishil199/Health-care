@@ -16,9 +16,7 @@ class CreateDoctorDetailsTable extends Migration
         Schema::create('doctor_details', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('clinic_id');
-            $table->foreign('clinic_id')->references('id')->on('clinics');
             $table->string('address', 191);
             $table->string('latitude', 15);
             $table->string('logitude', 15);

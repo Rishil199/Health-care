@@ -16,9 +16,7 @@ class CreateDoctorsTable extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('clinic_id');
-            $table->foreign('clinic_id')->references('id')->on('clinics');
             $table->string('name', 90);
             $table->string('email', 60)->unique();
             $table->string('phone_no', 15);

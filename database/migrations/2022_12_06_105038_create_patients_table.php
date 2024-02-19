@@ -16,11 +16,8 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('clinic_id');
-            $table->foreign('clinic_id')->references('id')->on('clinics');
             $table->integer('doctor_id');
-            $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->string('name', 90);
             $table->string('email', 60)->unique();
             $table->string('gender');
