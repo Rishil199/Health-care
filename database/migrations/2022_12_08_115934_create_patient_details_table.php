@@ -19,7 +19,7 @@ class CreatePatientDetailsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('clinic_id');
             $table->foreign('clinic_id')->references('id')->on('clinics');
-            $table->integer('doctor_id');
+            $table->integer('doctor_id')->nullable();
             $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->string('gender');
             $table->date('admit_date')->nullable()->default('1970-01-01');
