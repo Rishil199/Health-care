@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patient_details', function (Blueprint $table) {
-            $table->boolean('is_mediclaim_available')->nullable()->default(false);
+            $table->boolean('is_mediclaim_available')->nullable()->default(false)->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patient_details', function (Blueprint $table) {
-           $table->dropColumn('is_mediclaim_available');
+           $table->boolean('is_mediclaim_available')->change();
         });
     }
 };
