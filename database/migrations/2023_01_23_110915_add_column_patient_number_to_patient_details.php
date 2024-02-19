@@ -15,7 +15,7 @@ class AddColumnPatientNumberToPatientDetails extends Migration
     {
         Schema::table('patient_details', function (Blueprint $table) {
             $table->string('patient_number',100);
-            $table->integer('receptionist_id')->unsigned()->nullable();
+            $table->integer('receptionist_id')->nullable()->unsigned();
             $table->decimal('height',5,2)->nullable();
             $table->decimal('weight',5,2)->nullable();
             $table->string('blood_group')->nullable();

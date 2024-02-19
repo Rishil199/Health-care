@@ -14,8 +14,7 @@ class AddUserIdToGeneralSettingsTable extends Migration
     public function up()
     {
         Schema::table('general_settings', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
         });
     }
 

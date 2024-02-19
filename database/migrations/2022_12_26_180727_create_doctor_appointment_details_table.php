@@ -15,8 +15,7 @@ class CreateDoctorAppointmentDetailsTable extends Migration
     {
         Schema::create('doctor_appointment_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
             $table->date('appointment_date')->nullable()->default('1970-01-01');
             $table->timestamps();
         });
