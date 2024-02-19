@@ -15,9 +15,9 @@ class CreatePatientDetailsTable extends Migration
     {
         Schema::create('patient_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('clinic_id');
-            $table->integer('doctor_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('clinic_id')->unsigned();
+            $table->integer('doctor_id')->unsigned();
             $table->string('gender');
             $table->date('admit_date')->nullable()->default('1970-01-01');
             $table->string('disease_name')->nullable()->default('N/A');

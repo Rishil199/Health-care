@@ -15,8 +15,8 @@ class CreateReceptionistDetailsTable extends Migration
     {
         Schema::create('receptionist_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('clinic_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('clinic_id')->unsigned();
             $table->string('gender');
             $table->date('birth_date')->nullable()->default('1970-01-01');
             $table->string('qualification')->nullable()->default('N/A');

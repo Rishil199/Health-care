@@ -15,9 +15,9 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('clinic_id');
-            $table->integer('doctor_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('clinic_id')->unsigned();
+            $table->integer('doctor_id')->unsigned();
             $table->string('name', 90);
             $table->string('email', 60)->unique();
             $table->string('gender');

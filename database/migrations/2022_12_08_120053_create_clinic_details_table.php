@@ -15,8 +15,8 @@ class CreateClinicDetailsTable extends Migration
     {
         Schema::create('clinic_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('clinic_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('clinic_id')->unsigned();
             $table->string('address', 191);
             $table->string('latitude', 15);
             $table->string('logitude', 15);
