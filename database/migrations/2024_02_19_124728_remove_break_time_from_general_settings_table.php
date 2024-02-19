@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('patient_details', function (Blueprint $table) {
-            $table->boolean('is_mediclaim_available')->nullable()->default(false)->change();
+        Schema::table('general_settings', function (Blueprint $table) {
+           $table->dropColumn('break_time');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('patient_details', function (Blueprint $table) {
-           $table->boolean('is_mediclaim_available')->change();
+        Schema::table('general_settings', function (Blueprint $table) {
+            $table->string('break_time');
         });
     }
 };
