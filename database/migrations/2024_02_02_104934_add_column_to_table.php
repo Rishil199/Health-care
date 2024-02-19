@@ -35,7 +35,10 @@ return new class extends Migration
            $table->dropColumn('blood_group');
            $table->dropColumn('blood_pressure');
            $table->dropColumn('is_mediclaim_available');
-           $table->dropColumn('');
+           $table->dropColumn('relation');
+           $table->dropColumn('relative_name');
+           $table->dropColumn('emergency_contact');
+
         });
     }
 };
