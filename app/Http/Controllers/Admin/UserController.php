@@ -64,7 +64,7 @@ class UserController extends Controller
         }
 
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-        $rct = ReceptionistDetails::select('clinic_id','user_id')->where('clinic_id',@$clinic_details->id)->first();
+        $rct = ReceptionistDetails::select('clinic_id','user_id')->where('clinic_id',$clinic_details?->id)->first();
         $rt = ReceptionistDetails::select('clinic_id','user_id')->where('clinic_id',Auth::user()->id)->first();
                
         $appointmentsCount = count(DoctorAppointmentDetails::withTrashed()->get());  
@@ -137,26 +137,29 @@ class UserController extends Controller
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
     
-            $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',@$clinic_user_id->clinic_id)->latest()->get();
-            $appointmentsCount = count(DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',@$clinic_user_id->clinic_id)->withTrashed()->get());
+            $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->latest()->get();
+            $appointmentsCount = count(DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->withTrashed()->get());
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
-                        ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
+                        ->orWhere('clinic_id', $clinic_user_id?->clinic_id);
                 })->get()->count();  
+        
            
             $upcoming_appointment = DoctorAppointmentDetails::where('appointment_date','>',$date)->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
-                        ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
+                        ->orWhere('clinic_id', $clinic_user_id?->clinic_id);
                 })->get()->count();
+            
  
             $past_appointment = DoctorAppointmentDetails::where('is_complete','=','1')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
-                        ->orWhere('clinic_id', @$clinic_user_id->clinic_id);
+                        ->orWhere('clinic_id', $clinic_user_id?->clinic_id);
                 })
                 ->where('disease_name','!=','')->get()->count();
+
 
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'

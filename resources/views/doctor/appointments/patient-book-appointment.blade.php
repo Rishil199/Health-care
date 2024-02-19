@@ -63,8 +63,8 @@
             </div>
             </div>
             @endif
-            <input type="hidden" name="clinic_id" value="{{@$clinic_details->id}}">
-            <input type="hidden" name="receptionist_id" value="{{@$receptionist_details->id}}">
+            <input type="hidden" name="clinic_id" value="{{$clinic_details?->id}}">
+            <input type="hidden" name="receptionist_id" value="{{$receptionist_details?->id}}">
             <input type="hidden" name="created_by" value="{{Auth::user()->id}}">
             {{-- <div class="theme-form-input">
                 <label class="theme-label" for="time_start">Time Slot <span class="required">*</span></label>

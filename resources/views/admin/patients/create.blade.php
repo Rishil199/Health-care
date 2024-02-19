@@ -188,7 +188,7 @@
                      <select class="form-control form-select" name="clinic_id" id="clinic-dropdown">
                         <option value="">Select Clinic</option>
                         @foreach($clinics as $value)
-                        <option value="{{ $value->user_id }}">{{ @$value->user->first_name }}</option>
+                        <option value="{{ $value->user_id }}">{{ $value?->user?->first_name }}</option>
                         @endforeach
                      </select>
                   </div>
@@ -201,10 +201,10 @@
                   <label class="theme-label" for="picker1">Select Doctor</label>
                   <div class="theme-form-input">
                      <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
-                        {{-- <option value="">Select Doctor</option>
+                        <option value="">Select Doctor</option>
                         @foreach($doctors as $value)
                         <option value="{{ $value->id }}">{{ $value->user->first_name }} {{ $value->user->last_name }}</option>
-                        @endforeach --}}
+                        @endforeach
                      </select>
                   </div>
                </div>

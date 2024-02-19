@@ -77,7 +77,7 @@
                         <select class="form-control form-select" name="clinic_id" id="clinic-dropdown">
                            <option value="">Select Clinic</option>
                            @foreach($clinics as $value)
-                           <option value="{{ $value->id }}" {{ $patient->clinic_id == $value->id ? 'selected' : '' }}>{{ @$value->user->first_name }}</option>
+                           <option value="{{ $value->id }}" {{ $patient->clinic_id == $value->id ? 'selected' : '' }}>{{ $value?->user?->first_name }}</option>
                            @endforeach
                         </select>
                      </div>

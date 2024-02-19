@@ -244,7 +244,7 @@ class PatientController extends Controller
         $users->save();
         $patient->address = $post_data['address'];
         $patient->gender = $request['gender'];
-        $patient->admit_date = @$request['admit_date'] ? Carbon::createFromFormat('d/m/Y',$request['admit_date']) : null;
+        $patient->admit_date = isset($request['admit_date']) ? Carbon::createFromFormat('d/m/Y',$request['admit_date']) : null;
         $patient->disease_name = $request['disease_name'];
         $patient->patient_number = Str::random(8);
         $patient->allergies = $request['allergies'] ?? '';
@@ -558,7 +558,7 @@ class PatientController extends Controller
     public function fetchDoctors(Request $request)
     {
         $clinic_id = ClinicDetails::where('user_id',$request->clinic_id)->first();
-        $data['doctors'] = DoctorDetails::where("clinic_id",$clinic_id->id)->with('user')->get();
+        $data['doctors'] = DoctorDetails::where('clinic_id',$clinic_id?->id)->with('user')->get();
         return response()->json($data);
     }
 }

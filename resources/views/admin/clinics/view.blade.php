@@ -61,16 +61,16 @@
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item">
-                           <strong>Hospital Name:</strong> <span>{{ @$main_clinic->user->first_name }}</span>
+                           <strong>Hospital Name:</strong> <span>{{ optional($main_clinic->user)->first_name }}</span>
                         </li>
                         <li class="list-group-item">
-                           <strong>Email:</strong> <a href="mailto:{{ @$main_clinic->user->email }}">{{ @$main_clinic->user->email }}</a>
+                           <strong>Email:</strong> <a href="mailto:{{ optional($main_clinic->user)->email }}">{{ optional($main_clinic->user)->email }}</a>
                         </li>
                         <li class="list-group-item">
                            <strong>Status:</strong> <span>{{ $main_clinic->status==0 ? "Deactive" : "Active" }}</span>
                         </li>
                         <li class="list-group-item">
-                           <strong>Phone:</strong> <span>{{ @$main_clinic->user->phone_no }}</span>
+                           <strong>Phone:</strong> <span>{{ optional($main_clinic->user)->phone_no }}</span>
                         </li>
                         <li class="list-group-item">
                            <strong>Address:</strong> <span>{{ $main_clinic->address }}</span>

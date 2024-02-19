@@ -34,6 +34,9 @@ class StorePatientRequest extends FormRequest
                 'gender' => 'required',
                 'doctor_id' => 'required',  
                 'clinic_id' => 'required',
+                'height'=>'required|numeric',
+                'weight'=>'required|numeric',
+                'emergency_contact' => 'required|digits:10|numeric'
             ];
         }
         
