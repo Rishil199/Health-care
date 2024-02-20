@@ -287,6 +287,7 @@ class PatientController extends Controller
         }
         $patient->latitude = $request['latitude'] ? $request['latitude'] : $latitude;
         $patient->logitude = $request['logitude'] ? $request['logitude'] : $logitude;
+        
         $patient->save();
         $token = $request->_token;
 
@@ -313,10 +314,14 @@ class PatientController extends Controller
      */ 
 
     public function show(Request $request, $id) {
-   
 
-        $patient = PatientDetails::select('id','clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude',)->where('id',$id)->with('user')->first();
-       
+        $patient = PatientDetails::select('id','clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude','height','weight','blood_group','blood_pressure','relation','relative_name','emergency_contact')->where('id',$id)->with('user')->first();
+   
+        $patient_history=DoctorAppointmentDetails::select('id','user_id','appointment_date','time_start','time_end'
+        ,'disease_name','prescription','weight','blood_pressure','dietplan','next_date')->where('patient_id',$patient->user_id)->with('user')->get();
+        
+  
+
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
 
             $user_id =PatientDetails::find($id);
@@ -370,6 +375,7 @@ class PatientController extends Controller
                 'title' => 'View Patient Details',
                 'id' => $id,
                 'patient' => $patient,
+                'patient_history'=>$patient_history
             );
             $view = view('admin.patients.view', $this->data)->render();
             

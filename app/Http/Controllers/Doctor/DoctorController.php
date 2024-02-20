@@ -1161,7 +1161,9 @@ class DoctorController extends Controller
                     'appointment_date' => $request->appointment_date,
                     'available_slots' => $available_slots,
                     'clinics' => $clinics,
-                    'selected_date' =>  $selected_date
+                    'selected_date' =>  $selected_date,
+                    'clinic_details'=>$clinic_details,
+                    
                 );
 
                 $view = view('doctor.appointments.patient-book-appointment', $this->data)->render();

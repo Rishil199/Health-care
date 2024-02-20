@@ -1,3 +1,5 @@
+@use ('App\Models\User')
+
 <div class="modal-content">
     <div class="modal-header">
         <div class="title">
@@ -196,6 +198,50 @@
                     </div>
                 </div>
             </div>
+            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
+            <div class="theme-form-input mb-4">
+                <h5 class="mt-5">Medical history -</h5>
+                 </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table table-light">
+                            <tr>
+                                <th scope="col">Appointment Date</th>
+                                <th scope="col">Appointment Time</th>
+                                <th scope="col">Observation</th>
+                                <th scope="col">Prescription</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Blood Pressure</th>
+                                <th scope="col">Diet Plan</th>
+                                <th scope="col">Next Date</th>               
+                            </tr>
+                        </thead>
+                        @if($patient_history->isEmpty())
+                        <tr>
+                        <td class="justify-center">No history available<td>
+                        </tr>
+                            @else
+                     <tbody>
+                        @foreach($patient_history as $history)
+                    <tr>
+                        <td>{{ \Carbon\Carbon::parse($history->appointment_date)->format('d-m-Y')}}</td>
+                        <td>{{ $history->time_start }} - {{ $history->time_end }}</td>
+                        <td>{{ $history->disease_name !==null && $history->disease_name !=='' ? $history->disease_name:'-'}}</td>
+                        <td>{{ $history->prescription ?? '-'}}</td>
+                        <td>{{ $history->weight ?? '-' }}</td>
+                        <td>{{ $history->blood_pressure ?? '-' }}</td>
+                        <td>{{ $history->dietplan ?? '-' }}</td>
+                        <td>{{ $history->next_date ? \Carbon\Carbon::parse($history->next_date)->format('d-m-Y') : '-' }}</td>
+                    </tr>
+                        @endforeach
+                        @endif
+                     </tbody>
+                    </table>
+                    @endif
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
