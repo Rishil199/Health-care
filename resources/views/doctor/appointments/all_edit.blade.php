@@ -164,11 +164,11 @@
             </div>
             
 
-                <h5>Patient medical history -</h5>
+                <h5 class="mb-3"> Medical History -</h5>
             
             <div class="table-responsive">
                 <table class="table table-bordered" id="appointments_table">
-                    <thead>
+                    <thead class="table table-light">
                         <tr>
                             <th scope="col">Appointment Date</th>
                             <th scope="col">Appointment Time</th>

@@ -176,7 +176,7 @@ $(document).on('click', '.patient-view',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-branch-modal', resp.data.view, true, 'modal-lg' );
+                        make_modal( 'add-branch-modal', resp.data.view, true, 'modal-xl' );
                         validateForm( $('.add_branch_form') );
                     }
                 }
