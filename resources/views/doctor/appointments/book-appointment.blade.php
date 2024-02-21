@@ -1,9 +1,9 @@
 @use ('App\Models\User')
 <style> 
-.select-box {
+/* .select-box {
     width:-750px;
     z-index: 19999 !important;
-}
+} */
 /* .book-appointment {
     modal-xl;
 } */

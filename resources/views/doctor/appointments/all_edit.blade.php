@@ -170,6 +170,7 @@
                 <table class="table table-bordered" id="appointments_table">
                     <thead class="table table-light">
                         <tr>
+                            <th>Sr.no</th>
                             <th scope="col">Appointment Date</th>
                             <th scope="col">Appointment Time</th>
                             <th scope="col">Observation</th>
@@ -181,8 +182,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $count=0;?>
                         @foreach ($appointment_history as $history)
+                        <?php $count++;?>
                         <tr class="table-font">
+                            <td>{{$count}}</td>
                             <td>{{ \Carbon\Carbon::parse($history->appointment_date)->format('d-m-Y')}}</td>
                             <td>{{ $history->time_start }} - {{ $history->time_end }}</td>
                             <td>{{ $history->disease_name !==null && $history->disease_name !=='' ? $history->disease_name:'-'}}</td>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\GeneralSettings;
 use App\Models\User;
+use App\Models\DoctorDetails;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,6 +44,10 @@ class DoctorAppointmentDetails extends Model
     //this doctor belongs to user
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function doctor(){
+        return $this->belongsTo(DoctorDetails::class);
     }
 
     public function scopeGetAvailableTimeslotes( $query, $date, $current_time = '' ) {
