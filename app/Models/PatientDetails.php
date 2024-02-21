@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
+
 class PatientDetails extends Model
 {
     use HasFactory;
@@ -43,7 +44,5 @@ class PatientDetails extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function doctor(){
-    //     return $this->belongsTo(DoctorDetails::class);
-    // }
+   
 }
