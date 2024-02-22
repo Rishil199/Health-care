@@ -113,8 +113,7 @@
            <div class="col-md-3 mb-3">
             <div class="form-group theme-form-group">
                 <div class="d-block ">
-                    <label class="theme-label" for="blood_group">Blood Group <span
-                            class="text-danger">*</span></label>
+                    <label class="theme-label" for="blood_group">Blood Group </label>
                 </div>
                 <div class="input-wrapper d-flex">
                     <div class="theme-form-input ">
@@ -128,8 +127,7 @@
             <div class="col-md-3 mb-3">
             <div class="form-group theme-form-group">
                     <div class="d-block">
-                        <label class="theme-label" for="blood_pressure" >Blood Pressure<span
-                                class="text-danger">*</span></label>
+                        <label class="theme-label" for="blood_pressure" >Blood Pressure</label>
                     </div>
                     <div class="input-wrapper d-flex">
                         <div class="theme-form-input ">
@@ -145,7 +143,7 @@
 
       <div class="col-md-6 mb-3">
          <div class="form-group theme-form-group">
-            <label class="theme-label" for="relation">Relation<span class="required">*</span></label>
+            <label class="theme-label" for="relation">Relation</label>
             <div class="theme-form-input">
                <input class="form-control" id="relation" name="relation" type="text" placeholder="Enter Relation"  />
             </div>
@@ -154,7 +152,7 @@
 
       <div class="col-md-6 mb-3">
          <div class="form-group theme-form-group">
-            <label class="theme-label" for="relative_name">Relative Name <span class="required">*</span></label>
+            <label class="theme-label" for="relative_name">Relative Name </label>
             <div class="theme-form-input">
                <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Enter Relative Name"  />
             </div>
@@ -163,7 +161,7 @@
 
       <div class="col-md-6 mb-3">
          <div class="form-group theme-form-group">
-            <label class="theme-label" for="emergency_contact">Emergency contact <span class="required">*</span></label>
+            <label class="theme-label" for="emergency_contact">Emergency contact </label>
             <div class="theme-form-input">
                <input class="form-control" id="emergency_contact" name="emergency_contact" type="tel" placeholder="Emergency contact"  />
             </div>
