@@ -35,7 +35,7 @@
                     <div class="form-group theme-form-group ">
                         <label  class="theme-label " for="end_time">End Time<span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <input class="form-control " id="end_time" name="end_time" type="text" placeholder="End Time"  value="{{ date('H:i A', strtotime($generalSettings?->end_time )) ? date('H:i A', strtotime($generalSettings? ->end_time )) : ' '}}" required />
+                            <input class="form-control " id="end_time" name="end_time" type="text" placeholder="End Time"  value="{{ date('H:i A', strtotime($generalSettings?->end_time )) ? date('H:i A', strtotime($generalSettings?->end_time )) : ' '}}" required />
                             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                         </div>
                         @error('end_time')

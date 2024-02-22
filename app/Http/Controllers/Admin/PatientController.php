@@ -318,7 +318,7 @@ class PatientController extends Controller
         $patient = PatientDetails::select('id','clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude','height','weight','blood_group','blood_pressure','relation','relative_name','emergency_contact')->where('id',$id)->with('user')->first();
         
         $patient_history=DoctorAppointmentDetails::select('id','user_id','doctor_id','appointment_date','time_start','time_end'
-        ,'disease_name','prescription','weight','blood_pressure','dietplan','next_date')->where('patient_id',$patient->user_id)->with(['user','doctor.user'])->orderByDesc('appointment_date')->get();
+        ,'disease_name','prescription','weight','blood_pressure','dietplan','next_date')->where('patient_id',$patient?->user_id)->with(['user','doctor.user'])->orderByDesc('appointment_date')->get();
         
   
 

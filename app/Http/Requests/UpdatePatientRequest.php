@@ -41,8 +41,7 @@ class UpdatePatientRequest extends FormRequest
             'alchohol_consumption' => 'required',
             'diet' => 'required',
             'height'=>'required|numeric',
-            'weight'=>'required|numeric',
-            'emergency_contact' => 'required|digits:10|numeric'
+            'weight'=>'required|numeric'
 
 
         ];

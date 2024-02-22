@@ -119,7 +119,7 @@
                 <div class="input-wrapper d-flex">
                     <div class="theme-form-input ">
                         <input class="form-control " type="text" name="blood_group"
-                            placeholder="Blood Group" id="blood_group" required>
+                            placeholder="Blood Group" id="blood_group" >
                     </div>
                 </div>
                     </div>
@@ -134,7 +134,7 @@
                     <div class="input-wrapper d-flex">
                         <div class="theme-form-input ">
                             <input class="form-control " type="text"
-                                name="blood_pressure" placeholder="119/70" id="blood_pressure" required>
+                                name="blood_pressure" placeholder="119/70" id="blood_pressure" >
                         </div>
                     </div>
                     </div>
@@ -147,7 +147,7 @@
          <div class="form-group theme-form-group">
             <label class="theme-label" for="relation">Relation<span class="required">*</span></label>
             <div class="theme-form-input">
-               <input class="form-control" id="relation" name="relation" type="text" placeholder="Enter Relation" required />
+               <input class="form-control" id="relation" name="relation" type="text" placeholder="Enter Relation"  />
             </div>
          </div>
       </div>
@@ -156,7 +156,7 @@
          <div class="form-group theme-form-group">
             <label class="theme-label" for="relative_name">Relative Name <span class="required">*</span></label>
             <div class="theme-form-input">
-               <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Enter Relative Name" required />
+               <input class="form-control" id="relative_name" name="relative_name" type="text" placeholder="Enter Relative Name"  />
             </div>
          </div>
       </div>
@@ -165,7 +165,7 @@
          <div class="form-group theme-form-group">
             <label class="theme-label" for="emergency_contact">Emergency contact <span class="required">*</span></label>
             <div class="theme-form-input">
-               <input class="form-control" id="emergency_contact" name="emergency_contact" type="tel" placeholder="Emergency contact" required />
+               <input class="form-control" id="emergency_contact" name="emergency_contact" type="tel" placeholder="Emergency contact"  />
             </div>
          </div>
       </div>
