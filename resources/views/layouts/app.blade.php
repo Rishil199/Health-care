@@ -37,16 +37,37 @@
       @yield('content')
       @if(Auth::check())
       <div class="header-upper">
-         <div class="container">
-            <div class="row align-items-center justify-content-between">
-               <div class="col-md-4 col-6">
-                  <div class="logo">
-                     <a href="{{route('admin_dashboard')}}">
-                     <img src="{{ asset('assets/img/narolacare_logo.png') }}" alt="Logo">
-                     </a>
+         <div class="container-fluid h-100">
+            <div class="d-flex align-items-center justify-content-between h-100">
+               <!-- <div class="col-md-4 col-6"> -->
+
+                  <div class="d-flex align-items-center gap-2">
+                      <div class="header-btn">
+                        <button class="btn p-0">
+                           <svg version="1.1" width="22" height="22" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                              viewBox="0 0 299.1 292.7" style="enable-background:new 0 0 299.1 292.7;" xml:space="preserve">
+                              <g>
+                                 <path class="st0" d="M6.6,18.9L6.6,18.9c0-8.7,7-15.7,15.7-15.7h256.1c8.7,0,15.7,7,15.7,15.7v0c0,8.7-7,15.7-15.7,15.7H22.4
+                                    C13.7,34.7,6.6,27.6,6.6,18.9z" style="fill: #fff !important;" />
+                                 <path class="st0" d="M6.7,146.9L6.7,146.9c0-8.7,7-15.7,15.7-15.7h256.1c8.7,0,15.7,7,15.7,15.7v0c0,8.7-7,15.7-15.7,15.7H22.4
+                                    C13.7,162.6,6.7,155.6,6.7,146.9z" style="fill: #fff !important;" />
+                                 <path class="st0" d="M182.4,274.9L182.4,274.9c0,8.7-7.1,15.8-15.8,15.8H22.5c-8.7,0-15.8-7.1-15.8-15.8v0
+                                    c0-8.7,7.1-15.8,15.8-15.8h144.1C175.3,259.2,182.4,266.2,182.4,274.9z" style="fill: #fff !important;" />
+                              </g>
+                           </svg>
+                        </button>
+                     </div>
+
+                      <div class="logo">
+                        <a href="{{route('admin_dashboard')}}">
+                        <img src="{{ asset('assets/img/narolacare_logo.png') }}" alt="Logo">
+                        </a>
+                     </div>
+
                   </div>
-               </div>
-               <div class="col-md-3 col-6">
+                 
+               <!-- </div> -->
+               <!-- <div class="col-md-3 col-6"> -->
                   <div class="hu-right">
                      <div class="noti-block dropdown drop-style-1">
                         {{-- <a href="" class="noti-icon" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -165,31 +186,16 @@
                         </div>
                      </div>
                   </div>
-               </div>
+               <!-- </div> -->
             </div>
          </div>
       </div>
-      <div class="header-lower">
+      <!-- pav add -->
+      <div class="main_body">
+         <div class="header-lower">
          <div class="header-upper-block show">
             <div class="header-upper-left">
-               <div class="header-btn">
-                  <button class="btn">
-                     <svg version="1.1" width="22" height="22" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 299.1 292.7" style="enable-background:new 0 0 299.1 292.7;" xml:space="preserve">
-                        <style type="text/css">
-                           .st0{fill:#26282B;}
-                        </style>
-                        <g>
-                           <path class="st0" d="M6.6,18.9L6.6,18.9c0-8.7,7-15.7,15.7-15.7h256.1c8.7,0,15.7,7,15.7,15.7v0c0,8.7-7,15.7-15.7,15.7H22.4
-                              C13.7,34.7,6.6,27.6,6.6,18.9z"/>
-                           <path class="st0" d="M6.7,146.9L6.7,146.9c0-8.7,7-15.7,15.7-15.7h256.1c8.7,0,15.7,7,15.7,15.7v0c0,8.7-7,15.7-15.7,15.7H22.4
-                              C13.7,162.6,6.7,155.6,6.7,146.9z"/>
-                           <path class="st0" d="M182.4,274.9L182.4,274.9c0,8.7-7.1,15.8-15.8,15.8H22.5c-8.7,0-15.8-7.1-15.8-15.8v0
-                              c0-8.7,7.1-15.8,15.8-15.8h144.1C175.3,259.2,182.4,266.2,182.4,274.9z"/>
-                        </g>
-                     </svg>
-                  </button>
-               </div>
+              
             </div>
             <div class="header-upper-right open">
                <div class="hur-block d-lg-none">
@@ -407,7 +413,7 @@
                            </svg>
 
                            <style type="text/css">
-                              .st0 { fill:#26282B; }
+                              .st0 { fill:#26282B !important; }
                            </style>
 
                            </span>
@@ -672,7 +678,9 @@
             </div>
          </div>
       </div>
-      <div class="breadcrumbs">
+
+      <div class="dashboard_body">
+          <div class="breadcrumbs">
          <div class="container">
             <div class="row align-items-center">
                <div class="col-12">
@@ -712,6 +720,10 @@
       </div>
       
       @yield('content-body')
+      </div>
+      </div>
+      
+     
       @endif
       <footer>
          <div class="container">

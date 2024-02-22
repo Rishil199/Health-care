@@ -1,10 +1,14 @@
 $(document).ready(function() {
     $(document).on('click', '.header-btn .btn', function() {
-        $('.header-upper-right').toggleClass('open');
+        // $('.header-upper-right').toggleClass('open');
+        $('.header-lower').toggleClass('open');
+        $('.dashboard_body').toggleClass('open');
 
     });
     $(document).on('click', '.hur-block .close', function() {
-        $('.header-upper-right').removeClass('open');
+        // $('.header-upper-right').removeClass('open');
+        $('.header-lower').removeClass('open');
+        $('.dashboard_body').toggleClass('open');
     });
 
 

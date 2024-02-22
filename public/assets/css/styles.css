@@ -237,10 +237,14 @@ input[type=number] {
 
 .login-page {
     background-color: rgb(154 179 245 / 15%);
-    background-image: url('../img/login-banner.png');
+   /* background-image: url('../img/login-banner.png');
     background-size: 500px;
     background-repeat: no-repeat;
-    background-position: right 80px center;
+    background-position: right 80px center;*/
+    background-image: url('../img/login-banner-new.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
     height: 100vh;
 }
 
@@ -554,7 +558,7 @@ header {
 }
 
 .header-upper {
-    padding: 15px 0;
+/*    padding: 15px 0;*/
     background: var(--theme-black);
 }
 
@@ -930,7 +934,7 @@ header {
 
 .header-upper-right .responsive li a{
     display: block;
-    padding: 8px 5px;
+    padding: 8px 15px;
     color: #545a6d;
     font-size: 14px;
     font-weight: 600;
@@ -947,6 +951,7 @@ header {
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     text-decoration: none;
+    gap: 8px;
 }
 
 .header-upper-right .responsive li a .svg-icon{
@@ -3181,3 +3186,95 @@ a.testimonial-section {
     text-decoration: none !important;
 }
 
+
+
+
+/*PAV start*/
+.main_body {
+    position: relative;
+}
+
+.header-lower {
+    position: fixed;
+    left: 0;
+    width: 300px;
+    height: calc(100% - 60px);
+    top: 60px;
+}
+
+.header-upper-right .responsive .slick-track {
+        flex-direction: column;
+}
+
+.header-upper-right {
+    padding: 0;
+}
+
+.header-upper-block {
+    flex-direction: column;
+}
+
+.header-upper-left {
+    position: relative;
+    width: 100%;
+}
+
+.dashboard_body {
+    margin-left: 300px;
+    margin-top: 60px;
+    background: #f4f9fd;
+    transition: 0.5s ease-in;
+}
+
+.dashboard_body.open {
+    margin-left: 0;
+}
+
+.header-upper-right .theme-scroll .slick-list {
+    width: 100%;
+}
+
+.header-upper-right .slick-track {
+    width: 100%;
+}
+
+.header-upper-right .slick-track li.slick-slide {
+    width: 100% !important;
+    min-width: 100%;
+}
+
+.header-upper {
+    height: 60px;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.theme-scroll .slick-arrow {
+    display: none !important;
+} 
+
+.header-lower {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+    
+.header-lower.open {
+    -webkit-transform: translateX(-300px);
+    -ms-transform: translateX(-300px);
+    transform: translateX(-300px);
+}
+
+.login_main {
+    padding: 65px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+/*PAV end*/
