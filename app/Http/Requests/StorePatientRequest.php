@@ -35,8 +35,7 @@ class StorePatientRequest extends FormRequest
                 'doctor_id' => 'required',  
                 'clinic_id' => 'required',
                 'height'=>'required|numeric',
-                'weight'=>'required|numeric',
-                'emergency_contact' => 'required|digits:10|numeric'
+                'weight'=>'required|numeric'
             ];
         }
         
@@ -49,8 +48,7 @@ class StorePatientRequest extends FormRequest
                 'address' => 'required',
                 'gender' => 'required',
                 'height'=>'required|numeric',
-                'weight'=>'required|numeric',
-                'emergency_contact' => 'required|digits:10|numeric'
+                'weight'=>'required|numeric'
             ];
         }
     }

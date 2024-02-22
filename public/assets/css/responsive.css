@@ -33,9 +33,9 @@
     .header-btn .btn {
         padding-left: 0;
     }
-    .header-upper-right {
+   /* .header-upper-right {
         padding-left: 5%;
-    }
+    }*/
     .header-upper-right>ul>li {
 /*        width: calc(17.1% - 14px);*/
     }
