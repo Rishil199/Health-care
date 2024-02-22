@@ -54,7 +54,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group">
-                        <label for="Weight" class="theme-label">Weight <span class="required">*</span></label>
+                        <label for="Weight" class="theme-label">Weight </label>
                         <div class="theme-form-input">
                             <input type="text" name="weight" class="form-control"  placeholder="(In KG)" value="{{ $all_appointent->weight }}">
                         </div>
@@ -63,7 +63,7 @@
 
                 <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group">
-                        <label for="Weight" class="theme-label">Blood Pressure <span class="required">*</span></label>
+                        <label for="Weight" class="theme-label">Blood Pressure </label>
                         <div class="theme-form-input">
                             <input type="text" name="blood_pressure" class="form-control" placeholder="119/70">
                         </div>
@@ -75,7 +75,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group">
-                        <label for="observation" class="theme-label">Observation <span class=""></span></label>
+                        <label for="observation" class="theme-label">Observation <span class="required">*</span></label>
                         <div class="theme-form-input">
                             <input type="text" class="form-control" id="disease_name" name="disease_name"
                                 type="text" placeholder="Observation"  value="">
@@ -85,7 +85,7 @@
 
                 <div class="col-md-6 mb-3">
                     <div class="form-group theme-form-group">
-                        <label for="disease_name" class="theme-label">Prescription <span class=""></span></label>
+                        <label for="disease_name" class="theme-label">Prescription <span class="required">*</span></label>
                         <div class="theme-form-input">
                             <input type="text" class="form-control" id="prescription" name="prescription"
                                 type="text" placeholder="Prescription" value="" required>
