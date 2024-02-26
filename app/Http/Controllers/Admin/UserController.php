@@ -36,6 +36,7 @@ class UserController extends Controller
         $clinics=ClinicDetails::where('user_id',Auth::user()->id)->get();
  
     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+ 
 
     $dct = DoctorDetails::select('clinic_id','user_id')->where('user_id',Auth::user()->id)->first();
 
@@ -48,6 +49,8 @@ class UserController extends Controller
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+              
+                 
         }
    
      
@@ -256,6 +259,7 @@ class UserController extends Controller
                  ); 
     
                 }
+                
                 return view('admin.dashboard',$this->data);
       
 

@@ -607,11 +607,7 @@ $(document).on('click', '.edit-patient',function(e) {
     }
 });
 
-$(document).ready(function(){
-    $('#full_calendar_events').click(function(){
-        
-    });
-});
+
 
 
 

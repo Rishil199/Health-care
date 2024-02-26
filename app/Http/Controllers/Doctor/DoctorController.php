@@ -141,10 +141,11 @@ class DoctorController extends Controller
                 if(Auth::user()->hasRole([User::ROLE_RECEPTIONIST])){
                    
                     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+                    
                   
                     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->id)->first();
                   
-                    $doctors = DoctorDetails::select('id','user_id','clinic_id')->where('id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                    $doctors = DoctorDetails::select('id','user_id','clinic_id')->Where('clinic_id',$user_id->clinic_id)->get();
               
                     $patients = PatientDetails::select(array(
                         'id', 'user_id',
@@ -193,10 +194,14 @@ class DoctorController extends Controller
             }
         }
 
-        $generalSettings = GeneralSettings::select('start_time','end_time','duration')->where('user_id',Auth::user()->id)->first();
+        if(Auth::user()->hasRole(User::ROLE_DOCTOR))
+        {
+            $generalSettings = GeneralSettings::select('start_time','end_time','duration')->where('user_id',Auth::user()->id)->first();
+    
+            if($generalSettings == null) {
+                return view('test');
+            }
 
-        if($generalSettings == null) {
-            return view('test');
         }
 
         $user_id = auth()->id();

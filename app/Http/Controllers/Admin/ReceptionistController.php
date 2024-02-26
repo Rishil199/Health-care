@@ -164,7 +164,7 @@ class ReceptionistController extends Controller
      */
 
     public function store( StoreReceptionistRequest $request ) {
-        $role = Role::where(['name' => 'Receptionist'])->first();
+        $role = Role::where(['name' => 'Staff'])->first();
         $post_data = $request->validated();
         $clinic_id = 0;
         $latitude = 0;
@@ -208,7 +208,7 @@ class ReceptionistController extends Controller
         return response()->json(
             [
                'status' => true,
-               'message' => 'New receptionist has been created!'
+               'message' => 'New Staff has been created!'
             ]
         );
     }
@@ -305,7 +305,7 @@ class ReceptionistController extends Controller
         return response()->json(
              [
                'status' => true,
-               'message' => 'Receptionist has been updated.'
+               'message' => 'Staff has been updated.'
              ]
         );
         return response()->json($response);
@@ -325,7 +325,7 @@ class ReceptionistController extends Controller
             $delete_receptionistuser = User::where('id',$delete_receptionist->user_id)->first();
             $delete_receptionistuser->delete();
             return response()->json([
-                'status' => 'Receptionist has been deleted!'
+                'status' => 'Staff has been deleted!'
             ]);
         }
         return response()->json([

@@ -52,4 +52,18 @@ class StorePatientRequest extends FormRequest
             ];
         }
     }
+
+    public function messages(){
+        return [
+
+            'first_name.required'=>'Patient name is required',
+            'email.required'=>'Patient email is required',
+            'email.unique' => 'patient email is already taken.',
+            'phone_no.required'=>'Patient phone number is required',
+            'address.required'=>'Patient address is required',
+            'gender.required'=>'Patient email is required',
+            'height.required'=>'Patient email is required',
+            'weight.required'=>'Patient weight is required'
+        ];
+    }
 }

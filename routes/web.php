@@ -63,14 +63,14 @@ Route::group(['middleware' => 'auth'], function () {
     
         //Routes available to all users
 
-        Route::group(['prefix' => 'permissions'], function() {
-            Route::get('/', [PermissionController::class, 'index'])->name('permissions.index');
-            Route::get('create', [PermissionController::class, 'create'])->name('permissions.create');
-            Route::post('store', [PermissionController::class, 'store'])->name('permissions.store');
-            Route::get('edit/{id}', [PermissionController::class, 'edit'])->name('permissions.edit');
-            Route::put('update/{id}', [PermissionController::class, 'update'])->name('permissions.update');
-            Route::delete('delete', [PermissionController::class, 'destroy'])->name('permissions.destroy');
-        });
+        // Route::group(['prefix' => 'permissions'], function() {
+        //     Route::get('/', [PermissionController::class, 'index'])->name('permissions.index');
+        //     Route::get('create', [PermissionController::class, 'create'])->name('permissions.create');
+        //     Route::post('store', [PermissionController::class, 'store'])->name('permissions.store');
+        //     Route::get('edit/{id}', [PermissionController::class, 'edit'])->name('permissions.edit');
+        //     Route::put('update/{id}', [PermissionController::class, 'update'])->name('permissions.update');
+        //     Route::delete('delete', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+        // });
     
         //roles
         Route::group(['prefix' => 'roles'], function() {
@@ -105,7 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
         
     });
 
-      Route::middleware(['role:Super Admin|Hospital|Receptionist'])->group(function () {
+      Route::middleware(['role:Super Admin|Hospital'])->group(function () {
      //doctors
         Route::group(['prefix' => 'doctors'], function() {
             Route::get('/', [DoctorController::class, 'index'])->name('doctors.index');
@@ -124,7 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::middleware(['role:Super Admin|Hospital'])->group(function () {
         //receptionist
-        Route::group(['prefix' => 'receptionist'], function() {
+        Route::group(['prefix' => 'staff'], function() {
             Route::get('/', [ReceptionistController::class, 'index'])->name('receptionists.index');
             Route::get('create', [ReceptionistController::class, 'create'])->name('receptionists.create');
             Route::post('store', [ReceptionistController::class, 'store'])->name('receptionists.store');
@@ -137,7 +137,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
     // Routes available to super admin and doctor
-    Route::middleware(['role:Super Admin|Doctor|Receptionist|Hospital'])->group(function () {
+    Route::middleware(['role:Super Admin|Doctor|Staff|Hospital'])->group(function () {
          
         //patients
         Route::group(['prefix' => 'patients'], function() {
@@ -154,7 +154,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
         });
-        Route::middleware(['role:Doctor|Receptionist|Hospital'])->group(function () {
+        Route::middleware(['role:Doctor|Staff|Hospital'])->group(function () {
             Route::get('/appointments', [MainDoctorController::class, 'appointments'])->name('appointments.index');
             Route::get('/all_appointment', [MainDoctorController::class, 'all_appointment'])->name('all_appointment');
             Route::get('/todays_appointment', [MainDoctorController::class, 'todays_appointment'])->name('todays_appointment');
@@ -174,7 +174,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
         });
 
-        Route::middleware(['role:Doctor|Receptionist|Hospital|Super Admin|Patient'])->group(function () {
+        Route::middleware(['role:Doctor|Hospital|Super Admin|Patient'])->group(function () {
             Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
         });
 
