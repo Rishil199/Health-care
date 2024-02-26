@@ -164,7 +164,7 @@ class ReceptionistController extends Controller
      */
 
     public function store( StoreReceptionistRequest $request ) {
-        $role = Role::where(['name' => 'Staff'])->first();
+        $role = Role::where(['name' => User::ROLE_RECEPTIONIST])->first();
         $post_data = $request->validated();
         $clinic_id = 0;
         $latitude = 0;
