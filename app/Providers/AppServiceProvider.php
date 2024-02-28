@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\ClinicDetails;
 use App\Models\DoctorDetails;
 use Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        URL::forceScheme('https');
+        
         Schema::defaultStringLength(191);
 
         Gate::before(function ($user, $ability) {
