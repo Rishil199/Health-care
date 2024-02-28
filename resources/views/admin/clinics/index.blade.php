@@ -85,7 +85,7 @@
       <div class="col-12">
          <div class="theme-block mt-4">
             <div class="table-responsive">
-               <table class="table theme-table sr-table clinics-table" id="clinics-table" name="Clinic">
+               <table class="table theme-table sr-table clinics-table" id="clinics-table" name="Hospital">
                   <thead class="table-dark">
                      <th>Name</th>
                      <th>Email</th>

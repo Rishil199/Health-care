@@ -80,10 +80,10 @@ class CustomResetPasswordNotification extends Notification
         return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification'))
             ->greeting(Lang::get('Hello '.$notifiable->first_name ))
-            ->line(Lang::get('You have been added by '.($this->authuser? $this->authuser->first_name:null) . ' as a ' .$notifiable->name.' Please review below URL and login to the panel for manage your clinic details.'))
-            ->action(Lang::get('Reset password'), $url)
+            ->line(Lang::get(' Your ' . $notifiable->name . ' account has been created by '.($this->authuser && $this->authuser->first_name=='Super' ? ' Narola care '. ' '  :($this->authuser ? $this->authuser->first_name.' ':null))  .    ($this->authuser   ?   $this->authuser->name:null)  . '. Please review below URL and login to the panel to manage your details.'))
             ->line(Lang::get('Email : '.$notifiable->email))
-            ->line(Lang::get('In case of any trouble, please contact your clinic admin.'));
+            ->action(Lang::get('Reset password'), $url)
+            ->line(Lang::get('In case of any trouble, please contact your Hospital admin.'));
     }
 
     /**

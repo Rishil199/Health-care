@@ -43,7 +43,6 @@ function displayMessage(message) {
     }
 
 $(document).on('click', '.settings-add-btn',function(e) {
-    console.log("aav");
     e.preventDefault();
     let add_settings_url = $(this).attr('data-url');
     if ( add_settings_url ) {
@@ -55,7 +54,7 @@ $(document).on('click', '.settings-add-btn',function(e) {
                 let resp = response.responseJSON;
                 if ( resp ) {
                     if ( resp.status ) {
-                        make_modal( 'add-settings-modal', resp.data.view, true );
+                        make_modal( 'add-settings-modal', resp.data.view, true, 'modal-lg' );
                         validateSettingsForm( $('.add_settings_form') );
                     }
                 }

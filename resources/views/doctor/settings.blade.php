@@ -17,7 +17,7 @@
         <form action="{{ route('settings.store') }}" method="post" class="add_settings_form" id="add_settings_form" autocomplete="off">
             @csrf
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="form-group theme-form-group">
                         <label  class="theme-label " for="start_time">Start Time<span class="required">*</span></label>
                         <div class="theme-form-input">
@@ -31,7 +31,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="form-group theme-form-group ">
                         <label  class="theme-label " for="end_time">End Time<span class="required">*</span></label>
                         <div class="theme-form-input">
@@ -45,7 +45,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="form-group theme-form-group">
                         <label  class="theme-label" for="duration">Duration (in Minute.)<span class="required">*</span></label>
                         <div class="theme-form-input">
@@ -58,23 +58,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-3">
-                    <div class="form-group theme-form-group">
-                        {{-- <label  class="theme-label" for="break_time">Break Time (in Minute.)<span class="required">*</span></label> --}}
-                        <div class="theme-form-input">
-                            {{-- <input class="form-control" id="break_time" name="break_time" type="number" placeholder="break_time" value="{{  $generalSettings?->break_time}}"  required /> --}}
-                        @error('break_time')
-                        <p class="text-danger" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </p>
-                        @enderror
-                    </div>
-                </div>
-            </div>
+           
              <div class="modal-footer justify-content-center text-center">
                     <button type="submit" value="Add" name="add_settings" class="add_settings btn btn-info mt-4" id="validation-next">
                         <i class="lni lni-save"></i>
-                        Add
+                        Save
                     </button>
                 </div>
         </form>

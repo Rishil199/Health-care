@@ -31,4 +31,13 @@ class StoreClinicRequest extends FormRequest
             'address' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'Hospital name is required.',
+            'first_name.unique' => 'Hospital name is already taken.',
+            'first_name.regex'=> 'Hospital name is invalid.'
+        ];
+    }
 }
