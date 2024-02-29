@@ -170,6 +170,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::delete('delete', [MainDoctorController::class, 'destroy'])->name('all-appointments.destroy');
             Route::get('changeStatus', [MainDoctorController::class, 'changeStatus'])->name('appointments.changeStatus');
             Route::get('/mailview', [MainDoctorController::class, 'mailview'])->name('mailview');
+            Route::post('/fetchDoctortimeslots', [MainDoctorController::class, 'fetchDoctortimeslots'])->name('appointments.fetchDoctortimeslots');
 
         });
         });

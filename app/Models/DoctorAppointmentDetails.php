@@ -51,8 +51,9 @@ class DoctorAppointmentDetails extends Model
     }
 
     public function scopeGetAvailableTimeslotes( $query, $date, $current_time = '' ) {
-        
+       
         $user_id = auth()->id();
+    
 
         $available_time_slots = $query->select(array(
                 'id', 'patient_id', 'time_start', 'time_end', 'appointment_date',
@@ -60,6 +61,12 @@ class DoctorAppointmentDetails extends Model
                 'appointment_date' => $date,
                 'created_by' => $user_id,
             ))->get();
+       
+
+
+
+
+
            
 
         $booked_timeslots = [];
@@ -69,12 +76,16 @@ class DoctorAppointmentDetails extends Model
         }
 
         $booked_timeslots = array_unique($booked_timeslots);
+    
        
         $general_time = GeneralSettings::select(array(
-            'start_time', 'end_time', 'duration'
+            'user_id','start_time', 'end_time', 'duration'
         ))->where(array(
             'user_id' => $user_id,
         ))->first();
+        
+    
+
 
         $current_time = now()->toTimeString();
 
@@ -116,4 +127,6 @@ class DoctorAppointmentDetails extends Model
     public function scopeAppointmentCounts( $query, $where ) {
         return $query->where($where)->get()->count();
     }
+
+   
 }

@@ -36,6 +36,7 @@ class UserController extends Controller
         $clinics=ClinicDetails::where('user_id',Auth::user()->id)->get();
  
     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+  
  
 
     $dct = DoctorDetails::select('clinic_id','user_id')->where('user_id',Auth::user()->id)->first();
@@ -133,12 +134,20 @@ class UserController extends Controller
          
             $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
+            $doctorsIds = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->pluck('id');
+           
+        
+
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id'
-            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
             // $patients = PatientDetails::select(array(
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+           
+       
     
             $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->latest()->get();
             $appointmentsCount = count(DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->withTrashed()->get());
@@ -173,15 +182,19 @@ class UserController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+           
+           
             
-            // $doctors = DoctorDetails::select(array(
-            //     'id','user_id','clinic_id','status','created_at'
-            // ))->latest()->with('user')->where('cliic_id',$user_id->id)->get();
+            $doctorsIds = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->pluck('id');
        
-            
+
             $patients = PatientDetails::select(array(
-                'id','user_id','created_at','doctor_id'
-            ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+                'id','user_id','created_at','doctor_id','clinic_id'
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhereIn('doctor_id',$doctorsIds)->get();
+
+           
             
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
           
