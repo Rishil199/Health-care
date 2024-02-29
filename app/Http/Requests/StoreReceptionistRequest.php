@@ -34,4 +34,22 @@ class StoreReceptionistRequest extends FormRequest
             'experience' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'Staff first name is required.',
+            'first_name.regex'=> 'Staff first name is invalid.',
+            'last_name.required' => ' Staff last name is required.',
+            'last_name.regex'=> 'Staff last name is invalid.',
+            'email.required'=> 'Staff email is required.',
+            'email.unique'=> 'Staff email is already taken.',
+            'phone_no.required'=> 'Staff phone number is required.',
+            'birth_date.required'=> 'Staff birth date is required.',
+            'gender.required'=>'Staff gender is required.',
+            'qualification.required'=>'Staff qualification is required.',
+            'experience.required'=>'Staff experience is required.'
+
+        ];
+    }
 }

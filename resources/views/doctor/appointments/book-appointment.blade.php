@@ -62,15 +62,16 @@
             <input type="hidden" name="clinic_id" value="{{@$clinic_details->id}}">
             <input type="hidden" name="receptionist_id" value="{{@$receptionist_details->id}}">
             <input type="hidden" name="created_by" value="{{Auth::user()->id}}">
+            <input type="hidden" name="doctortime" id="doctortime">
             <div class="theme-form-input mt-3">
                 <label class="theme-label" for="time_start">Time Slot <span class="required">*</span></label>
                 <div class="theme-form-input text-center">
                     <input type="hidden" id="modal-appointment-selected-date-for-check">
                     <select name="time_start" id="time_start" class="form-select form-group select-box">
                         <option value=""> Select Time Slot </option>
-                        @foreach( $available_slots as $time )
+                        {{-- @foreach( $available_slots as $time )
                             <option id="{{ $time }}" value="{{ $time }}" >{{ $time }}</option> 
-                        @endforeach
+                        @endforeach --}}
                     </select>                                  
                 </div>
 
@@ -115,5 +116,37 @@
         }
       }
     });   
+</script>
+
+<script>
+
+  $(document).ready(function () {
+      $('#doctor_id').on('change', function() {
+          var selectedDoctor = this.value;
+          let appointment_date = $(document).find('#appointment_date').val();
+        //   alert(selectedDoctor);
+          $('#time_start').html();
+  $.ajax({
+    type: "post",
+    url: "{{route('appointments.fetchDoctortimeslots')}}",
+    data: {doctor_id:selectedDoctor,
+            appointment_date,
+     },
+    dataType: "json",
+    success: function (result) {
+        $('#time_start').html('<option value="">Select Time Slot</option>');
+                   console.log(result);
+                   $.each(result.arr, function (key, value) {
+                    console.log(key,value)
+                       $("#time_start").append('<option value="' + value + '">'+ value +'</option>');
+                   });
+    },
+    error: function(error,xhr,staus){
+        console.log('Error:',error);
+    }
+});
+});
+});
+
 </script>
 

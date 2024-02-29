@@ -60,9 +60,12 @@ class DoctorController extends Controller
 
     public function appointments(Request $request) {
         
+    
         $user_id = auth()->id();
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',$user_id)->first();
-       $selected_date=$request->appointment_date;
+        $selected_date=$request->appointment_date;
+      
+      
         $doctors = DoctorDetails::select('id','user_id')->where('user_id',Auth::user()->id)->get();
         if(Auth::user()->hasRole(User::ROLE_CLINIC)) {
  
@@ -73,12 +76,16 @@ class DoctorController extends Controller
         if ( $request->ajax() ) {
             
             if ( $request->load_view == 'true' ) {
-     
+                
                 $current_time = now()->toTimeString();
                 
-                $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );
-                
+               
+                $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name);
+               
+                // $availale_slots = GeneralSettings::select('id','user_id','start_time','end_time')->where('user_id', $request->doctor_id)->first();
+               
                 $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            
 
                 if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 
@@ -108,7 +115,11 @@ class DoctorController extends Controller
            
                 if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                     $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-                    
+                  
+                    $doctorsIds = DoctorDetails::select(array(
+                        'id','user_id','clinic_id','status','created_at'
+                    ))->latest()->with('user')->where('clinic_id',$user_id->id)->pluck('id');
+                   
                     $patients = PatientDetails::select(array(
                         'id', 'user_id',
                     ))->with(array(
@@ -119,8 +130,8 @@ class DoctorController extends Controller
                         }
                     ))->where(array(
                         'clinic_id' => $user_id->id,
-                    ))->latest()->get();
-
+                    ))->orWhereIn('doctor_id',$doctorsIds)->latest()->get();
+                   
                 }
 
                 if(Auth::user()->hasRole(User::ROLE_PATIENT)){
@@ -142,11 +153,12 @@ class DoctorController extends Controller
                    
                     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
                     
-                  
                     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->id)->first();
                   
                     $doctors = DoctorDetails::select('id','user_id','clinic_id')->Where('clinic_id',$user_id->clinic_id)->get();
-              
+                  
+                    $doctorsIds = $doctors->pluck('id');
+
                     $patients = PatientDetails::select(array(
                         'id', 'user_id',
                     ))->with(array(
@@ -157,7 +169,8 @@ class DoctorController extends Controller
                         }
                     ))->where(array(
                         'receptionist_id' => $user_id->id,
-                    ))->orWhere('clinic_id',$user_id->clinic_id)->latest()->get();
+                    ))->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->latest()->get();
+                    // dd($patients);
                 }
       
                 $this->data = array(
@@ -1222,6 +1235,7 @@ class DoctorController extends Controller
 
     public function fetchDoctors(Request $request)
     {
+        
         $clinic_id = ClinicDetails::where('user_id',$request->clinic_id)->first();
         $data['doctors'] = DoctorDetails::where("clinic_id",$clinic_id->id)->with('user')->get();
         return response()->json($data);
@@ -1235,6 +1249,7 @@ class DoctorController extends Controller
         $data['generalSettings'] = GeneralSettings::select('start_time','end_time','duration')->where('user_id',$request->clinic_id)->first();
         
         $user_id = auth()->id();
+        
         
         $date = today();
 
@@ -1252,6 +1267,10 @@ class DoctorController extends Controller
             'clinic_id' => $clinic_id->id,
         ))->get();
 
+        
+       
+
+        
         $booked_timeslots = [];
 
         foreach ($available_time_slots as $available) {
@@ -1310,8 +1329,7 @@ class DoctorController extends Controller
     {
         
         $doctor_id = DoctorDetails::where('user_id',$request->doctor_id)->first();
-        
-        
+     
         $data['generalSettings'] = GeneralSettings::select('id','start_time','end_time','duration')->where('user_id',$request->doctor_id)->first();
         
         $user_id = auth()->id();
@@ -1345,14 +1363,17 @@ class DoctorController extends Controller
             'user_id' => $request->doctor_id,
         ))->first();
 
+       
+
         $current_time = now()->toTimeString();
 
         $start = new DateTime($general_time->start_time ?? '');
         $start_time = $start->format('H:i:s');
+       
         
         $end = new DateTime($general_time->end_time ?? '');
         $end_time = $end->format('H:i:s');
-        
+       
         $duration = $general_time->duration ?? 10;
         
         // $break_time = $general_time->break_time ?? 10;
@@ -1370,6 +1391,7 @@ class DoctorController extends Controller
             $start_time = date('H:i:s', strtotime(" +$duration minutes", strtotime($start_time)));
 
             $cur_date = $request->appointment_date;
+      
 
             if ($current_date == $cur_date) {
                 if ( ( strtotime($start_time) < strtotime($end_time) )  && ( $current_time < $start_time )) {
@@ -1383,6 +1405,7 @@ class DoctorController extends Controller
         }
 
         $data['arr'] = array_values(array_diff($data['all_day_time_slots'], $data['booked_timeslots']));
+      
         return response()->json($data);
     }
 
@@ -1688,4 +1711,97 @@ class DoctorController extends Controller
      
     }
 
+    public function fetchDoctortimeslots(Request $request)
+    {
+        
+        // $doctorId=$request->doctor_id;
+        // $doctors=DoctorDetails::select('user_id')->where('id',$doctorId)->first();
+    
+        $doctor_id = DoctorDetails::select('id','user_id')->where('id',$request->doctor_id)->first();
+      
+
+        $data['generalSettings'] = GeneralSettings::select('id','start_time','end_time','duration')->where('user_id',$doctor_id->user_id)->first();
+       
+
+        $available_Slots=GeneralSettings::select('id','user_id','start_time','end_time','duration')
+        ->where('user_id',$doctor_id->user_id)->get();
+
+        
+      
+ 
+        $date = today();
+
+        $available_slot = [];
+    
+        $current_time = now()->toTimeString();
+
+        $data['current_slots'] = DoctorAppointmentDetails::where('doctor_id',$doctor_id->id)->get();
+        
+        $available_time_slots = DoctorAppointmentDetails::with('user')->select(array(
+            'id', 'patient_id', 'time_start', 'time_end', 'appointment_date','doctor_id'
+        ))->where(array(
+            'appointment_date' => $date,
+            'doctor_id' => $doctor_id->id,
+        ))->get();
+
+        
+
+        $booked_timeslots = [];
+
+        foreach ($available_time_slots as $available) {
+            $data['booked_timeslots'][] = $available->time_start . '-' . $available->time_end;
+        }
+    
+        $data['booked_timeslots'] = array_unique($booked_timeslots);
+    
+        $general_time = GeneralSettings::select(array(
+            'start_time', 'end_time', 'duration'
+        ))->where(array(
+            'user_id' => $doctor_id->user_id,
+        ))->first();
+   
+
+        $current_time = now()->toTimeString();
+       
+        $start = new DateTime($general_time->start_time ?? '');
+        $start_time = $start->format('H:i:s');
+        
+        $end = new DateTime($general_time->end_time ?? '');
+        $end_time = $end->format('H:i:s');
+       
+        $duration = $general_time->duration ?? 10;
+        
+        $all_day_time_slots = array();
+
+        $current_date = \Carbon\Carbon::now()->format('Y-m-d');
+        
+        
+        $data['all_day_time_slots']=[];
+    
+        while(strtotime($start_time) <= strtotime($end_time)) {
+            $start = $start_time;
+            $end = date('H:i:s', strtotime("+$duration minutes", strtotime($start_time)));
+    
+            $start_time = date('H:i:s', strtotime(" +$duration minutes", strtotime($start_time)));
+
+            $cur_date = $request->appointment_date;
+
+            if ($current_date == $cur_date) {
+                if ( ( strtotime($start_time) < strtotime($end_time) )  && ( $current_time < $start_time )) {
+                    $data['all_day_time_slots'][] = "$start-$end";
+                }
+            } else {
+                if ( ( strtotime($start_time) <= strtotime($end_time) ) ) {
+                     $data['all_day_time_slots'][]  = "$start-$end";
+                }
+            }
+        }
+    
+        $data['arr'] = array_values(array_diff($data['all_day_time_slots'], $data['booked_timeslots']));
+        return response()->json($data);
+
+    }
+
 }
+
+
