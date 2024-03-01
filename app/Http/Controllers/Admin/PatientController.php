@@ -60,9 +60,14 @@ class PatientController extends Controller
  
                     $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
                     $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id','receptionist_id')->where('clinic_id',$user_id->clinic_id)->first();
+                    $doctorsIds = DoctorDetails::select(array(
+                        'id','user_id','clinic_id','status','created_at'
+                    ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->pluck('id');
+                
+                    
                     $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
-                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
                     
          
                 }
@@ -71,9 +76,15 @@ class PatientController extends Controller
 
                 $user_id = ClinicDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
           
+                $doctorsIds = DoctorDetails::select(array(
+                    'id','user_id','clinic_id','status','created_at'
+                ))->latest()->with('user')->where('clinic_id',$user_id->id)->pluck('id');
+           
+
+
                 $patients = PatientDetails::select(array(
-                    'id','user_id','clinic_id','created_at'
-                ))->latest()->with('user')->where('clinic_id',$clinic_details->id)->orWhere('receptionist_id',$user_id->id)->get();
+                    'id','user_id','clinic_id','doctor_id','created_at'
+                ))->latest()->with('user')->where('clinic_id',$clinic_details->id)->orWhere('receptionist_id',$user_id->id)->orWhereIn('doctor_id',$doctorsIds)->get();
               
               
             }

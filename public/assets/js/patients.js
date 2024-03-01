@@ -70,6 +70,29 @@ function validateForm( $form ) {
                     required: true
                 },
             },
+            messages: {
+                'first_name': {
+                  required: "Patient name is required. ",
+                },
+                'email': {
+                  required: " Patient email is required.",
+                },
+                'phone_no': {
+                  required: "Patient contact number is required",
+                },
+                'address':{
+                    required:'Patient address is required.'
+                },
+                'gender': {
+                    required:'Patient gender is required.'
+                },
+                'height':{
+                    required:'Patient height is required.'
+                },
+                'weight':{
+                    required:'Patient weight is required.'
+                }
+              },
             errorPlacement: function(error, element) {
                 // Styled checkboxes, radios, bootstrap switch
                 if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {

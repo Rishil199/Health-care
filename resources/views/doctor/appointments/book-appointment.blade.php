@@ -59,8 +59,11 @@
                 </select>
             </div>
             @endif
-            <input type="hidden" name="clinic_id" value="{{@$clinic_details->id}}">
-            <input type="hidden" name="receptionist_id" value="{{@$receptionist_details->id}}">
+            <input type="hidden" name="clinic_id" value="{{$clinic_details->id ?? ''}}">
+            <input type="hidden" name="receptionist_id" value="{{$receptionist_details->id?? ''}}">
+            @if (Auth::user()->hasRole(User::ROLE_RECEPTIONIST))
+            <input type="hidden" name="clinic_id" value="{{$receptionist_details->clinic_id?? ''}}">
+            @endif
             <input type="hidden" name="created_by" value="{{Auth::user()->id}}">
             <input type="hidden" name="doctortime" id="doctortime">
             <div class="theme-form-input mt-3">
@@ -69,9 +72,9 @@
                     <input type="hidden" id="modal-appointment-selected-date-for-check">
                     <select name="time_start" id="time_start" class="form-select form-group select-box">
                         <option value=""> Select Time Slot </option>
-                        {{-- @foreach( $available_slots as $time )
+                        @foreach( $available_slots as $time )
                             <option id="{{ $time }}" value="{{ $time }}" >{{ $time }}</option> 
-                        @endforeach --}}
+                        @endforeach
                     </select>                                  
                 </div>
 
@@ -114,8 +117,20 @@
         doctor_id: {
             required: true
         }
-      }
-    });   
+      },
+     messages: {
+    'time_start': {
+      required: "Start time is required. ",
+    },
+    'event_name': {
+      required: " Patient is required.",
+    },
+    'doctor_id': {
+      required: "Doctor is required",
+    },
+  }
+});
+
 </script>
 
 <script>

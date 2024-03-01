@@ -15,6 +15,17 @@ function validateSettingsForm( $form ) {
                     number: true
                 }
             },
+            messages: {
+                'start_time': {
+                  required: "Start time is required. ",
+                },
+                'end_time': {
+                    required: "End time is required.",
+                },
+                'duration': {
+                    required: "Duration is required."
+                }
+            },
             submitHandler: ( form ) => {
                 let url = $form.attr('action');
                 $.ajax({

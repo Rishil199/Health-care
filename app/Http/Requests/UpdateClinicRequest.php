@@ -31,4 +31,16 @@ class UpdateClinicRequest extends FormRequest
             'address' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'Hospital name is required.',
+            'first_name.regex'=> 'Hospital name is invalid.',
+            'email.required'=> 'Hospital email is required.',
+            'phone_no.required'=> 'Hospital phone number is required.',
+            'status.required' => 'Hospital status is required.',
+            'address.required'=> 'Hospital address is required.',
+        ];
+    }
 }

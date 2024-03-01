@@ -38,4 +38,22 @@ class UpdateDoctorRequest extends FormRequest
             'expertice' => 'required'
         ];
     }
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'Doctor name is required.',
+            'first_name.regex'=> 'Doctor name is invalid.',
+            'last_name.required' => 'Doctor last name is required.',
+            'last_name.regex'=> 'Doctor last name is invalid.',
+            'email.required'=> 'Doctor email is required.',
+            'email.unique'=> 'Doctor email is already taken.',
+            'phone_no.required'=> 'Doctor phone number is required.',
+            'status.required' => 'Doctor status is required.',
+            'address.required'=> 'Doctor address is required.',
+            'birth_date.required'=> 'Doctor birth date is required.',
+            'degree.required'=>'Doctor degree is required.',
+            'experience.required'=>'Doctor experience is required.',
+            'expertice.required'=>'Doctor expertice is required.'
+        ];
+    }
 }

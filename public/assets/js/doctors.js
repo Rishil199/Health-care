@@ -117,6 +117,44 @@ function validateForm( $form ) {
                     required: true
                 }
             },
+            messages: {
+                'first_name': {
+                  required: "Doctor first name is required. ",
+                },
+                'last_name':{
+                    required: " Doctor last name is required."
+                },
+                'email': {
+                  required: " Doctor email is required.",
+                },
+                'phone_no': {
+                  required: "Doctor contact number is required",
+                },
+                'birth_date':{
+                    required:'Doctor birth date is required.'
+                },
+                'expertice': {
+                    required:'Doctor expertice is required.'
+                },
+                'status':{
+                    required:'Doctor status is required.'
+                },
+                'clinic_id':{
+                    required:'Doctor clinic is required.'
+                },
+                'address':{
+                    required:'Doctor address is required.'
+                },
+                'gender':{
+                    required:'Doctor gender is required.'
+                },
+                'degree':{
+                    required:'Doctor degree is required.'
+                },
+                'experience':{
+                    required:'Doctor experience is required.'
+                }
+              },
             errorPlacement: function(error, element) {
                 // Styled checkboxes, radios, bootstrap switch
                 if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {

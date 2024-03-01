@@ -62,10 +62,10 @@
                                                             User::ROLE_DOCTOR,
                                                             User::ROLE_RECEPTIONIST,
                                                         ]))
-                                                        <span class="fs-4">{{ $appointmentsCount }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="doc-data-title">Appointments</div>
+                                                        <div class="theme-card-fig-title">All Appointments</div>
+                                                        @endif
+                                                    </div>
+                                                    <span class="fs-4">{{ $appointmentsCount }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -82,10 +82,9 @@
                                             <div class="doc-data-card patient">
                                                 <div class="doc-data">
                                                     <div class="doc-data-count">
-                                                        <span class="fs-4">{{ $todays_appointment }}</span>
-
+                                                        <div class="theme-card-fig-title">Today Appointments</div>     
                                                     </div>
-                                                    <div class="doc-data-title">Today Appointments</div>
+                                                    <span class="fs-4">{{ $todays_appointment }}</span>
                                                 </div>
                                             </div>
                                         </div>

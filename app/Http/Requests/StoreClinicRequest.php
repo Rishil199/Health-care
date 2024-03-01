@@ -41,8 +41,8 @@ class StoreClinicRequest extends FormRequest
             'email.required'=> 'Hospital email is required.',
             'email.unique'=> 'Hospital email is already taken.',
             'phone_no.required'=> 'Hospital phone number is required.',
-            'address.required'=> 'Hospital address is required.',
             'status.required' => 'Hospital status is required.',
+            'address.required'=> 'Hospital address is required.',
         ];
     }
 }
