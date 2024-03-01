@@ -987,7 +987,7 @@ class DoctorController extends Controller
      */
 
     public function settingsStore(Request $request) {   
-       
+
         GeneralSettings::updateOrCreate(
         [
         'user_id'   => Auth::user()->id,
