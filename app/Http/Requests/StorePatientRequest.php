@@ -57,13 +57,17 @@ class StorePatientRequest extends FormRequest
         return [
 
             'first_name.required'=>'Patient name is required',
+            'first_name.regex'=> 'Patient name is invalid.',
             'email.required'=>'Patient email is required',
             'email.unique' => 'patient email is already taken.',
             'phone_no.required'=>'Patient phone number is required',
             'address.required'=>'Patient address is required',
-            'gender.required'=>'Patient email is required',
-            'height.required'=>'Patient email is required',
-            'weight.required'=>'Patient weight is required'
+            'gender.required'=>'Patient gender is required',
+            'height.required'=>'Patient height is required',
+            'height.numeric'=>'Patient height must be in CM',
+            'weight.required'=>'Patient weight is required',
+            'weight.numeric'=>'Patient weight must be in KG '
+            
         ];
     }
 }

@@ -41,9 +41,37 @@ class UpdatePatientRequest extends FormRequest
             'alchohol_consumption' => 'required',
             'diet' => 'required',
             'height'=>'required|numeric',
-            'weight'=>'required|numeric'
-
+            'weight'=>'required|numeric',
+            'smoke'=>'required|numeric',
 
         ];
+
     }
+
+    public function messages(){
+        return [
+
+            'first_name.required'=>'Patient name is required',
+            'first_name.regex'=> 'Patient name is invalid.',
+            'email.required'=>'Patient email is required',
+            'phone_no.required'=>'Patient phone number is required',
+            'address.required'=>'Patient address is required',
+            'admit_date.required'=>'Patient admit date is required',
+            'gender.required'=>'Patient gender is required',
+            'disease_name.required'=>'Patient disease name is required',
+            'prescription.required'=>'Patient prescription is required',
+            'illness.required'=>'Patient illness is required',
+            'exercise.required'=>'Patient exercise is required',
+            'alchohol_consumption.required'=>'Patient alchohol consumption is required',
+            'diet.required'=>'Patient diet is required',
+            'height.required'=>'Patient height is required',
+            'height.numeric'=>'Patient height must be in CM',
+            'weight.required'=>'Patient weight is required',
+            'weight.numeric'=>'Patient weight must be in KG',
+            'smoke.required'=>'Patient smoke is required',
+            
+        ];
+    }
+
+
 }

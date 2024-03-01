@@ -65,6 +65,9 @@ function validateForm( $form ) {
                 'phone_no': {
                     required: true
                 },
+                'birth_date':{
+                    required:true
+                },
                 'clinic_id': {
                     required: true
                 },
@@ -78,6 +81,35 @@ function validateForm( $form ) {
                     required: true
                 }
             },
+            messages: {
+                'first_name': {
+                  required: "Staff first name is required. ",
+                },
+                'last_name':{
+                    required: " Staff last name is required."
+                },
+                'email': {
+                  required: " Staff email is required.",
+                },
+                'phone_no': {
+                  required: "Staff contact number is required."
+                },
+                'birth_date':{
+                    required:"Staff birth date is required."
+                },
+                'clinic_id':{
+                    required:'Staff clinic is required.'
+                },
+                'gender': {
+                    required:'Staff gender is required.'
+                },
+                'qualification':{
+                    required:'Staff qualification is required.'
+                },
+                'experience':{
+                    required:'Staff experience is required.'
+                }
+              },
             errorPlacement: function(error, element) {
                 // Styled checkboxes, radios, bootstrap switch
                 if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container') ) {
