@@ -7,39 +7,41 @@
                 <hr>
             </div>
 @endif
-    <div class="col-md-6">
+
+    <div class="col-md-6 mb-3">
         <div class="form-group">
-            <label for="name" class="theme-label">Hospital Name <span class="text-danger">*</span></label>
+            <label for="first_name" class="theme-label">Hospital Name <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Hospital Name" required />
+                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter Name" required />
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="email">Email <span class="text-danger">*</span></label>
-            <div class="theme-form-input">
-                <input class="form-control" id="email" name="email" type="email" placeholder="Hospital Email" required />
-            </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="form-group ">
+           <label class="theme-label" for="email">Email <span class="text-danger">*</span></label>
+           <div class="theme-form-input">
+              <input class="form-control" id="email" name="email" type="email" placeholder="Enter Email" required/>
+           </div>
         </div>
-    </div>
-    <div class="col-md-6">
+     </div>
+    <div class="col-md-6 mb-3 ">
         <div class="form-group">
             <label for="phone_no" class="theme-label">Phone No. <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Hospital Phone No." required />
+                <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Enter Phone No." required />
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12 mb-3">
         <div class="form-group">
             <label for="address" class="theme-label">Address <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <textarea class="form-control" id="address" name="address" type="text" placeholder="Hospital Address" style="resize: none;" required></textarea>
+                <textarea class="form-control" id="address" name="address" type="text" placeholder="Enter Address" style="resize: none;" required></textarea>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    {{-- <div class="col-md-6">
         <div class="form-group">
             <div class="form-label label-title d-block">
                 <label for="status" class="theme-label">Status <span class="text-danger">*</span></label>
@@ -49,13 +51,13 @@
                     <input name="status" id="statusActive" type="radio" value="1" checked>
                     <label class="theme-label" for="statusActive">Activate</label>
                 </div>
-                <div class="input-block ms-3">
-                    <input name="status" type="radio" value="0" id="statusNotActive">
-                    <label class="theme-label" for="statusNotActive">Deactive</label>
+                <div class="input-block ms-3"> --}}
+                    <input name="status" type="hidden" value="0" id="statusNotActive">
+                    {{-- <label class="theme-label" for="statusNotActive">Deactive</label>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>     --}}
 @if ( !$modal_view )
         <div class="col-md-6 text-right">
             <a href="javascript: void(0);" class="btn btn-danger mt-4 remove-branch">Remove</a>

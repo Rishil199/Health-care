@@ -5,14 +5,6 @@
             Edit Branch Details 
          <strong>
       </div>
-      <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close">
-         <svg fill="#000000" width="20" height="20" version="1.1" id="lni_lni-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-            <path d="M34.5,32L62.2,4.2c0.7-0.7,0.7-1.8,0-2.5c-0.7-0.7-1.8-0.7-2.5,0L32,29.5L4.2,1.8c-0.7-0.7-1.8-0.7-2.5,0
-               c-0.7,0.7-0.7,1.8,0,2.5L29.5,32L1.8,59.8c-0.7,0.7-0.7,1.8,0,2.5c0.3,0.3,0.8,0.5,1.2,0.5s0.9-0.2,1.2-0.5L32,34.5l27.7,27.8
-               c0.3,0.3,0.8,0.5,1.2,0.5c0.4,0,0.9-0.2,1.2-0.5c0.7-0.7,0.7-1.8,0-2.5L34.5,32z" fill="#fff">
-            </path>
-            </svg>
-         </button>
    </div>
    <div class="modal-body">
       <form action="{{ route('clinics.update',$clinic->id) }}" method="post" class="update_clinic_form" id="update_clinic_form">
@@ -42,7 +34,7 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-6 mb-3">
+            {{-- <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <div class="d-block ">
                      <label class="theme-label" for="status">Status <span class="required">*</span></label>
@@ -58,7 +50,7 @@
                      </div>
                   </div>
                </div>
-            </div>
+            </div> --}}
             @if($clinic->is_main_branch != 1)
             <div class="col-md-6">
               <div class="form-group theme-form-group">
@@ -78,7 +70,7 @@
                </div>
             </div>
             @endif
-            <div class="col-md-6 mb-3">
+            <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
@@ -91,6 +83,9 @@
                   <i class="lni lni-save"></i>
                   Save
                </button>
+               <button  type="button" class="btn btn-outline-dark mt-4 mx-3" data-bs-dismiss="modal">  
+                  Cancel 
+              </button>
             </div>
          </div>
       </form>

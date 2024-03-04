@@ -4,7 +4,21 @@
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 @endpush
 @section('content-breadcrumb')
+<style>
+.btn-back{
+   background-color: #263b5e;
+    color: white;
+}
+
+</style>
+
 <li>
+   <span>
+    Hospitals  
+   </span>       / 
+   <span class="mx-2">
+  {{$main_clinic->user->first_name}}    
+      </span>    /
    <span>
       <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -48,16 +62,19 @@
       </svg>
    </span>
    <span>
-   {{$title}}
+         {{$title}}
    </span>
 </li>
 
 @endsection
 @section('content-body')
+<div class="container mt-2">
     <div class="row mb-4">
         <div class="col-md-12 mb-3">
-            <div class="card text-left">
-                <h4 class="card-header">Main Hospital Detail</h4>
+         <div class="card-header d-flex justify-content-between align-items-center mx-3 mt-3">
+            <h4 class="mb-0">Hospital Information</h4>
+            <button class="btn-back btn-sm" onclick="window.location='{{route('clinics.index')}}'">Back</button>
+        </div>
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -79,8 +96,8 @@
                 </div>
             </div>
         </div>
+        <div class="col-12">
         <div class="row">
-          <div class="col-12">
              <div class="theme-block mt-4">
                 <div class="table-responsive">
                    <table class="table theme-table sr-table branches-table" id="branches-table" name="Branch">
@@ -100,6 +117,7 @@
           </div>
        </div>
     </div>
+   </div>
 @endsection
 
 @push('footer_js')
