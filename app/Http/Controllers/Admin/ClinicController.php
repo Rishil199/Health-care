@@ -32,6 +32,7 @@ class ClinicController extends Controller
             $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','status','created_at','is_main_branch'
             ))->latest()->where('is_main_branch',1)->with('user')->get();
+         
            
 
             return Datatables::of($clinics)
@@ -160,17 +161,26 @@ class ClinicController extends Controller
      */
 
     public function createBranch(Request $request, $id) {
+        if($id)
+        {
+            $clinic = ClinicDetails::select('id','user_id','clinic_id','status','address','created_at')->where('id',$id)->with('user')->first();
+           
+       
         if ( $request->ajax() ) {
             $this->data = array(
                 'title' => 'Add New Branch',
                 'id' => $id,
+                'clinic'=>$clinic,
             );
+            
+            
             $view = view('admin.clinics.add-branch', $this->data)->render();
             
             $this->data = array(
                 'status' => true,
                 'data' => array(
                     'view' => $view,
+                   
                 ),
             );
         } else {
@@ -180,6 +190,7 @@ class ClinicController extends Controller
             );
         }
         return response()->json($this->data);
+        }
     }
 
     /**
@@ -191,7 +202,7 @@ class ClinicController extends Controller
     public function viewBranch(Request $request, $id) {
         if($id) {
               $clinic = ClinicDetails::select('id','user_id','clinic_id','status','address','created_at')->where('id',$id)->with('user')->first();
-
+             
             if ( $request->ajax() ) {
                 $this->data = array(
                     'title' => 'View Branch Details',
@@ -279,9 +290,7 @@ class ClinicController extends Controller
      */
 
     public function show($id, Request $request) {
-
         if ($request->ajax()) {
-
             if($id) {
                 $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','address','status','created_at','is_main_branch'
@@ -370,6 +379,7 @@ class ClinicController extends Controller
         $main_clinic = ClinicDetails::select(
                 'id','clinic_id','user_id','address','status','created_at','is_main_branch'
              )->where('id',$id)->with('user')->first();
+         
 
         $this->data = array(
             'title' => 'View Branch Details',
