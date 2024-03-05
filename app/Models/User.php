@@ -11,6 +11,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use App\Notifications\CustomResetPasswordNotification;
+// use Spatie\Sluggable\HasSlug;
+// use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
@@ -70,4 +72,16 @@ class User extends Authenticatable
         $this->notify(new CustomResetPasswordNotification($token,$authuser));
     }
     
+
+    //  public function getSlugOptions() : SlugOptions
+    // {
+    //     return SlugOptions::create()
+    //         ->generateSlugsFrom('first_name')
+    //         ->saveSlugsTo('slug');
+    // }
+
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 }

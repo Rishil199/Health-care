@@ -41,14 +41,7 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-6 mb-3">
-               <div class="form-group theme-form-group">
-                  <label class="theme-label" for="birth_date">Birth Date: <span class="text-danger">*</span></label>
-                  <div class="theme-form-input">
-                     <input class="form-control date" id='datepicker' name="birth_date" type="text" placeholder="Birth Date" required />
-                  </div>
-               </div>
-            </div>
+
             @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
@@ -64,23 +57,8 @@
                </div>
             </div>
             @endif
-            <div class="col-md-6 mb-3">
-               <div class="form-group theme-form-group">
-                  <div class="d-block ">
-                     <label class="theme-label" for="status">Status <span class="required">*</span></label>
-                  </div>
-                  <div class="input-wrapper d-flex">
-                     <div class="theme-input radio">
-                        <input name="status" id="statusActive" type="radio" value="1" checked>
-                        <label for="statusActive" class="theme-label">Activate</label>
-                     </div>
-                     <div class="theme-input radio ms-3">
-                        <input name="status" type="radio" value="0" id="statusNotActive">
-                        <label for="statusNotActive" class="theme-label">Deactive</label>
-                     </div>
-                  </div>
-               </div>
-            </div>
+
+
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <div class="d-block ">
@@ -98,6 +76,36 @@
                   </div>
                </div>
             </div>
+
+
+            <div class="col-md-6 mb-3">
+               <div class="form-group theme-form-group">
+                  <label class="theme-label" for="birth_date">Birth Date: <span class="text-danger">*</span></label>
+                  <div class="theme-form-input">
+                     <input class="form-control date" id='datepicker' name="birth_date" type="text" placeholder="Birth Date" required />
+                  </div>
+               </div>
+            </div>
+          
+
+            {{-- <div class="col-md-6 mb-3">
+               <div class="form-group theme-form-group">
+                  <div class="d-block ">
+                     <label class="theme-label" for="status">Status <span class="required">*</span></label>
+                  </div>
+                  <div class="input-wrapper d-flex">
+                     <div class="theme-input radio">
+                        <input name="status" id="statusActive" type="radio" value="1" checked>
+                        <label for="statusActive" class="theme-label">Activate</label>
+                     </div>
+                     <div class="theme-input radio ms-3"> --}}
+                        <input name="status" type="hidden" value="0" id="statusNotActive">
+                        {{-- <label for="statusNotActive" class="theme-label">Deactive</label> --}}
+                     {{-- </div>
+                  </div>
+               </div>
+            </div> --}}
+       
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="qualification">Qualification <span class="required">*</span></label>

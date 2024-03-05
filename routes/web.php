@@ -90,7 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('createMainBranch', [ClinicController::class, 'createMainBranch'])->name('clinics.createMainBranch');
 
             Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');
-            Route::get('view/{id}', [ClinicController::class, 'show'])->name('clinics.view');
+            Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view');
             Route::get('add-branch', [ClinicController::class, 'add_branch'])->name('clinics.add-branch');
             Route::post('store', [ClinicController::class, 'store'])->name('clinics.store');
             Route::delete('delete', [ClinicController::class, 'destroy'])->name('clinics.destroy');

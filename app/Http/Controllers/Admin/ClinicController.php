@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ClinicDetails;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use App\Http\Requests\StoreClinicRequest;
@@ -32,8 +33,11 @@ class ClinicController extends Controller
             $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','status','created_at','is_main_branch'
             ))->latest()->where('is_main_branch',1)->with('user')->get();
-         
            
+            // $slugs = $clinics->map(function ($clinic) {
+            //             return $clinic->user->slug; 
+            //         });
+                    // dd($slug);
 
             return Datatables::of($clinics)
                 ->editColumn('status',function($row){
@@ -52,6 +56,9 @@ class ClinicController extends Controller
                 ->addColumn('fullname', function($row) {
                     return $row?->user?->first_name . ' ' . $row?->user?->last_name;
                 })
+                ->addColumn('slug', function($row) {
+                    return $row?->user?->slug;
+                })
                 ->addColumn('email', function($row) {
                     return '<a href="mailto:' . $row->user->email . '">' . $row->user->email . '</a>';
                 })
@@ -65,49 +72,22 @@ class ClinicController extends Controller
                                             </button>
                                             <ul class="dropdown-menu">
                                             <li>
-                                               <a class="dropdown-item view-clinic" href="'. route('clinics.view', $row->id) .'">
-                                                  <span class="svg-icon">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-                                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-                                                     </svg>
-                                                  </span>
+                                               <a class="dropdown-item view-clinic" href="'. route('clinics.view', $row->user->slug) .'" title="View">
                                                   <span class="svg-text">View</span>
                                                </a>
                                             </li>
                                             <li>
-                                               <a class="dropdown-item add-branch" href="javascript:void(0)" data-url="'. route('clinics.createBranch',$row->id) .'" data-id="'. $row->id .'" data-toggle="addmodal" data-target="#myAddModal">
-                                                  <span class="svg-icon">
-                                                     <svg fill="#000000" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 591.6 591.6" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M581.4,244.8H346.8V10.2c0-5.712-4.488-10.2-10.2-10.2H255c-5.712,0-10.2,4.488-10.2,10.2v234.6H10.2 C4.488,244.8,0,249.288,0,255v81.6c0,5.712,4.488,10.2,10.2,10.2h234.6v234.6c0,5.712,4.488,10.2,10.2,10.2h81.6 c5.712,0,10.2-4.488,10.2-10.2V346.8h234.6c5.712,0,10.2-4.488,10.2-10.2V255C591.6,249.288,587.112,244.8,581.4,244.8z M571.2,326.4H336.6c-5.712,0-10.2,4.488-10.2,10.2v234.6h-61.2V336.6c0-5.712-4.488-10.2-10.2-10.2H20.4v-61.2H255 c5.712,0,10.2-4.488,10.2-10.2V20.4h61.2V255c0,5.712,4.488,10.2,10.2,10.2h234.6V326.4z"></path> <path d="M303.96,33.66h-20.4c-2.856,0-5.1,2.244-5.1,5.1v204c0,2.856,2.244,5.1,5.1,5.1s5.1-2.244,5.1-5.1V43.86h15.3 c2.856,0,5.1-2.244,5.1-5.1S306.816,33.66,303.96,33.66z"></path> </g> </g> </g></svg>
-                                                  </span>
+                                               <a class="dropdown-item add-branch" href="javascript:void(0)" data-url="'. route('clinics.createBranch',$row->id) .'" data-id="'. $row->id .'" data-toggle="addmodal" data-target="#myAddModal" title="Add">
                                                   <span class="svg-text">Add New Branch</span>
                                                </a>
                                             </li>
                                              <li>
-                                               <a class="dropdown-item edit-branch" href="javascript:void(0)" data-url="'. route('clinics.edit', $row->id) .'" data-id="'. $row->id .'" data-toggle="addmodal" data-target="#myAddModal">
-                                                  <span class="svg-icon">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
-                                                     </svg>
-                                                  </span>
+                                               <a class="dropdown-item edit-branch" href="javascript:void(0)" data-url="'. route('clinics.edit', $row->id) .'" data-id="'. $row->id .'" data-toggle="addmodal" data-target="#myAddModal"  title="Edit">
                                                   <span class="svg-text">Edit</span>
                                                </a>
                                             </li>
                                             <li>
-                                               <a class="dropdown-item" href="javascript:delete_main_record(' . $row->id . ');" class="btn btn-delete" title="Delete">
-                                                      <span class="svg-icon">
-                                                         <svg fill="#000000" width="16" height="16" version="1.1" id="lni_lni-trash-can" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-                                                            <g>
-                                                               <path d="M50.7,8.6H41V5c0-2.1-1.7-3.8-3.8-3.8H26.8C24.7,1.3,23,2.9,23,5v3.6h-9.7c-2.1,0-3.8,1.7-3.8,3.8v7.3c0,1,0.8,1.8,1.8,1.8
-                                                                  h1.5v33.9c0,4.1,3.4,7.5,7.5,7.5h23.5c4.1,0,7.5-3.4,7.5-7.5V21.3h1.5c1,0,1.8-0.8,1.8-1.8v-7.3C54.4,10.2,52.8,8.6,50.7,8.6z
-                                                                  M26.5,5c0-0.1,0.1-0.3,0.3-0.3h10.4c0.1,0,0.3,0.1,0.3,0.3v3.6H26.5V5z M13.1,12.3c0-0.1,0.1-0.3,0.3-0.3h11.5h14.4h11.5
-                                                                  c0.1,0,0.3,0.1,0.3,0.3v5.5H13.1V12.3z M47.7,55.3c0,2.2-1.8,4-4,4H20.3c-2.2,0-4-1.8-4-4V21.3h31.5V55.3z"></path>
-                                                               <path d="M32,48.3c1,0,1.8-0.8,1.8-1.8V33.4c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8v13.2C30.3,47.6,31,48.3,32,48.3z"></path>
-                                                               <path d="M40.4,48.3c1,0,1.8-0.8,1.8-1.8V33.4c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8v13.2C38.7,47.6,39.5,48.3,40.4,48.3z"></path>
-                                                               <path d="M23.6,48.3c1,0,1.8-0.8,1.8-1.8V33.4c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8v13.2C21.8,47.6,22.6,48.3,23.6,48.3z"></path>
-                                                            </g>
-                                                         </svg>
-                                                      </span>
+                                               <a class="dropdown-item" href="javascript:delete_main_record(' . $row->id . ');"  title="Delete">
                                                       <span class="svg-text">Delete</span>
                                                     </a>
                                                 </li>
@@ -252,6 +232,7 @@ class ClinicController extends Controller
         $users->phone_no = $request['phone_no'];
         $users->name = $role->name;
         $users->assignRole(Role::findOrFail($role->id));
+        $users->slug=Str::slug( $request['first_name']);
         $users->save();
         $uid=$users->id;
         
@@ -289,9 +270,10 @@ class ClinicController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id, Request $request) {
+    public function show($slug, Request $request) {
+        // dd($slug);
         if ($request->ajax()) {
-            if($id) {
+            if($slug) {
                 $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','address','status','created_at','is_main_branch'
             ))->with('user')->where('clinic_id',$id)->latest()->get();
@@ -376,14 +358,19 @@ class ClinicController extends Controller
             
         }
 
+        $user = User::where('slug', $slug)->firstOrFail();
+        
+
         $main_clinic = ClinicDetails::select(
                 'id','clinic_id','user_id','address','status','created_at','is_main_branch'
-             )->where('id',$id)->with('user')->first();
+             )->where('user_id',$user->id)->with('user')->first();
+            
+
          
 
         $this->data = array(
             'title' => 'View Branch Details',
-            'id' => $id,
+            'slug' => $slug,
             'main_clinic' => $main_clinic,
 
         );
@@ -459,7 +446,7 @@ class ClinicController extends Controller
 
         $post_data = $request->validated();
         $clinic->address = $post_data['address'];
-        $clinic->status = $post_data['status'];
+        // $clinic->status = $post_data['status'];
         $clinic->save();
 
         $clinic->user()->update([
@@ -593,4 +580,20 @@ class ClinicController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+
+
+    // public function display()
+    // {
+    //     $clinics = ClinicDetails::select(array(
+    //         'id','user_id','clinic_id','status','created_at','is_main_branch'
+    //     ))->latest()->where('is_main_branch',1)->with('user')->orderByDesc('created_at')->get();
+      
+    //     $slugs = $clinics->map(function ($clinic) {
+    //         return $clinic->user->slug; 
+    //     });
+        
+    //     dd($slugs);
+        
+
+    // }
 }

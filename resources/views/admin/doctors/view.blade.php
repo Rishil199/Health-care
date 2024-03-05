@@ -91,7 +91,7 @@
         </div>
         <div class="text-center">
             <button  type="button" class="btn btn-outline-dark mt-0  mx-3" data-bs-dismiss="modal">  
-                Cancel 
+                Back 
             </button>
         </div>
     </div>

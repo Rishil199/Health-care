@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\DoctorAppointmentDetails;
+use App\Models\ClinicDetails;
 
 class DoctorDetails extends Model
 {
@@ -31,5 +32,9 @@ class DoctorDetails extends Model
 
     public function appointments(){
         return $this->hasMany(DoctorAppointmentDetails::class);
+    }
+
+    public function clinics(){
+        return $this->belongsTo(ClinicDetails::class,'clinic_id');
     }
 }

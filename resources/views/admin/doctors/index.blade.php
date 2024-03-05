@@ -69,7 +69,7 @@
                <table class="table theme-table sr-table doctors-table" id="doctors-table" name="Doctor">
                   <thead class="table-dark">
                      <th>Name</th>
-                     <th>Email</th>
+                     <th>Hospital name</th>
                      <th>Phone No.</th>
                      <th>Status</th>
                      <th>Created At</th>

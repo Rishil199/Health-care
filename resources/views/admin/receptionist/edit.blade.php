@@ -40,6 +40,28 @@
                      </div>
                   </div>
                </div>
+               
+               <div class="col-md-6 mb-3">
+                  <div class="form-group theme-form-group">
+                     <div class="d-block ">
+                        <label class="theme-label" for="gender">Gender <span class="required">*</span></label>
+                     </div>
+                     <div class="input-wrapper d-flex">
+                        <div class="theme-input radio">
+                           <input name="gender" id="male" type="radio" value="male" {{ $receptionist->gender == "male"  ? 'checked' : '' }}>
+                           <label for="male" class="theme-label" >Male</label>
+                        </div>
+                        <div class="theme-input radio ms-3">
+                           <input name="gender" type="radio" id="female" value="female" {{ $receptionist->gender == "female"  ? 'checked' : '' }}>
+                           <label for="female" class="theme-label">Female</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+
+
                <div class="col-md-6 mb-3">
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="birth_date">Birth Date: <span class="text-danger">*</span></label>
@@ -61,40 +83,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-6 mb-3">
-                  <div class="form-group theme-form-group">
-                     <div class="d-block ">
-                        <label class="theme-label" for="status">Status <span class="required">*</span></label>
-                     </div>
-                     <div class="input-wrapper d-flex">
-                        <div class="theme-input radio">
-                           <input name="status" id="statusActive" type="radio" value="1" {{ $receptionist->status == "1"  ? 'checked' : '' }}>
-                           <label for="statusActive" class="theme-label">Activate</label>
-                        </div>
-                        <div class="theme-input radio ms-3">
-                           <input name="status" type="radio" value="0" id="statusNotActive" {{ $receptionist->status == "0"  ? 'checked' : '' }}>
-                           <label for="statusNotActive" class="theme-label">Deactive</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-6 mb-3">
-                  <div class="form-group theme-form-group">
-                     <div class="d-block ">
-                        <label class="theme-label" for="gender">Gender <span class="required">*</span></label>
-                     </div>
-                     <div class="input-wrapper d-flex">
-                        <div class="theme-input radio">
-                           <input name="gender" id="male" type="radio" value="male" {{ $receptionist->gender == "male"  ? 'checked' : '' }}>
-                           <label for="male" class="theme-label" >Male</label>
-                        </div>
-                        <div class="theme-input radio ms-3">
-                           <input name="gender" type="radio" id="female" value="female" {{ $receptionist->gender == "female"  ? 'checked' : '' }}>
-                           <label for="female" class="theme-label">Female</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+            
                <div class="col-md-6 mb-3">
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="qualification">Qualification <span class="required">*</span></label>

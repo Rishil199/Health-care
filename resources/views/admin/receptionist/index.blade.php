@@ -89,7 +89,8 @@
                <table class="table theme-table sr-table receptionists-table" id="receptionists-table" style="width: 100%" name="Staff">
                   <thead class="table-dark">
                      <th>Name</th>
-                     <th>Email</th>
+                     <th>Hospital Name</th>
+                     {{-- <th>Email</th> --}}
                      <th>Phone No.</th>
                      <th>Status</th>
                      <th>Created At</th>
