@@ -37,13 +37,6 @@ class DoctorController extends Controller
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with(['user','clinics'])->get();
 
-            $hospitalName=null;
-            foreach($doctors as $doctor){
-                $hospitalName=$doctor->clinics?->user->first_name;
-            }
-
-
-
             if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
         
                 $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
@@ -84,8 +77,8 @@ class DoctorController extends Controller
                     '<a href="mailto:' . $row->user->email . '?" class="small">' . $row->user->email . '</a>';
                 })
                 ->addColumn('email', function($row) {
-                   $hospitalName= $row->clinics? $row->clinics->user->first_name:'';
-                    return $hospitalName;
+                  return $row->clinics? $row->clinics->user->first_name:'';
+       
                 })
                 ->addColumn('action', function($row) {
                     $actionBtn =   '<div class="dropable-btn">
