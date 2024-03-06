@@ -36,7 +36,6 @@ class ReceptionistController extends Controller
             foreach($receptionist as $staff){
                 $hospitalName=$staff->clinics?->user->first_name;
             }
-            // dd($hospitalName);
 
             if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();

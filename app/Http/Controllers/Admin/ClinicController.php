@@ -34,11 +34,7 @@ class ClinicController extends Controller
                 'id','user_id','clinic_id','status','created_at','is_main_branch'
             ))->latest()->where('is_main_branch',1)->with('user')->get();
            
-            // $slugs = $clinics->map(function ($clinic) {
-            //             return $clinic->user->slug; 
-            //         });
-                    // dd($slug);
-
+            
             return Datatables::of($clinics)
                 ->editColumn('status',function($row){
                     if($row->status == 1){
