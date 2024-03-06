@@ -270,15 +270,22 @@ class ClinicController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($slug, Request $request) {
-        // dd($slug);
+    public function show($slug='', Request $request) {
+        
+        
+        $user = User::where('slug', $slug)->firstOrFail();
+
         if ($request->ajax()) {
             if($slug) {
                 $clinics = ClinicDetails::select(array(
                 'id','user_id','clinic_id','address','status','created_at','is_main_branch'
-            ))->with('user')->where('clinic_id',$id)->latest()->get();
+            ))->with('user')->where('user_id',$user->id)->latest()->first();
 
-            return Datatables::of($clinics)
+            $branches= ClinicDetails::select(
+                'id','clinic_id','user_id','address','status','created_at','is_main_branch'
+             )->where('clinic_id',$clinics->id)->with('user')->get();
+         
+            return Datatables::of($branches)
                 ->addColumn('fullname', function($row) {
                     return $row?->user?->first_name . ' ' . $row?->user?->last_name;
                 })
@@ -358,14 +365,11 @@ class ClinicController extends Controller
             
         }
 
-        $user = User::where('slug', $slug)->firstOrFail();
-        
 
         $main_clinic = ClinicDetails::select(
                 'id','clinic_id','user_id','address','status','created_at','is_main_branch'
              )->where('user_id',$user->id)->with('user')->first();
             
-
          
 
         $this->data = array(
@@ -582,18 +586,5 @@ class ClinicController extends Controller
     }
 
 
-    // public function display()
-    // {
-    //     $clinics = ClinicDetails::select(array(
-    //         'id','user_id','clinic_id','status','created_at','is_main_branch'
-    //     ))->latest()->where('is_main_branch',1)->with('user')->orderByDesc('created_at')->get();
-      
-    //     $slugs = $clinics->map(function ($clinic) {
-    //         return $clinic->user->slug; 
-    //     });
-        
-    //     dd($slugs);
-        
-
-    // }
+    
 }

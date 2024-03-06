@@ -4,7 +4,7 @@
         <div class="title">
             <strong>Add New Staff </strong>
         </div>
-    </div>
+      </div>
     <div class="modal-body">
         <form action="{{ route('receptionists.store') }}" method="post" class="add-receptionists-form" id="add-receptionists-form" autocomplete="off">
             @csrf
@@ -13,7 +13,7 @@
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="first_name">First Name <span class="required">*</span></label>
                         <div class="theme-form-input">
-                           <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Staff First Name" />
+                           <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter First Name" />
                         </div>
                   </div>
                </div>
@@ -21,7 +21,7 @@
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="last_name">Last Name <span class="required">*</span></label>
                         <div class="theme-form-input">
-                            <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Staff Last Name" />
+                            <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter Last Name" />
                         </div>
                   </div>
                </div>
@@ -29,7 +29,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="email">Email <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="email" name="email" type="email" placeholder="Staff Email" required />
+                     <input class="form-control" id="email" name="email" type="email" placeholder="Enter Email" required />
                   </div>
                </div>
             </div>
@@ -37,7 +37,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="phone_no">Phone No. <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Staff Phone No." required />
+                     <input class="form-control" id="phone_no" name="phone_no" type="tel" placeholder="Enter contact number." required />
                   </div>
                </div>
             </div>
@@ -45,10 +45,10 @@
             @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="picker1">Select Clinic</label>
+                  <label class="theme-label" for="picker1">Choose Clinic</label>
                   <div class="theme-form-input">
                      <select class="form-control form-select" name="clinic_id">
-                        <option value="">Select Clinic</option>
+                        <option value="">Choose Clinic</option>
                         @foreach($clinics as $value)
                         <option value="{{ $value->id }}">{{ $value?->user?->first_name }}</option>
                         @endforeach
@@ -57,8 +57,6 @@
                </div>
             </div>
             @endif
-
-
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <div class="d-block ">
@@ -77,7 +75,6 @@
                </div>
             </div>
 
-
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="birth_date">Birth Date: <span class="text-danger">*</span></label>
@@ -87,7 +84,6 @@
                </div>
             </div>
           
-
             {{-- <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
                   <div class="d-block ">
@@ -110,7 +106,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="qualification">Qualification <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="qualification" name="qualification" type="text" placeholder="Staff Qualification" required />
+                     <input class="form-control" id="qualification" name="qualification" type="text" placeholder="Enter Qualification" required />
                   </div>
                </div>
             </div>
@@ -118,7 +114,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="experience">Experience <span class="required">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control" id="experience" name="experience" type="text" placeholder="Staff Experience" required />
+                     <input class="form-control" id="experience" name="experience" type="text" placeholder="Enter Experience" required />
                   </div>
                </div>
             </div>

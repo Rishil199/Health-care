@@ -98,8 +98,6 @@ class DoctorController extends Controller
                                             <ul class="dropdown-menu">
                                             <li>
                                                <a class="dropdown-item doctor-view" href="javascript:void(0)" data-url="'. route('doctors.view',$row->id) .'" data-id="'. $row->id .'" data-bs-toggle="viewmodal" data-bs-target="#myViewModal" title="View">
-                                                  <span class="svg-icon">
-                                                  </span>
                                                   <span class="svg-text">View</span>
                                                </a>
                                             </li>

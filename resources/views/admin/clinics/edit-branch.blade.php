@@ -51,7 +51,7 @@
                   </div>
                </div>
             </div> --}}
-            @if($clinic->is_main_branch != 1)
+            {{-- @if($clinic->is_main_branch != 1)
             <div class="col-md-6">
               <div class="form-group theme-form-group">
                   <div class="form-label label-title d-block">
@@ -69,7 +69,7 @@
                   </div>
                </div>
             </div>
-            @endif
+            @endif --}}
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
