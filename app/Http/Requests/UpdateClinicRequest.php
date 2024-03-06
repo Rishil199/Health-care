@@ -27,7 +27,7 @@ class UpdateClinicRequest extends FormRequest
             'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
             'email' => 'required|email',
             'phone_no' => 'required|digits:10|numeric',
-            'status' => 'required',
+            // 'status' => 'required',
             'address' => 'required',
         ];
     }
@@ -39,7 +39,7 @@ class UpdateClinicRequest extends FormRequest
             'first_name.regex'=> 'Hospital name is invalid.',
             'email.required'=> 'Hospital email is required.',
             'phone_no.required'=> 'Hospital phone number is required.',
-            'status.required' => 'Hospital status is required.',
+            // 'status.required' => 'Hospital status is required.',
             'address.required'=> 'Hospital address is required.',
         ];
     }

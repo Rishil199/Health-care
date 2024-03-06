@@ -32,6 +32,11 @@ class ReceptionistController extends Controller
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->get();
 
+            $hospitalName=null;
+            foreach($receptionist as $staff){
+                $hospitalName=$staff->clinics?->user->first_name;
+            }
+
             if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
                 $receptionist = ReceptionistDetails::select(array(
@@ -55,10 +60,12 @@ class ReceptionistController extends Controller
                     return $formatedDate;
                 })
                 ->addColumn('fullname', function($row) {
-                    return $row->user->first_name.' '.$row->user->last_name;
+                    return $row->user->first_name.' '.$row->user->last_name.'<br>'.
+                    '<a href="mailto:' . $row->user->email . '?" class="small">' . $row->user->email . '</a>';
                 })
                 ->addColumn('email', function($row) {
-                    return '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>';
+                    $hospitalName= $row->clinics? $row->clinics->user->first_name:'';
+                    return $hospitalName;
                 })
                 ->addColumn('action', function($row) {
                     $actionBtn =   '<div class="dropable-btn">
@@ -70,41 +77,17 @@ class ReceptionistController extends Controller
                                             </button>
                                             <ul class="dropdown-menu">
                                             <li>
-                                               <a class="dropdown-item receptionists-view" href="javascript:void(0)" data-url="'. route('receptionists.view',$row->id) .'" data-id="'. $row->id .'" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
-                                                  <span class="svg-icon">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-                                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-                                                     </svg>
-                                                  </span>
+                                               <a class="dropdown-item receptionists-view" href="javascript:void(0)" data-url="'. route('receptionists.view',$row->id) .'" data-id="'. $row->id .'" data-bs-toggle="viewmodal" data-bs-target="#myViewModal" title="View">
                                                   <span class="svg-text">View</span>
                                                </a>
                                             </li>
                                             <li>
-                                               <a class="dropdown-item edit-receptionists" href="javascript:void(0)" data-url="'. route('receptionists.edit', $row->id) .'" data-id="'. $row->id .'">
-                                                  <span class="svg-icon">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
-                                                     </svg>
-                                                  </span>
+                                               <a class="dropdown-item edit-receptionists" href="javascript:void(0)" data-url="'. route('receptionists.edit', $row->id) .'" data-id="'. $row->id .'" title="Edit">
                                                   <span class="svg-text">Edit</span>
                                                </a>
                                             </li>
                                             <li>
                                                <a class="dropdown-item" href="javascript:delete_record(' . $row->id . ');" class="btn btn-delete" title="Delete">
-                                                      <span class="svg-icon">
-                                                         <svg fill="#000000" width="16" height="16" version="1.1" id="lni_lni-trash-can" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-                                                            <g>
-                                                               <path d="M50.7,8.6H41V5c0-2.1-1.7-3.8-3.8-3.8H26.8C24.7,1.3,23,2.9,23,5v3.6h-9.7c-2.1,0-3.8,1.7-3.8,3.8v7.3c0,1,0.8,1.8,1.8,1.8
-                                                                  h1.5v33.9c0,4.1,3.4,7.5,7.5,7.5h23.5c4.1,0,7.5-3.4,7.5-7.5V21.3h1.5c1,0,1.8-0.8,1.8-1.8v-7.3C54.4,10.2,52.8,8.6,50.7,8.6z
-                                                                  M26.5,5c0-0.1,0.1-0.3,0.3-0.3h10.4c0.1,0,0.3,0.1,0.3,0.3v3.6H26.5V5z M13.1,12.3c0-0.1,0.1-0.3,0.3-0.3h11.5h14.4h11.5
-                                                                  c0.1,0,0.3,0.1,0.3,0.3v5.5H13.1V12.3z M47.7,55.3c0,2.2-1.8,4-4,4H20.3c-2.2,0-4-1.8-4-4V21.3h31.5V55.3z"></path>
-                                                               <path d="M32,48.3c1,0,1.8-0.8,1.8-1.8V33.4c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8v13.2C30.3,47.6,31,48.3,32,48.3z"></path>
-                                                               <path d="M40.4,48.3c1,0,1.8-0.8,1.8-1.8V33.4c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8v13.2C38.7,47.6,39.5,48.3,40.4,48.3z"></path>
-                                                               <path d="M23.6,48.3c1,0,1.8-0.8,1.8-1.8V33.4c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8v13.2C21.8,47.6,22.6,48.3,23.6,48.3z"></path>
-                                                            </g>
-                                                         </svg>
-                                                      </span>
                                                       <span class="svg-text">Delete</span>
                                                     </a>
                                                 </li>
@@ -285,7 +268,7 @@ class ReceptionistController extends Controller
         $logitude = 0;
 
         $receptionist = ReceptionistDetails::with('user')->findOrFail($id);
-        $receptionist->status = $request['status'];
+        // $receptionist->status = $request['status'];
         $receptionist->gender = $request['gender'];
         $receptionist->birth_date = Carbon::parse($request->validated()['birth_date'])->format('Y-m-d h:i');
         $receptionist->qualification = $request->validated()['qualification'];

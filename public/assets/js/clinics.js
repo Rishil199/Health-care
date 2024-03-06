@@ -6,7 +6,8 @@ if ( $('.clinics-table').length ) {
         ajax: clinics_url,
         columns: [
             { data: 'fullname', name: 'fullname' },
-            { data: 'email', name: 'email' },           
+            { data: 'email', name: 'email' }, 
+            // {data: 'slug', name: 'slug'} ,         
             { data: 'user.phone_no', name: 'user.phone_no' },
             { data: 'status', name: 'status' },
             { data: 'created_at', name: 'created_at' },

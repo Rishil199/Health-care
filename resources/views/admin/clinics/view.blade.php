@@ -122,7 +122,7 @@
 
 @push('footer_js')
     <script type="text/javascript">
-        var branches_url = "{{ route('clinics.view',$id) }}"
+        var branches_url = "{{ route('clinics.view',$slug) }}"
         var delete_branch_url = "{{ route('branches.destroy')}}"
         let changeStatus = "{{ route('clinics.changeStatus')}}"
     </script>

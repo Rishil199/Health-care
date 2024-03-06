@@ -17,7 +17,7 @@
                         <label class="theme-label" for="first_name">Name <span class="required">*</span></label>
                         <div class="theme-form-input">
                             <input class="form-control" id="first_name" name="first_name" type="text"
-                                placeholder="Patient Name" required />
+                                placeholder="Enter Name" required />
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                         <label class="theme-label" for="email">Email <span class="required">*</span></label>
                         <div class="theme-form-input">
                             <input class="form-control" id="email" name="email" type="email"
-                                placeholder="Patient Email" required />
+                                placeholder="Enter Email" required />
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         <label class="theme-label" for="phone_no">Phone No. <span class="text-danger">*</span></label>
                         <div class="theme-form-input">
                             <input class="form-control" id="phone_no" name="phone_no" type="tel"
-                                placeholder="Patient Phone No." required />
+                                placeholder="Enter Phone No." required />
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                     <div class="form-group theme-form-group">
                         <label class="theme-label" for="address">Address <span class="text-danger">*</span></label>
                         <div class="theme-form-input">
-                            <textarea class="form-control" id="address" name="address" type="text" placeholder="Patient Address" required></textarea>
+                            <textarea class="form-control" id="address" name="address" type="text" placeholder="Enter Address" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -190,10 +190,10 @@
                 @if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
                     <div class="col-md-6 mb-3">
                         <div class="form-group theme-form-group">
-                            <label class="theme-label" for="picker1">Select Clinic</label>
+                            <label class="theme-label" for="picker1">Choose Clinic</label>
                             <div class="theme-form-input">
                                 <select class="form-control form-select" name="clinic_id" id="clinic-dropdown">
-                                    <option value="">Select Clinic</option>
+                                    <option value="">Choose Clinic</option>
                                     @foreach ($clinics as $value)
                                         <option value="{{ $value->user_id }}">{{ $value?->user?->first_name }}</option>
                                     @endforeach
@@ -205,10 +205,10 @@
                 @if (Auth::user()->hasAnyRole(User::ROLE_SUPER_ADMIN))
                     <div class="col-md-6 mb-3">
                         <div class="form-group theme-form-group">
-                            <label class="theme-label" for="picker1">Select Doctor</label>
+                            <label class="theme-label" for="picker1">Choose Doctor</label>
                             <div class="theme-form-input">
                                 <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
-                                    <option value="">Select Doctor</option>
+                                    <option value="">Choose Doctor</option>
                                     @foreach ($doctors as $value)
                                         <option value="{{ $value->id }}">{{ $value->user->first_name }}
                                             {{ $value->user->last_name }}</option>

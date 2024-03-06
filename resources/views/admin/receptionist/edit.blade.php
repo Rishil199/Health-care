@@ -50,36 +50,6 @@
                </div>
                <div class="col-md-6 mb-3">
                   <div class="form-group theme-form-group">
-                     <label class="theme-label" for="picker1">Select Clinic</label>
-                     <div class="theme-form-input">
-                        <select class="form-control form-select" name="clinic_id">
-                           <option value="">Select Clinic</option>
-                           @foreach($clinics as $value)
-                           <option value="{{ $value->id }}" {{ $receptionist->clinic_id == $value->id ? 'selected' : '' }}>{{ $value?->user?->first_name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-6 mb-3">
-                  <div class="form-group theme-form-group">
-                     <div class="d-block ">
-                        <label class="theme-label" for="status">Status <span class="required">*</span></label>
-                     </div>
-                     <div class="input-wrapper d-flex">
-                        <div class="theme-input radio">
-                           <input name="status" id="statusActive" type="radio" value="1" {{ $receptionist->status == "1"  ? 'checked' : '' }}>
-                           <label for="statusActive" class="theme-label">Activate</label>
-                        </div>
-                        <div class="theme-input radio ms-3">
-                           <input name="status" type="radio" value="0" id="statusNotActive" {{ $receptionist->status == "0"  ? 'checked' : '' }}>
-                           <label for="statusNotActive" class="theme-label">Deactive</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-6 mb-3">
-                  <div class="form-group theme-form-group">
                      <div class="d-block ">
                         <label class="theme-label" for="gender">Gender <span class="required">*</span></label>
                      </div>
@@ -95,6 +65,20 @@
                      </div>
                   </div>
                </div>
+               <div class="col-md-6 mb-3">
+                  <div class="form-group theme-form-group">
+                     <label class="theme-label" for="picker1">Choose Clinic</label>
+                     <div class="theme-form-input">
+                        <select class="form-control form-select" name="clinic_id">
+                           <option value="">Choose Clinic</option>
+                           @foreach($clinics as $value)
+                           <option value="{{ $value->id }}" {{ $receptionist->clinic_id == $value->id ? 'selected' : '' }}>{{ $value?->user?->first_name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            
                <div class="col-md-6 mb-3">
                   <div class="form-group theme-form-group">
                      <label class="theme-label" for="qualification">Qualification <span class="required">*</span></label>
