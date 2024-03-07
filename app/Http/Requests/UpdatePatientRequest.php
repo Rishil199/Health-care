@@ -42,7 +42,7 @@ class UpdatePatientRequest extends FormRequest
             'diet' => 'required',
             'height'=>'required|numeric',
             'weight'=>'required|numeric',
-            'smoke'=>'required|numeric',
+            'smoke'=>'required'
 
         ];
 

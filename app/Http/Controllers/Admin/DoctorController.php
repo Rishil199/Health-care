@@ -35,7 +35,7 @@ class DoctorController extends Controller
             
             $doctors = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with(['user','clinics'])->get();
+            ))->latest()->with(['user','clinic'])->get();
 
             if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
         
@@ -73,11 +73,15 @@ class DoctorController extends Controller
                 })
                 ->addColumn('fullname', function($row) {
                     
-                    return $row->user->first_name.' '.$row->user->last_name.'<br>'.
-                    '<a href="mailto:' . $row->user->email . '?" class="small">' . $row->user->email . '</a>';
+                    return '<div class="text-center mt-5">'.
+                    $row->user->first_name.' '.$row->user->last_name.'<br>'.
+                    '<a href="mailto:' . $row->user->email . '?" class="small">' . $row->user->email . '</a>'.
+                    '</div>';
                 })
                 ->addColumn('email', function($row) {
-                  return $row->clinics? $row->clinics->user->first_name:'';
+                  return '<div class="text-center ">'.
+                   ($row->clinic? $row->clinic->user->first_name:'').
+                   '</div>';
        
                 })
                 ->addColumn('action', function($row) {
@@ -223,6 +227,7 @@ class DoctorController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
+            $request->user()->sendEmailVerificationNotification();
         }
         return response()->json(
             [
@@ -308,7 +313,6 @@ class DoctorController extends Controller
         $doctor = DoctorDetails::with('user')->findOrFail($id);
       
         $doctor->address = $request->validated()['address'];
-        // $doctor->status = $request['status'];
         $doctor->gender = $request['gender'];
         $doctor->birth_date = Carbon::createFromFormat('d/m/Y',$request['birth_date']);
         $doctor->degree = $request->validated()['degree'];
