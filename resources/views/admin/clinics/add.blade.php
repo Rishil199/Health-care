@@ -101,7 +101,7 @@
         </div>
         <div class="col-md-12 text-right">
             <button class="btn btn-info mt-4" id="cancel_clinic_btn" type="button">Cancel</button>
-            <button class="btn btn-info mt-4" id="add_clinic_btn" type="submit">Add</button>
+            <button class="btn btn-info mt-4" id="add_clinic_btn" type="submit">Save</button>
         </div>            
     </div>
 </form>

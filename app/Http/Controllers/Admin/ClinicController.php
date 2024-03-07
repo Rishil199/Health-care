@@ -250,6 +250,7 @@ class ClinicController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
+             $request->user()->sendEmailVerificationNotification();
         }
 
         return response()->json(

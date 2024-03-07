@@ -35,7 +35,7 @@ Route::get('/', function () {
 
 Route::post('subscription/store',  [UserController::class, 'subscriptionStore'])->name('subscription'); 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','verified']], function () {
     
     //Routes available to All Roles
     //dashboard

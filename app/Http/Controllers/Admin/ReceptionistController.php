@@ -32,10 +32,7 @@ class ReceptionistController extends Controller
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->get();
 
-            $hospitalName=null;
-            foreach($receptionist as $staff){
-                $hospitalName=$staff->clinics?->user->first_name;
-            }
+           
 
             if(Auth::user()->hasRole(User::ROLE_CLINIC)){
                 $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
@@ -60,12 +57,16 @@ class ReceptionistController extends Controller
                     return $formatedDate;
                 })
                 ->addColumn('fullname', function($row) {
-                    return $row->user->first_name.' '.$row->user->last_name.'<br>'.
-                    '<a href="mailto:' . $row->user->email . '?" class="small">' . $row->user->email . '</a>';
+                    return '<div class="text-center mt-5 ">' .
+                    $row->user->first_name . ' ' . $row->user->last_name . '<br>' .
+                    '<a href="mailto:' . $row->user->email . '" class="small">' . $row->user->email . '</a>' .
+                    '</div>';
                 })
                 ->addColumn('email', function($row) {
-                    $hospitalName= $row->clinics? $row->clinics->user->first_name:'';
-                    return $hospitalName;
+                   return '<div class="text-center">'.
+                   ($row->clinic? $row->clinic->user->first_name:'').
+                   '</div>'
+                   ;
                 })
                 ->addColumn('action', function($row) {
                     $actionBtn =   '<div class="dropable-btn">
@@ -186,6 +187,7 @@ class ReceptionistController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
+             $request->user()->sendEmailVerificationNotification();
         }
 
         return response()->json(

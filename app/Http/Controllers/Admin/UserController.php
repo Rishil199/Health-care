@@ -141,13 +141,14 @@ class UserController extends Controller
         
 
             $patients = PatientDetails::select(array(
-                'id','user_id','created_at','doctor_id'
+                'id','user_id','created_at','doctor_id','clinic_id'
             ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
             // $patients = PatientDetails::select(array(
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+          
            
-       
+   
     
             $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->latest()->get();
             $appointmentsCount = count(DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->withTrashed()->get());

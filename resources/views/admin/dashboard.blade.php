@@ -20,7 +20,7 @@
                                         @break
 
                                         @case(0)
-                                            <p class="mb-4 text-uppercase text-dark"><b> : Sub Branch </b></p>
+                                            <p class="mb-4 text-uppercase text-dark"><b> Branch : Sub Branch </b></p>
                                         @break
                                     @endswitch
                                 @endforeach
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     @if (Auth::user()->hasRole(User::ROLE_CLINIC) && $doctors->isEmpty())
-                        <div class="alert alert-info fs-7" role="alert">Your doctor is not registerd if you want to book an
+                        <div class="alert alert-info fs-7" role="alert">Your doctor is not registerd, if you want to book an
                             appointment please add doctor.</div>
                     @endif
                 </div>
@@ -754,11 +754,11 @@
                                                             <tbody>
                                                                 @foreach ($patients as $patient)
                                                                     <tr>
-                                                                        <td>{{ ucfirst($patient->user->first_name) . ' ' . ucfirst($patient->user->last_name) }}
+                                                                        <td>{{ ucfirst($patient->user?->first_name) . ' ' . ucfirst($patient->user?->last_name) }}
                                                                         </td>
-                                                                        <td>{{ $patient->user->phone_no }}</td>
+                                                                        <td>{{ $patient->user?->phone_no }}</td>
                                                                         <td class="email_link"><a
-                                                                                href="mailto:{{ $patient->user->email }}">{{ $patient->user->email }}</a>
+                                                                                href="mailto:{{ $patient->user?->email }}">{{ $patient->user?->email }}</a>
                                                                         </td>
                                                                         <td>
                                                                             <div class="table-btns">

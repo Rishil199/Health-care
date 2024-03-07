@@ -68,7 +68,7 @@ class PatientController extends Controller
                     $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
-                    
+              
          
                 }
 

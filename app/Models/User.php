@@ -14,7 +14,7 @@ use App\Notifications\CustomResetPasswordNotification;
 // use Spatie\Sluggable\HasSlug;
 // use Spatie\Sluggable\SlugOptions;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 

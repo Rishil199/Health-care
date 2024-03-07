@@ -26,7 +26,7 @@ class ReceptionistDetails extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function clinics(){
+    public function clinic(){
         return $this->belongsTo(ClinicDetails::class,'clinic_id');
     }
 }
