@@ -243,6 +243,7 @@ class ClinicController extends Controller
         $clinic->save();
        
         $token = $request->_token;
+        // dd($users);
 
         if($users) {
             // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
@@ -250,7 +251,7 @@ class ClinicController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
-             $request->user()->sendEmailVerificationNotification();
+             $users->sendEmailVerificationNotification();
         }
 
         return response()->json(

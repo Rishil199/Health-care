@@ -22,26 +22,26 @@
                   <x-auth-session-status class="alert-success" :status="session('status')" />
                   <form  method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" autocomplete="off">
                      @csrf
-                     <div class="input-with-error">
-                        <div class="input-group mb-3">
+                     <div class="input-with-error mb-3">
+                        <div class="input-group ">
                            <span class="input-group-text input-icon">
                            <i class="lni lni-envelope"></i>
                            </span>
                            <input type="email" class="form-control @error('email') is-invalid @enderror"  name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
                         </div>
                         @error('email')
-                        <div class="mb-3"><span class="text-danger">{{ $message }}</span></div>
+                        <div class="mb-2"><span class="text-danger"> {{$message}} </span></div>
                         @enderror
                      </div>
-                     <div class="input-with-error">
-                        <div class="input-group mb-3">
+                     <div class="input-with-error mb-3">
+                        <div class="input-group ">
                            <span class="input-group-text input-icon">
                            <i class="lni lni-lock-alt"></i>
                            </span>
                            <input type="password" class="form-control @error('password') is-invalid @enderror"  name="password" placeholder="Password">
                         </div>
                         @error('password')
-                        <div class="mb-3"><span class="text-danger">{{ $message }}</span></div>
+                        <div class="mb-2"><span class="text-danger"> {{$message}} </span></div>
                         @enderror
                      </div>
                      <div class="theme-button">

@@ -212,9 +212,11 @@ class UserController extends Controller
          if(Auth::user()->hasRole(User::ROLE_PATIENT)){
 
             $user_id = PatientDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            $patients = PatientDetails::select(array(
-                'id','user_id','created_at','doctor_id'
-            ))->latest()->with('user')->where('id',$user_id->id)->get();
+           
+            // $patients = PatientDetails::select(array(
+            //     'id','user_id','created_at','doctor_id'
+            // ))->latest()->with('user')->where('id',$user_id->id)->get();
+            
         
             // $doctors = DoctorDetails::select(array(
             //     'id','user_id','created_at','clinic_id'
@@ -223,18 +225,18 @@ class UserController extends Controller
             //     'id','user_id','clinic_id','status','created_at'
             // ))->latest()->with('user')->get();
           
-            $authUser= Auth::user();        
-            $doctordetails= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
+          
+            $doctordetails= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$user_id->user_id)
             ->pluck('doctor_id');
-           
+       
+            
             if($doctordetails){
                 $doctors=DoctorDetails::select('id','user_id')->whereIn('id',$doctordetails->all())->with('user')->get();   
-      
             }
 
 
-            $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
-            
+            $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
+        //   dd($appointments);
             $appointmentsCount = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
             
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->count();

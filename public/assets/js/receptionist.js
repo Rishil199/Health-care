@@ -66,7 +66,8 @@ function validateForm( $form ) {
                     required: true
                 },
                 'birth_date':{
-                    required:true
+                    required:true,
+                    date: true,
                 },
                 'clinic_id': {
                     required: true

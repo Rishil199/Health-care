@@ -49,8 +49,9 @@
          </g>
       </svg>
    </span>
-   <span>
+   <span><a href="{{route('receptionists.index')}}" class="text-black text-decoration-none">
    {{$title}}
+      </a>
    </span>
 </li>
 @endsection

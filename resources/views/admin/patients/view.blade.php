@@ -6,186 +6,179 @@
             <strong>View Patient Detail</strong>
         </div>
     </div>
-    <div class="modal-body">
+    <div class="modal-body mx-5">
         <div class="view-block">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="firstName">Name:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="firstName" class="form-control" value="{{ $patient->user->first_name }} {{ $patient->user->last_name }}" disabled>
+                           <span>{{ $patient->user->first_name }} {{ $patient->user->last_name }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="email">Email:</label>
                         <div class="theme-form-input">
-                            <input type="email" id="email" class="form-control" value="{{ $patient->user->email }}" disabled>
+                           <span>{{ $patient->user->email }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group">
                         <label class="theme-label" for="phone_no">Phone No.:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="phone_no" class="form-control" value="{{ $patient->user->phone_no }}" disabled>
+                         <span>{{ $patient->user->phone_no }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="gender">Gender:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="gender" class="form-control" value="{{ $patient->gender }}" disabled>
+                           <span>{{ $patient->gender }}</span>
                         </div>
                     </div>
                 </div>
 
 
 
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="address">Address:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="address" class="form-control" value="{{ $patient->address }}" disabled>
+                            <span>{{ $patient->address }}<span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="d-block">
                             <label class="theme-label" for="height">Height </label>
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-form-input">
-                                <input class="form-control " type="text" name="height"  id="height" value="{{ $patient->height}}" disabled>
+                             <span>{{ $patient->height}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-8 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="d-block">
                             <label class="theme-label" for="weight">Weight </label>
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-form-input">
-                                <input class="form-control " type="text" name="weight" value="{{ $patient->weight}}" id="weight" disabled>
+                               <span>{{ $patient->weight}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="birth_date">Admit Date:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="admit_date" class="form-control" value="{{ $patient->admit_date ? date('d/m/Y', strtotime($patient->admit_date)) : '' }}" disabled>
+                        <span>{{ $patient->admit_date ? date('d/m/Y', strtotime($patient->admit_date)) : '' }}</span>
                         </div>
                     </div>
                 </div>
             
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-8 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="d-block ">
                             <label class="theme-label" for="blood_group">Blood Group </label>
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-form-input ">
-                                <input class="form-control " type="text" name="blood_group"
-                                    value="{{$patient->blood_group}}" id="blood_group" disabled>
+                                <span>{{$patient->blood_group}}</span>
                             </div>
                         </div>
                             </div>
                     </div>
 
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-4 mb-3">
                         <div class="form-group theme-form-group">
                                 <div class="d-block">
                                     <label class="theme-label" for="blood_pressure" >Blood Pressure</label>
                                 </div>
                                 <div class="input-wrapper d-flex">
                                     <div class="theme-form-input ">
-                                        <input class="form-control " type="text"
-                                            name="blood_pressure" value="{{ $patient->blood_pressure}} " id="blood_pressure" disabled>
+                                      <span> {{ $patient->blood_pressure}} </span>
                                     </div>
                                 </div>
                                 </div>
                             </div>
                     
 
-
-
-
-
-
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="disease_name">Disease Name:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="disease_name" class="form-control" value="{{ $patient->disease_name }}" disabled>
+                           <span>{{ $patient->disease_name }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="prescription">Prescription:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="prescription" class="form-control" value="{{ $patient->prescription }}" disabled>
+                           <span>{{ $patient->prescription }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="allergies">Allergies:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="allergies" class="form-control" value="{{ $patient->allergies }}" disabled>
+                            <span>{{ $patient->allergies }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group">
                         <label class="theme-label" for="illness">Medical History:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="illness" class="form-control" value="{{ $patient->illness == "yes"  ? 'Yes' : 'No' }}" disabled>
+                        <span>   <span>{{ $patient->illness == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="exercise">Exercise:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="exercise" class="form-control" value="{{ $patient->exercise == "yes"  ? 'Yes' : 'No' }}" disabled>
+                        <span>{{ $patient->exercise == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="alchohol_consumption">Alchohol Consumption:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="alchohol_consumption" class="form-control" value="{{ $patient->alchohol_consumption == "yes"  ? 'Yes' : 'No' }}" disabled>
+                           <span>{{ $patient->alchohol_consumption == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-8 mb-3">
+                    <div class="theme-form-group ">
                         <label class="theme-label" for="diet">Diet:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="diet" class="form-control" value="{{ $patient->diet == "yes"  ? 'Yes' : 'No' }}" disabled>
+                           <span>{{ $patient->diet == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="theme-form-group mb-3">
+                <div class="col-md-4 mb-3">
+                    <div class="theme-form-group">
                         <label class="theme-label" for="smoke">Smoke:</label>
                         <div class="theme-form-input">
-                            <input type="text" id="smoke" class="form-control" value="{{ $patient->smoke == "yes"  ? 'Yes' : 'No' }}" disabled>
+                           <span>{{ $patient->smoke == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
@@ -243,10 +236,6 @@
             @endif
             
         </div>
-        <div class="text-center">
-        <button  type="button" class="btn btn-outline-dark mt-0  mx-3" data-bs-dismiss="modal">  
-            Back 
-        </button>
-    </div>
+       
     </div>
 </div>

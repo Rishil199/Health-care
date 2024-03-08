@@ -211,7 +211,7 @@
                   <ul class="list-unstyled theme-scroll responsive">
                      @if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST, User::ROLE_PATIENT]))
                      <li>
-                        <a href="{{route('admin_dashboard')}}">
+                        <a href="{{route('admin_dashboard')}}" class="tab-link" data-tab="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" version="1.1" width="16" height="16" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 515 512" style="enable-background:new 0 0 515 512;" xml:space="preserve">
                                  <g>
@@ -239,7 +239,7 @@
                      @endif
                      @if(Auth::user()->hasAnyRole([User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                      <li id="appointment">
-                        <a href="{{route('appointments.index')}}">
+                        <a href="{{route('appointments.index')}}" class="tab-link"  data-tab="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -340,7 +340,7 @@
                      @endif
                      @if(Auth::user()->hasRole(User::ROLE_PATIENT))
                      <li>
-                        <a href="{{route('patient_appointments.index')}}">
+                        <a href="{{route('patient_appointments.index')}}" class="tab-link" data-tab="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -475,7 +475,7 @@
                      @endif
                      @if(Auth::user()->hasAnyRole(User::ROLE_SUPER_ADMIN))
                      <li>
-                        <a href="{{route('clinics.index')}}">
+                        <a href="{{route('clinics.index')}}" class="tab-link"  data-tab="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -526,7 +526,7 @@
                      @endif
                      @if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_CLINIC]))
                      <li class="has-sublist">
-                        <a href="{{route('doctors.index')}}">
+                        <a href="{{route('doctors.index')}}" class="tab-link"  data-tab="tab-link">
                            <span class="svg-icon me-1">
                               <svg width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 409.6 409.6" style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve">
                                  <g>
@@ -641,7 +641,7 @@
                      @endif
                      @if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN , User::ROLE_CLINIC]))
                       <li class="has-sublist">
-                        <a href="{{ route('receptionists.index')}}">
+                        <a href="{{ route('receptionists.index')}}" class="tab-link"  data-tab="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -787,10 +787,14 @@
                                  </g>
                               </svg>
                            </span>
-                           <span>
+                           <span ><a class="text-black text-decoration-none" href="{{route('admin_dashboard')}}">
                            Dashboard
-                           </span> /
-                            @yield('content-breadcrumb')
+                           </a>
+                           </span> 
+                           @if(trim($__env->yieldContent('content-breadcrumb')))
+                           /
+                           @yield('content-breadcrumb')
+                       @endif 
                         </li>
                      </ul>
                   </div>

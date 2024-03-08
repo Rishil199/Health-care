@@ -284,7 +284,8 @@ class PatientController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
-        
+            $users->sendEmailVerificationNotification();
+            
         }
         return response()->json(
             [

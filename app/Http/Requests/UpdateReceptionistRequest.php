@@ -32,7 +32,7 @@ class UpdateReceptionistRequest extends FormRequest
             'email' => 'required|email',
             'phone_no' => 'required|digits:10|numeric',
             // 'status' => 'required',
-            'birth_date' => 'required',
+            'birth_date' => 'required|before:today',
             'gender' => 'required',
             'qualification' => 'required',
             'experience' => 'required',

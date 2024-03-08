@@ -125,9 +125,9 @@
             </div>
             <div class="col-md-12 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="expertice">Expertice <span class="text-danger">*</span></label>
+                  <label class="theme-label" for="expertise">Expertise <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <textarea class="form-control" id="expertice" name="expertice" type="text" placeholder="Enter Expertice" style="resize: none;" required></textarea>
+                     <textarea class="form-control" id="expertise" name="expertice" type="text" placeholder="Enter Expertise" style="resize: none;" required></textarea>
                   </div>
                </div>
             </div>

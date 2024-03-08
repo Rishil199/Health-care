@@ -30,7 +30,7 @@ class StoreDoctorRequest extends FormRequest
             'phone_no' => 'required|digits:10|numeric',
             'status' => 'required',
             'address' => 'required',
-            'birth_date' => 'required|date_format:d/m/Y',
+            'birth_date' => 'required|date_format:d/m/Y|before:today',
             'degree' => 'required',
             'experience' => 'required',
             'expertice' => 'required'
