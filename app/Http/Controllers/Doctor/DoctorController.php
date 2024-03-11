@@ -1479,7 +1479,7 @@ class DoctorController extends Controller
         }
 
         $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
-
+      
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
                 return $row->user->phone_no;

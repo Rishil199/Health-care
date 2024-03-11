@@ -290,3 +290,26 @@ $(document).ready(function() {
         });
     });
 });
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentUrl = window.location.href;
+        var links = document.querySelectorAll('.list-unstyled.theme-scroll.responsive li a');
+        // console.log("links",links);
+        
+        links.forEach(function(link) {
+            
+            if (link.href === currentUrl && !link.parentElement.classList.contains('selected')) {
+                link.parentNode.classList.add('selected');
+            }
+        });
+    });
+
+ $(document).ready(function(){
+    $('.list-unstyled.theme-scroll.responsive li.selected').each(function(){
+        $(this).css({
+            'background-color':'#0084ff',
+        });
+    });
+ });
+    

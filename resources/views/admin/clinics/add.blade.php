@@ -114,5 +114,5 @@
         var delete_clinic_url = "{{ route('clinics.destroy')}}"
     </script>
     <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/clinics.js') }}" />
+    <script src="{{ asset('assets/js/clinics.js') }}" ></script>
 @endpush

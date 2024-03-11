@@ -48,8 +48,9 @@
          </g>
       </svg>
    </span>
-   <span>
+   <span><a href="{{route('clinics.index')}}" class="text-black text-decoration-none">
    {{$title}}
+   </a>
    </span>
 </li>
 @endsection

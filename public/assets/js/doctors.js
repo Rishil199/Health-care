@@ -78,6 +78,11 @@ $(document).on('click', '.btn-add-doctors',function(e) {
 
 function validateForm( $form ) {
     if ( $form.length ) {
+        $.validator.addMethod("phoneNumber", function(value, element) {
+            var regex = /^[+\-\d]+$/;
+            return this.optional(element) || regex.test(value);
+        }, "Please enter a valid phone number.");
+
         let validateForm = $form.validate({
             rules: {
                 'first_name': {
@@ -90,7 +95,8 @@ function validateForm( $form ) {
                     required: true
                 },
                 'phone_no': {
-                    required: true
+                    required: true,
+                    phoneNumber:true
                 },
                 'birth_date': {
                     required: true,
@@ -212,10 +218,14 @@ function validateForm( $form ) {
                         }else{
                         }
                     },
-                    error: function(error) {
+                    error: function(xhr) {
                         $('#loader').hide();
-                        error_notification_add();
-                        validateForm.showErrors(error.responseJSON.errors);
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            validateForm.showErrors(errors);
+                        } else {
+                            error_notification_add();
+                        }
                     },
                 });
             },

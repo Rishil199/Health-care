@@ -73,15 +73,13 @@ class DoctorController extends Controller
                 })
                 ->addColumn('fullname', function($row) {
                     
-                    return '<div class="text-center mt-5">'.
-                    $row->user->first_name.' '.$row->user->last_name.'<br>'.
+                    return '<div class="mt-5">'. '<span class="text-wrap">'. $row->user->first_name.' '.$row->user->last_name. 
                     '<a href="mailto:' . $row->user->email . '?" class="small">' . $row->user->email . '</a>'.
+                    '</span>'.
                     '</div>';
                 })
                 ->addColumn('email', function($row) {
-                  return '<div class="text-center ">'.
-                   ($row->clinic? $row->clinic->user->first_name:'').
-                   '</div>';
+                  return $row->clinic? $row->clinic->user->first_name:'';
        
                 })
                 ->addColumn('action', function($row) {
@@ -227,7 +225,7 @@ class DoctorController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
-            $request->user()->sendEmailVerificationNotification();
+            $users->sendEmailVerificationNotification();
         }
         return response()->json(
             [
@@ -398,8 +396,8 @@ class DoctorController extends Controller
     public function exportCSV(Request $request)
     {
         $fileName = 'Doctor.csv';
-        $doctors = DoctorDetails::with('user')->get();
-
+        $doctors = DoctorDetails::with('user')->orderByDesc('created_at')->get();
+         
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

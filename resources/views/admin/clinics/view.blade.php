@@ -13,10 +13,11 @@
 </style>
 
 <li>
-   <span>
+   <span><a href="{{route('clinics.index')}}" class="text-black text-decoration-none">
     Hospitals  
+    </a>
    </span>       / 
-   <span class="mx-2">
+   <span class="mx-2 text-black ">
   {{$main_clinic->user->first_name}}    
       </span>    /
    <span>
@@ -61,7 +62,7 @@
          </g>
       </svg>
    </span>
-   <span>
+   <span  class="text-black">
          {{$title}}
    </span>
 </li>

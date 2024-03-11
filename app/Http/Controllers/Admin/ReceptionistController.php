@@ -57,16 +57,14 @@ class ReceptionistController extends Controller
                     return $formatedDate;
                 })
                 ->addColumn('fullname', function($row) {
-                    return '<div class="text-center mt-5 ">' .
+                    return '<div class="mt-5 ">'.'<span class="text-wrap">' .
                     $row->user->first_name . ' ' . $row->user->last_name . '<br>' .
                     '<a href="mailto:' . $row->user->email . '" class="small">' . $row->user->email . '</a>' .
+                    '</span>'.
                     '</div>';
                 })
                 ->addColumn('email', function($row) {
-                   return '<div class="text-center">'.
-                   ($row->clinic? $row->clinic->user->first_name:'').
-                   '</div>'
-                   ;
+                   return $row->clinic? $row->clinic->user->first_name:'';
                 })
                 ->addColumn('action', function($row) {
                     $actionBtn =   '<div class="dropable-btn">
@@ -187,7 +185,7 @@ class ReceptionistController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
-             $request->user()->sendEmailVerificationNotification();
+             $users->sendEmailVerificationNotification();
         }
 
         return response()->json(
@@ -341,7 +339,7 @@ class ReceptionistController extends Controller
     public function exportCSV(Request $request)
     {
         $fileName = 'Receptionists.csv';
-        $receptionists = ReceptionistDetails::with('user')->get();
+        $receptionists = ReceptionistDetails::with('user')->orderByDesc('created_at')->get();
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

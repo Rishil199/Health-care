@@ -284,7 +284,8 @@ class PatientController extends Controller
             Password::sendResetLink(
                 $request->only('email')
             );
-        
+            $users->sendEmailVerificationNotification();
+            
         }
         return response()->json(
             [
@@ -505,7 +506,7 @@ class PatientController extends Controller
     public function exportCSV(Request $request)
     {
         $fileName = 'patients.csv';
-        $patients = PatientDetails::with('user')->get();
+        $patients = PatientDetails::with('user')->orderByDesc('created_at')->get();
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

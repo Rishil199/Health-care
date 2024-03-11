@@ -50,6 +50,10 @@ $(document).on('click', '.btn-add-receptionists',function(e) {
 
 function validateForm( $form ) {
     if ( $form.length ) {
+        $.validator.addMethod("phoneNumber",function(value,element){
+            var regex = /^[+\-\d]+$/;
+            return this.optional(element) || regex.test(value);
+        }, "Please enter a valid phone number.");
         console.log('$form', $form);
         let validateForm = $form.validate({
             rules: {
@@ -63,10 +67,12 @@ function validateForm( $form ) {
                     required: true
                 },
                 'phone_no': {
-                    required: true
+                    required: true,
+                    phoneNumber:true
                 },
                 'birth_date':{
-                    required:true
+                    required:true,
+                    date: true,
                 },
                 'clinic_id': {
                     required: true

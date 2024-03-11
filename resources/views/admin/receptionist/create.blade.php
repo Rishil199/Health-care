@@ -64,7 +64,7 @@
                   </div>
                   <div class="input-wrapper d-flex">
                      <div class="theme-input radio">
-                        <input name="gender" id="male" type="radio" value="male">
+                        <input name="gender" id="male" type="radio" value="male" checked>
                         <label for="male" class="theme-label" >Male</label>
                      </div>
                      <div class="theme-input radio ms-3">
@@ -79,7 +79,7 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label" for="birth_date">Birth Date: <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <input class="form-control date" id='datepicker' name="birth_date" type="text" placeholder="Birth Date" required />
+                     <input class="form-control" id='datepicker' name="birth_date" type="text" placeholder="Birth Date" required />
                   </div>
                </div>
             </div>
