@@ -57,11 +57,11 @@ class ReceptionistController extends Controller
                     return $formatedDate;
                 })
                 ->addColumn('fullname', function($row) {
-                    return '<div class="mt-5 ">'.'<span class="text-wrap">' .
-                    $row->user->first_name . ' ' . $row->user->last_name . '<br>' .
-                    '<a href="mailto:' . $row->user->email . '" class="small">' . $row->user->email . '</a>' .
-                    '</span>'.
-                    '</div>';
+                    return '<span class="text-wrap">' .
+                    $row->user->first_name . ' ' . $row->user->last_name . '<div class="mb-0"></div>' .
+                    '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>' .
+                    '</span>';
+                    
                 })
                 ->addColumn('email', function($row) {
                    return $row->clinic? $row->clinic->user->first_name:'';

@@ -3278,3 +3278,7 @@ a.testimonial-section {
     border-radius: 20px;
 }
 /*PAV end*/
+
+li.selected a.tab-link {
+    color: #fff;
+}
