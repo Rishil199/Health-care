@@ -27,7 +27,7 @@ class StoreReceptionistRequest extends FormRequest
             'first_name' => 'required|regex: /^[A-Z]{2,30}+$/i',
             'last_name' => 'required|regex: /^[A-Z]{2,30}+$/i',
             'email' => 'required|email|unique:users,email',
-            'phone_no' => 'required|digits:10|numeric',
+            'phone_no' => 'required|min:10|max:16|regex:/^[+\-\d]+$/',
             'birth_date' => 'required|before:today',
             'gender' => 'required',
             'qualification' => 'required',

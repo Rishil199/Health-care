@@ -2922,7 +2922,7 @@ td {
 }
 */
 input[type=text] { 
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .text-capital {
@@ -3278,8 +3278,3 @@ a.testimonial-section {
     border-radius: 20px;
 }
 /*PAV end*/
-
-
-.tab-link.selected {
-    background-color: #0084ff;
-}

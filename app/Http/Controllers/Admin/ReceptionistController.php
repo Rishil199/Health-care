@@ -339,7 +339,7 @@ class ReceptionistController extends Controller
     public function exportCSV(Request $request)
     {
         $fileName = 'Receptionists.csv';
-        $receptionists = ReceptionistDetails::with('user')->get();
+        $receptionists = ReceptionistDetails::with('user')->orderByDesc('created_at')->get();
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

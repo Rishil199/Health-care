@@ -37,6 +37,12 @@ if ( $('.branches-table').length ) {
 
 function validateForm( $form ) {
     if ( $form.length ) {
+
+        $.validator.addMethod("phoneNumber", function(value, element) {
+            var regex = /^[+\-\d]+$/;
+            return this.optional(element) || regex.test(value);
+        }, "Please enter a valid phone number.");
+
         let validateForm = $form.validate({
             rules: {
                 'first_name': {
@@ -50,6 +56,7 @@ function validateForm( $form ) {
                 },
                 'phone_no': {
                     required: true,
+                    phoneNumber:true
                 },
                 'status': {
                     required: true
@@ -138,10 +145,14 @@ function validateForm( $form ) {
                             $form.parents('.modal').modal('hide');  
                         }
                     },
-                    error: function(error) {
+                    error: function(xhr) {
                         $('#loader').hide();
-                        error_notification_add();
-                        validateForm.showErrors(error.responseJSON.errors);
+                        if(xhr.status===422){
+                         var errors= xhr.responseJSON.errors;   
+                         validateForm.showErrors(errors);
+                        }else {
+                           error_notification_add();
+                        }
                     },
                     complete: function() {
                         $('#loader').hide();

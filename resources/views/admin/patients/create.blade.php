@@ -54,7 +54,7 @@
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-input radio">
-                                <input name="gender" id="male" type="radio" value="male">
+                                <input name="gender" id="male" type="radio" value="male" checked>
                                 <label for="male" class="theme-label">Male</label>
                             </div>
                             <div class="theme-input radio ms-3">

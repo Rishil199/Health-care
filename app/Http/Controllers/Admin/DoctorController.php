@@ -396,8 +396,8 @@ class DoctorController extends Controller
     public function exportCSV(Request $request)
     {
         $fileName = 'Doctor.csv';
-        $doctors = DoctorDetails::with('user')->get();
-
+        $doctors = DoctorDetails::with('user')->orderByDesc('created_at')->get();
+         
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

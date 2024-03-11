@@ -52,7 +52,7 @@ class DoctorAppointmentDetails extends Model
     }
 
     public function patient(){
-        return $this->belongsTo(PatientDetails::class);
+        return $this->belongsTo(PatientDetails::class,'patient_id');
     }
 
     public function scopeGetAvailableTimeslotes( $query, $date, $current_time = '' ) {

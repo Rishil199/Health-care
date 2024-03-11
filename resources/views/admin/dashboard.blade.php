@@ -555,7 +555,7 @@
                                                         <div class="table-responsive">
                                                             <table class="table theme-table sr-table">
                                                                 <thead class="table-dark">
-                                                                    @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_RECEPTIONIST, User::ROLE_DOCTOR]))
+                                                                    @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_RECEPTIONIST, User::ROLE_DOCTOR, User::ROLE_PATIENT]))
                                                                         <th>Name</th>
                                                                     @else
                                                                         <th>Name</th>

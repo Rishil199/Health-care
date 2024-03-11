@@ -30,7 +30,7 @@ class UpdatePatientRequest extends FormRequest
         return [
             'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
             'email' => 'required|email',
-            'phone_no' => 'required|digits:10|numeric',
+            'phone_no' => 'required|min:10|max:16|regex:/^[+\-\d]+$/',
             'address' => 'required',
             'admit_date' => 'required|date_format:d/m/Y',
             'gender' => 'required',
@@ -40,8 +40,8 @@ class UpdatePatientRequest extends FormRequest
             'exercise' => 'required',
             'alchohol_consumption' => 'required',
             'diet' => 'required',
-            'height'=>'required|numeric',
-            'weight'=>'required|numeric',
+            'height'=>'required||regex:/^\d+(\.\d{1})?$/|max:5',
+            'weight'=>'required||regex:/^\d+(\.\d{1})?$/|max:5',
             'smoke'=>'required'
 
         ];

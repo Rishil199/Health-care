@@ -102,15 +102,15 @@ class UserController extends Controller
             $user=(Auth::user());
 
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',$user->id)->first();
-          
-            $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->orWhere('doctor_id',$user_id->id)->first();
+            
+            $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id','patient_id')->where('clinic_id',$user_id->clinic_id)->orWhere('doctor_id',$user_id->id)->first();
            
             $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','created_at','doctor_id'
                  ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
                
-            $appointments = DoctorAppointmentDetails::with('user')->where('doctor_id',$user_id->id)->latest()->get();
-          
+            $appointments = DoctorAppointmentDetails::with('patient.user')->where('doctor_id',$user_id->id)->latest()->get();
+             
             $appointmentsCount = count(DoctorAppointmentDetails::where('doctor_id',$user_id->id)->withTrashed()->get()); 
        
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()
@@ -236,7 +236,7 @@ class UserController extends Controller
 
 
             $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
-        //   dd($appointments);
+   
             $appointmentsCount = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
             
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->count();

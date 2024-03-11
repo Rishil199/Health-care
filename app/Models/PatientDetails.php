@@ -46,7 +46,7 @@ class PatientDetails extends Model
     }
 
     public function appointments(){
-        return $this->hasMany(DoctorAppointmentDetails::class);
+        return $this->hasMany(DoctorAppointmentDetails::class,'patient_id');
     }
    
 }

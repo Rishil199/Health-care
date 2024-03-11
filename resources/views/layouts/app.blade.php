@@ -791,10 +791,10 @@
                            Dashboard
                            </a>
                            </span> 
-                           @if(trim($__env->yieldContent('content-breadcrumb')))
-                           /
-                           @yield('content-breadcrumb')
-                       @endif 
+                          @if(trim($__env->yieldContent('content-breadcrumb')))
+    /
+    @yield('content-breadcrumb')
+@endif
                         </li>
                      </ul>
                   </div>

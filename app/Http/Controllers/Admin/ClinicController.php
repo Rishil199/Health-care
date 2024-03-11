@@ -243,7 +243,7 @@ class ClinicController extends Controller
         $clinic->save();
        
         $token = $request->_token;
-        // dd($users);
+       
 
         if($users) {
             // Mail::to($users['email'])->send(new WelcomeMail($users,$request));
@@ -552,7 +552,7 @@ class ClinicController extends Controller
     public function exportCSV(Request $request)
     {
         $fileName = 'Clinic.csv';
-        $clinics = ClinicDetails::with('user')->get();
+        $clinics = ClinicDetails::with('user')->orderByDesc('created_at')->get();
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

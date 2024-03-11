@@ -184,6 +184,16 @@
                 </div>
             </div>
             @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"> Back 
+            </button>
+        </div>@else 
+        <div class="text-end">
+            <button type="button" class="btn btn-outline-dark " data-bs-dismiss="modal"> Back 
+        </button>
+    </div>
+        @endif 
+            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="theme-form-input mb-4">
                 <h5 class="mt-5">Medical history -</h5>
                  </div>
