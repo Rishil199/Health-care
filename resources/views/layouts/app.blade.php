@@ -289,7 +289,7 @@
                      </li>
                      @elseif(Auth::user()->hasAnyRole(User::ROLE_CLINIC) && $doctors->isNotEmpty())
                      <li id="appointment">
-                        <a href="{{route('appointments.index')}}">
+                        <a href="{{route('appointments.index')}}" class="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -559,7 +559,7 @@
                      @endif
                      @if(Auth::user()->hasRole(User::ROLE_PATIENT))
                      <li class="has-sublist">
-                        <a href="{{route('doctorslisting.index')}}">
+                        <a href="{{route('doctorslisting.index')}}" class="tab-link">
                            <span class="svg-icon me-1">
                               <svg width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 409.6 409.6" style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve">
                                  <g>
@@ -590,7 +590,7 @@
                         </a>
                      </li>
                      <li class="has-sublist">
-                        <a href="{{route('clinicsListing.index')}}">
+                        <a href="{{route('clinicsListing.index')}}" class="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
@@ -695,7 +695,7 @@
                      @endif   
                      @if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                      <li class="has-sublist" id="patient">
-                        <a href="{{route('patients.index')}}">
+                        <a href="{{route('patients.index')}}" class="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 380 384" style="enable-background:new 0 0 380 384;" xml:space="preserve">
@@ -725,7 +725,7 @@
                      </li>
                      @elseif(Auth::user()->hasRole(User::ROLE_CLINIC) && $doctors->isNotEmpty())
                      <li class="has-sublist" id="patient">
-                        <a href="{{route('patients.index')}}">
+                        <a href="{{route('patients.index')}}" class="tab-link">
                            <span class="svg-icon">
                               <svg class="me-2" width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 380 384" style="enable-background:new 0 0 380 384;" xml:space="preserve">
