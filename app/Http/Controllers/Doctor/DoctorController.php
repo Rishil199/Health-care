@@ -1173,8 +1173,8 @@ class DoctorController extends Controller
             
             $upcoming_appointment = DoctorAppointmentDetails::where('appointment_date','>',$date)->where('patient_id',Auth::user()->id)->withTrashed()->where('is_complete','=','0')->count();
             
-            $past_appointment = DoctorAppointmentDetails::where('is_complete',1)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
-
+            $past_appointment = DoctorAppointmentDetails::where('disease_name','!=','')->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
+            
             $selected_date=$request->appointment_date;
           
         }
@@ -1478,7 +1478,7 @@ class DoctorController extends Controller
             return response()->json($this->data);
         }
 
-        $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
+        $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
       
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
@@ -1542,7 +1542,7 @@ class DoctorController extends Controller
             return response()->json($this->data);
         }
         
-        $appointments = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->get();
+        $appointments = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->get();
 
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
@@ -1603,7 +1603,7 @@ class DoctorController extends Controller
             return response()->json($this->data);
         }
         
-        $appointments = DoctorAppointmentDetails::where('appointment_date','>',$date)->withTrashed()->where('is_complete','=','0')->with('user')->where('patient_id',Auth::user()->id)->get();
+        $appointments = DoctorAppointmentDetails::where('appointment_date','>',$date)->withTrashed()->where('is_complete','=','0')->with('doctor.user')->where('patient_id',Auth::user()->id)->get();
 
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
@@ -1666,8 +1666,8 @@ class DoctorController extends Controller
             return response()->json($this->data);
         }
         
-        $appointments = DoctorAppointmentDetails::where('is_complete',1)->withTrashed()->with('user')->where('patient_id',Auth::user()->id)->get();
-
+        $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->withTrashed()->with('doctor.user')->where('patient_id',Auth::user()->id)->get();
+     
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
                 return $row->user->phone_no;

@@ -3282,3 +3282,7 @@ a.testimonial-section {
 li.selected a.tab-link {
     color: #fff;
 }
+
+input[type="checkbox"]+label{
+    cursor:pointer;
+    }

@@ -27,7 +27,7 @@ class StoreDoctorRequest extends FormRequest
             'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
             'last_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
             'email' => 'required|email|unique:users,email',
-            'phone_no' => 'required|min:10|max:16|regex:/^[+\-\d]+$/',
+            'phone_no' => 'required|min:10|max:15|regex:/^[+\-\d]+$/',
             'address' => 'required',
             'birth_date' => 'required|date_format:d/m/Y|before:today',
             'degree' => 'required',
