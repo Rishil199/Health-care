@@ -552,6 +552,21 @@
                         rules: {
                             name: {
                                 required: true
+                            },
+                            disease_name:{
+                                required:true
+                            },
+                            prescription:{
+                                required:true
+                            }
+                            
+                        },
+                        messages:{
+                            'disease_name':{
+                                required:"Disease name is required."
+                            },
+                            'prescription':{
+                                required:"Prescription is required"
                             }
                         },
                         submitHandler: (form) => {
@@ -656,7 +671,7 @@
                             let resp = response.responseJSON;
                             if (resp) {
                                 if (resp.status) {
-                                    make_modal('add-branch-modal', resp.data.view, true, 'modal-lg');
+                                    make_modal('add-branch-modal', resp.data.view, true, 'modal-xl');
                                     validateForm($('.add_branch_form'));
                                 }
                             }

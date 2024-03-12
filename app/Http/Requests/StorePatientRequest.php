@@ -29,7 +29,7 @@ class StorePatientRequest extends FormRequest
             return [
                 'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
                 'email' => 'required|email|unique:users,email',
-                'phone_no' => 'required|min:10|max:16|regex:/^[+\-\d]+$/',
+                'phone_no' => 'required|min:10|max:15|regex:/^[+\-\d]+$/',
                 'address' => 'required',
                 'gender' => 'required',
                 'doctor_id' => 'required',  
@@ -47,7 +47,7 @@ class StorePatientRequest extends FormRequest
             return [
                 'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
                 'email' => 'required|email|unique:users,email',
-                'phone_no' => 'required|min:10|max:16|regex:/^[+\-\d]+$/',
+                'phone_no' => 'required|min:10|max:15|regex:/^[+\-\d]+$/',
                 'address' => 'required',
                 'gender' => 'required',
                 'height'=>'required|regex:/^\d+(\.\d{1})?$/|max:5',

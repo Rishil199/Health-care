@@ -52,7 +52,7 @@ class PatientController extends Controller
                 $patients = PatientDetails::select(array(
                 'id','user_id','clinic_id','created_at','doctor_id'
                 ))->with('user')->where('doctor_id',$user_id->id)->get();
-                // $patients=Auth::user()->with('patients')->get();
+                
      
                
             }
@@ -515,8 +515,7 @@ class PatientController extends Controller
             "Expires"             => "0"
         );
 
-        $columns = array('Id','First Name','Last Name','Gender','Email','Contact No.','Address','Admit Date','Disease Name','Prescription','Allergies','Illness','Exercise','Alcohol Consumption','Diet','Smoke');
-
+        $columns = array('Id','First Name','Gender','Email','Contact No.','Address','Admit Date','Disease Name','Prescription','Allergies','Illness','Exercise','Alcohol Consumption');
         $callback = function() use($patients, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
@@ -524,7 +523,6 @@ class PatientController extends Controller
             foreach ($patients as $patient) {
                 $row['Id']  = $patient->id;
                 $row['First Name']  = $patient->user->first_name;
-                $row['Last Name']  = $patient->user->last_name;
                 $row['Gender']  = $patient->gender;
                 $row['Email']  = $patient->user->email;
                 $row['Contact No.']  = $patient->user->phone_no;
@@ -536,11 +534,9 @@ class PatientController extends Controller
                 $row['Illness']  = $patient->illness;
                 $row['Exercise']  = $patient->exercise;
                 $row['Alcohol Consumption']  = $patient->alchohol_consumption;
-                $row['Diet']  = $patient->diet;
-                $row['Smoke']  = $patient->smoke;
-                                 
+                 
 
-                fputcsv($file, array($row['Id'],$row['First Name'],$row['Last Name'],$row['Gender'],$row['Email'],$row['Contact No.'],$row['Address'],$row['Admit Date'],$row['Disease Name'],$row['Prescription'],$row['Allergies'],$row['Illness'],$row['Exercise'],$row['Alcohol Consumption'],$row['Diet'],$row['Smoke']));
+                fputcsv($file, array($row['Id'],$row['First Name'],$row['Gender'],$row['Email'],$row['Contact No.'],$row['Address'],$row['Admit Date'],$row['Disease Name'],$row['Prescription'],$row['Allergies'],$row['Illness'],$row['Exercise'],$row['Alcohol Consumption']));
             }
 
             fclose($file);

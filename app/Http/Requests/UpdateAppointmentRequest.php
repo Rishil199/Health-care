@@ -41,8 +41,9 @@ class UpdateAppointmentRequest extends FormRequest
     public function messages()
     {
         return [
-            'disease_name.required' => 'Prescription field is required.',
-            'is_complete.required' => 'This field is required.',
+            'disease_name.required' => 'Disease name is required.',
+            'is_complete.required' => 'is completed is required.',
+            'prescription.required' => 'Prescription is required.'
 
         ];
     }

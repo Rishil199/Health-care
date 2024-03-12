@@ -17,10 +17,10 @@ function validateSettingsForm( $form ) {
             },
             messages: {
                 'start_time': {
-                  required: "Start time is required. ",
+                  required: "Start time is required. "
                 },
                 'end_time': {
-                    required: "End time is required.",
+                    required: "End time is required."
                 },
                 'duration': {
                     required: "Duration is required."

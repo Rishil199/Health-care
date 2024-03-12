@@ -26,7 +26,7 @@ class StoreClinicRequest extends FormRequest
         return [
             'first_name' => 'required|unique:users,first_name|regex: /^[a-zA-Z ]{2,30}$/',
             'email' => 'required|email|unique:users,email',
-            'phone_no' => 'required|min:10|max:16|regex:/^[+\-\d]+$/',
+            'phone_no' => 'required|min:10|max:15|regex:/^[+\-\d]+$/',
             'address' => 'required',
         ];
     }
