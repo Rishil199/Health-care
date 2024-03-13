@@ -718,9 +718,15 @@
                                  </g>
                               </svg>
                            </span>
+                           @if(Auth::user()->hasAnyRole([ User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                            <span class="svg-text">
-                           Patients
+                           Master Patients
                            </span>
+                           @else 
+                           <span class="svg-text">
+                               Patients
+                              </span>
+                              @endif
                         </a>
                      </li>
                      @elseif(Auth::user()->hasRole(User::ROLE_CLINIC) && $doctors->isNotEmpty())
@@ -749,7 +755,7 @@
                               </svg>
                            </span>
                            <span class="svg-text">
-                           Patients
+                          Master Patients
                            </span>
                         </a>
                      </li>

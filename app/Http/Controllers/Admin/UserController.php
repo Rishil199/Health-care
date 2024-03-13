@@ -104,14 +104,21 @@ class UserController extends Controller
       
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $user=(Auth::user());   
+            
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',$user->id)->first();
-          
+            
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id','patient_id')->where('clinic_id',$user_id->clinic_id)->orWhere('doctor_id',$user_id->id)->first();
+            
+            $doctorIds=DoctorDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->clinic_id)->pluck('id');
            
-            $patients = PatientDetails::select(array(
-                    'id','user_id','clinic_id','created_at','doctor_id'
-                 ))->latest()->with('user')->where('doctor_id',$user_id->id)->get();
-               
+           $patients=PatientDetails::select(array(
+               'id','user_id','clinic_id','created_at','doctor_id'
+            ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorIds)->orderByDesc('created_at')->get();
+          
+            // $patients = PatientDetails::select(array(
+            //         'id','user_id','clinic_id','created_at','doctor_id'
+            //      ))->latest()->with('user')->where('doctor_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
+       
             $appointments = DoctorAppointmentDetails::with('patient.user')->where('doctor_id',$user_id->id)->latest()->get();
              
             $appointmentsCount = count(DoctorAppointmentDetails::where('doctor_id',$user_id->id)->withTrashed()->get()); 
@@ -139,13 +146,12 @@ class UserController extends Controller
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
             $doctorsIds = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
-            ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->pluck('id');
-           
-        
-
+                ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->pluck('id');
+                
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id','clinic_id'
-            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
+            ))->latest()->with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
+        
             // $patients = PatientDetails::select(array(
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();  
@@ -183,20 +189,16 @@ class UserController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-           
-           
-            
+          
             $doctorsIds = DoctorDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
             ))->latest()->with('user')->where('clinic_id',$user_id->id)->pluck('id');
-       
-
+      
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at','doctor_id','clinic_id'
             ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhereIn('doctor_id',$doctorsIds)->get();
-           
+        
 
-            
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
           
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
@@ -582,5 +584,11 @@ class UserController extends Controller
             return redirect()->back()->with('error','Subscription not set successfully');
         } 
 
+    }
+
+
+    public function resetpswd()
+    {
+        return view('verifyMail-test');
     }
 }

@@ -6,12 +6,12 @@
         <div class="table-responsive">
             <table class="table theme-table sr-table todays-patient-appointments-table" id="todays-patient-appointments-table" name="todays-patient-appointments" name="Appointment">
                 <thead class="table-dark">
-                    <th>Hospital Name</th>
+                    <th>Doctor Name</th>
                     <th>Phone No.</th>
                     <th>Appointment Date</th>
                     <th>Created By</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    {{-- <th>Action</th> --}}
                 </thead>
                 <tbody>
                 </tbody>
