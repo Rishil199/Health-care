@@ -37,7 +37,7 @@
 @section('content-body')
 <div class="container">
     <div class="row">
-      <div class="col-xl-3 col-lg-3 doctors-data-left">
+      <div class="col-xl-3 col-lg-3 col-12 doctors-data-left">
         <div class="row">
             <div class="col-lg-12 col-sm-4">
                 <div class="doc-data-card doctor">
@@ -85,12 +85,11 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-xl-9 col-lg-9 col-12">
         <div id='full_calendar_events'>
             <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                <div class="modal-dialog ">
                   <div class="modal-content">
-                     
                   </div>
                </div>
             </div>
@@ -102,8 +101,6 @@
 <script>
 
 //form validation
-       
-
 //full calender insert
     $(document).ready(function () {
         var SITEURL = "{{ url('/') }}";
