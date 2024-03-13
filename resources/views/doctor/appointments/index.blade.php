@@ -2,8 +2,7 @@
 @push('header_css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
+    <link href="{{ asset('assets/js/plugins/select2/select2.min.css') }}" rel="stylesheet" />
 @endpush
 @section('content-breadcrumb')
     <li>
@@ -38,16 +37,11 @@
             {{ $title }}
         </span>
     </li>
-    <style>
-        .cursor-pointer {
-            cursor: pointer;
-        }
-    </style>
 @endsection
 @section('content-body')
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-3 doctors-data-left">
+            <div class="col-xl-3 col-lg-3 col-12 doctors-data-left">
                 <div class="row">
                     <div class="col-lg-12 col-sm-4">
                         <div class="doc-data-card doctor">
@@ -104,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-xl-9 col-lg-9 col-12">
                 <div id='full_calendar_events'>
                     <div class="modal fade theme-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true" data-target="myModal">
@@ -118,15 +112,10 @@
             </div>
         </div>
         @push('footer_js')
-        @endsection
 
-
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> --}}
-
+        <script src="{{ asset('assets/js/plugins/select2/select2.min.js') }}"></script>
         <script>
             //form validation
-
-
             //full calender insert
             $(document).ready(function() {
                 var SITEURL = "{{ url('/') }}";
@@ -169,7 +158,10 @@
                                         if (resp.status) {
                                             make_modal('book-appointment-modal', resp.data.view,
                                                 true, 'modal-lg');
-                                            // $('#event_name').select2();
+                                             $('#event_name').select2({
+                                                dropdownParent: $('#book-appointment-modal'),
+                                                width: '100%'
+                                             });
                                         }
                                     }
                                 },
@@ -706,19 +698,8 @@
                 }
             });
         </script>
-
-
         <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
         <script src="{{ asset('assets/js/appointments.js') }}"></script>
-        {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
-
-
-        {{-- <script>
-    $(document).ready(function(){
- 
-    $('#event_name').select2();
-    
-
-   });
-    </script>  --}}
     @endpush
+    </div>
+@endsection

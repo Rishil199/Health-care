@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(document).on('click', '.hur-block .close', function() {
         // $('.header-upper-right').removeClass('open');
         $('.header-lower').removeClass('open');
-        $('.dashboard_body').toggleClass('open');
+        $('.dashboard_body').removeClass('open');
     });
 
 
@@ -154,8 +154,10 @@ $(document).ready(function() {
     $(window).resize(function() {
             console.log('resize called');
             var width = $(window).width();
-            if (width <= 960) {
-                $('.header-upper-right').removeClass('open');
+            if (width <= 1200) {
+                // $('.header-upper-right').removeClass('open');
+                $('.header-lower').addClass('open');
+                $('.dashboard_body').addClass('open');
             }
         })
         .resize();

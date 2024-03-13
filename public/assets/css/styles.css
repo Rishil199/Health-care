@@ -2630,10 +2630,13 @@ footer {
 }
 
 .theme-offcanvas .btn-close {
-    right: auto;
+    right: 20px;
     top: 10px;
-    left: -10px;
     box-shadow: none !important;
+    background-color: #fff !important;
+    color: #fff !important;
+    box-shadow: 0 0 4px rgb(0 0 0 / 50%) !important;
+    background-size: 12px;
 }
 
 .theme-offcanvas .offcanvas-header {
@@ -3186,6 +3189,10 @@ a.testimonial-section {
     text-decoration: none !important;
 }
 
+.dataTables_info, .dataTables_paginate {
+	margin-bottom: 30px;
+}
+
 
 
 
@@ -3250,7 +3257,7 @@ a.testimonial-section {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 5;
 }
 
 .theme-scroll .slick-arrow {
@@ -3283,6 +3290,31 @@ li.selected a.tab-link {
     color: #fff;
 }
 
+
+
+@media (max-width: 1199px) {
+    .dashboard_body {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .logo img {
+        filter: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .profile-text {
+        display: none;
+    }
+}
+
+@media (max-width: 574px) {
+    .header-upper .logo {
+        max-width: 170px;
+    }
+}
 input[type="checkbox"]+label{
     cursor:pointer;
     }
