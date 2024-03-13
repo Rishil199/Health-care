@@ -33,6 +33,11 @@
    {{$title}}
    </span>
 </li>
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
 @endsection
 @section('content-body')
 <div class="container">
@@ -46,7 +51,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('all_patient_appointment') }}" id="all_patient_appointment" data-total={{ $all_appointment }} class="appointment-view all-patient-appointment-btn">{{ $all_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">All Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">All Appointments</div>
                     </div>
                 </div>
             </div>
@@ -57,7 +62,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('todays_patient_appointment') }}" class="appointment-view todays-patient-appointment-btn">{{ $todays_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Today's Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Today's Appointments</div>
                     </div>
                 </div>
             </div>
@@ -68,7 +73,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('upcoming_patient_appointment') }}" class="appointment-view upcoming-patient-appointment-btn">{{ $upcoming_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Upcoming Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Upcoming Appointments</div>
                     </div>
                 </div>
             </div>
@@ -79,7 +84,7 @@
                         <div class="doc-data-count">
                             <a href="{{ route('past_patient_appointment') }}" class="appointment-view past-patient-appointment-btn">{{ $past_appointment }}</a>
                         </div>
-                        <div class="doc-data-title app-data-title">Completed Appointments</div>
+                        <div class="doc-data-title app-data-title cursor-pointer">Completed Appointments</div>
                     </div>
                 </div>
             </div>
@@ -204,10 +209,10 @@
                                         {
                                             'render': function(data, type, full, meta)
                                             {
-                                                return  '<a href="mailto:' + full.user.email + '?">' + full.user.first_name + full.user.last_name + '</a>';
+                                                return  '<a href="mailto:' + full.doctor.user.email + '?">' + full.doctor.user.first_name  + ' ' + full.doctor.user.last_name + '</a>';
                                             } 
                                         },
-                                        { data: 'user.phone_no', name: 'phone_no' },
+                                        { data: 'doctor.user.phone_no', name: 'phone_no' },
                                         { 'render': function(data, type, full, meta)
                                             {
                                                 return  full.appointment_date + ' ' + full.time_start;
@@ -262,10 +267,10 @@
                                         {
                                             'render': function(data, type, full, meta)
                                             {
-                                                return  '<a href="mailto:' + full.user.email + '?">' + full.user.first_name + full.user.last_name + '</a>';
+                                                return  '<a href="mailto:' + full.doctor.user.email + '?">' + full.doctor.user.first_name + ' ' + full.doctor.user.last_name + '</a>';
                                             } 
                                         },
-                                        { data: 'user.phone_no', name: 'phone_no' },
+                                        { data: 'doctor.user.phone_no', name: 'phone_no' },
                                         { 'render': function(data, type, full, meta)
                                             {
                                                 return  full.appointment_date + ' ' + full.time_start;
@@ -319,10 +324,10 @@
                                        {
                                             'render': function(data, type, full, meta)
                                             {
-                                                return  '<a href="mailto:' + full.user.email + '?">' + full.user.first_name + full.user.last_name + '</a>';
+                                                return  '<a href="mailto:' + full.doctor.user.email + '?">' + full.doctor.user.first_name + ' ' + full.doctor.user.last_name + '</a>';
                                             } 
                                         },
-                                        { data: 'user.phone_no', name: 'phone_no' },
+                                        { data: 'doctor.user.phone_no', name: 'phone_no' },
                                         { 'render': function(data, type, full, meta)
                                             {
                                                 return  full.appointment_date + ' ' + full.time_start;
@@ -376,10 +381,10 @@
                                         {
                                             'render': function(data, type, full, meta)
                                             {
-                                                return  '<a href="mailto:' + full.user.email + '?">' + full.user.first_name + full.user.last_name + '</a>';
+                                                return  '<a href="mailto:' + full.doctor.user.email + '?">' + full.doctor.user.first_name + ' ' + full.doctor.user.last_name + '</a>';
                                             } 
                                         },
-                                        { data: 'user.phone_no', name: 'phone_no' },
+                                        { data: 'doctor.user.phone_no', name: 'phone_no' },
                                         { 'render': function(data, type, full, meta)
                                             {
                                                 return  full.appointment_date + ' ' + full.time_start;
@@ -392,7 +397,7 @@
                                         },
                                         { data: 'created_by', name: 'created_by'},
                                         { data: 'status', name: 'status' },
-                                        { data: 'action', name: 'action' },
+                                        // { data: 'action', name: 'action' },
                                     ],
                                     // "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                                     //     console.log(aData.disease_name);

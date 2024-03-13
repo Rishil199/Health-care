@@ -9,47 +9,47 @@
     <div class="modal-body mx-5">
         <div class="view-block">
             <div class="row">
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="firstName">Name:</label>
+                        <label class="theme-label" for="firstName">Name</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->user->first_name }} {{ $patient->user->last_name }}</span>
+                           <span>{{ $patient->user->first_name ?? '-'}} {{ $patient->user->last_name ?? '-'}}</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="email">Email:</label>
+                        <label class="theme-label" for="email">Email</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->user->email }}</span>
+                           <span>{{ $patient->user->email ?? '-'}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group">
-                        <label class="theme-label" for="phone_no">Phone No.:</label>
+                        <label class="theme-label" for="phone_no">Phone No</label>
                         <div class="theme-form-input">
-                         <span>{{ $patient->user->phone_no }}</span>
+                         <span>{{ $patient->user->phone_no?? '-' }}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="gender">Gender:</label>
+                        <label class="theme-label" for="gender">Gender</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->gender }}</span>
+                           <span>{{ $patient->gender?? '-' }}</span>
                         </div>
                     </div>
                 </div>
 
 
 
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="address">Address:</label>
+                        <label class="theme-label" for="address">Address</label>
                         <div class="theme-form-input">
-                            <span>{{ $patient->address }}<span>
+                            <span>{{ $patient->address ?? '-'}}<span>
                         </div>
                     </div>
                 </div>
@@ -61,20 +61,20 @@
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-form-input">
-                             <span>{{ $patient->height}}</span>
+                             <span>{{ $patient->height ?? '-'}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="d-block">
                             <label class="theme-label" for="weight">Weight </label>
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-form-input">
-                               <span>{{ $patient->weight}}</span>
+                               <span>{{ $patient->weight?? '-'}} </span>
                             </div>
                         </div>
                     </div>
@@ -82,22 +82,22 @@
 
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="birth_date">Admit Date:</label>
+                        <label class="theme-label" for="birth_date">Admit Date</label>
                         <div class="theme-form-input">
-                        <span>{{ $patient->admit_date ? date('d/m/Y', strtotime($patient->admit_date)) : '' }}</span>
+                        <span>{{ $patient->admit_date ? date('d/m/Y', strtotime($patient->admit_date)) : '-' }}</span>
                         </div>
                     </div>
                 </div>
             
 
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="d-block ">
                             <label class="theme-label" for="blood_group">Blood Group </label>
                         </div>
                         <div class="input-wrapper d-flex">
                             <div class="theme-form-input ">
-                                <span>{{$patient->blood_group}}</span>
+                                <span>{{$patient->blood_group ??'-'}}</span>
                             </div>
                         </div>
                             </div>
@@ -111,48 +111,48 @@
                                 </div>
                                 <div class="input-wrapper d-flex">
                                     <div class="theme-form-input ">
-                                      <span> {{ $patient->blood_pressure}} </span>
+                                      <span> {{ $patient->blood_pressure ?? '-'}} </span>
                                     </div>
                                 </div>
                                 </div>
                             </div>
                     
 
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="disease_name">Disease Name:</label>
+                        <label class="theme-label" for="disease_name">Disease Name</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->disease_name }}</span>
+                           <span>{{ $patient->disease_name ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="prescription">Prescription:</label>
+                        <label class="theme-label" for="prescription">Prescription</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->prescription }}</span>
+                           <span>{{ $patient->prescription  ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="allergies">Allergies:</label>
+                        <label class="theme-label" for="allergies">Allergies</label>
                         <div class="theme-form-input">
-                            <span>{{ $patient->allergies }}</span>
+                            <span>{{ $patient->allergies ?? '-'  }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group">
-                        <label class="theme-label" for="illness">Medical History:</label>
+                        <label class="theme-label" for="illness">Medical History</label>
                         <div class="theme-form-input">
                         <span>   <span>{{ $patient->illness == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="exercise">Exercise:</label>
+                        <label class="theme-label" for="exercise">Exercise</label>
                         <div class="theme-form-input">
                         <span>{{ $patient->exercise == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
@@ -160,15 +160,15 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="alchohol_consumption">Alchohol Consumption:</label>
+                        <label class="theme-label" for="alchohol_consumption">Alchohol Consumption</label>
                         <div class="theme-form-input">
                            <span>{{ $patient->alchohol_consumption == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 mb-3">
+                <div class="col-md-4 mb-3">
                     <div class="theme-form-group ">
-                        <label class="theme-label" for="diet">Diet:</label>
+                        <label class="theme-label" for="diet">Diet</label>
                         <div class="theme-form-input">
                            <span>{{ $patient->diet == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
@@ -176,23 +176,13 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="theme-form-group">
-                        <label class="theme-label" for="smoke">Smoke:</label>
+                        <label class="theme-label" for="smoke">Smoke</label>
                         <div class="theme-form-input">
                            <span>{{ $patient->smoke == "yes"  ? 'Yes' : 'No' }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
-            <div class="text-center">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"> Back 
-            </button>
-        </div>@else 
-        <div class="text-end">
-            <button type="button" class="btn btn-outline-dark " data-bs-dismiss="modal"> Back 
-        </button>
-    </div>
-        @endif 
             @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="theme-form-input mb-4">
                 <h5 class="mt-5">Medical history -</h5>
@@ -244,7 +234,11 @@
                     </div>
                 </div>                
             @endif
-            
+            <div class="text-end">
+                <button type="button" class="btn btn-dark " data-bs-dismiss="modal"> Back 
+            </button>
+        </div>
+           
         </div>
        
     </div>

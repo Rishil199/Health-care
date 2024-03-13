@@ -139,7 +139,7 @@
                                             data-id={{ $all_appointent->id }} class="toggle-class form-check-input"
                                             type="checkbox" id="is_complete" data-onstyle="success"
                                             data-offstyle="danger" data-toggle="toggle" data-on="Active"
-                                            data-off="InActive" value="1" checked disabled></label></div>
+                                            data-off="InActive" value="1" cheked disabled ></label></div>
                             </label>
                         </div>
                     </div>
@@ -246,6 +246,8 @@ $(document).ready(function () {
     $(document).on('click', '.app_btn', function(e) {
         var status = $("#is_complete").prop('checked') == true ? 1 : 0;
         var disease_name = $("#disease_name").val();
+        var prescription=$("#prescription").val();
+        console.log("prescription",prescription);
         var id = $("#data_id").data('id');
         var next_date = $("#datepicker").val();
         var next_start_time = $('#next_start_time').val();
@@ -259,6 +261,7 @@ $(document).ready(function () {
                 'is_complete': status,
                 'id': id,
                 'disease_name': disease_name,
+                'prescription':prescription,
                 'next_date': next_date,
                 'next_start_time': next_start_time
             },
@@ -270,11 +273,19 @@ $(document).ready(function () {
                 window.location.reload();
                 $('#loader').hide();
             },
-            error: function(data) {
-                error_notification();
-            }
-        }).always(function() {
+            error: function(xhr) {
+                if(xhr.status===422){
+                         var errors= xhr.responseJSON.errors;   
+                         validateForm.showErrors(errors);
+                        }else {
+                        //    error_notification_add();
+                        console.log("Something went wrong.")
+                        }
+                    },
+                    complete: function() {
             $this.removeClass('pe-none');
+            }
         });
-    })
+    });
+    
 </script>

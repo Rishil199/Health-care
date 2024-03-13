@@ -3315,3 +3315,6 @@ li.selected a.tab-link {
         max-width: 170px;
     }
 }
+input[type="checkbox"]+label{
+    cursor:pointer;
+    }
