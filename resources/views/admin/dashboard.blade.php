@@ -599,11 +599,11 @@
                                                                 <tbody>
                                                                     @foreach ($appointments as $appointment)
                                                                         <tr>
-                                                                            <td>{{ ucfirst($appointment->patient->first_name) . ' ' . ucfirst($appointment->patient->last_name) }}
+                                                                            <td>{{ ucfirst($appointment->patient?->first_name) . ' ' . ucfirst($appointment->patient?->last_name) }}
                                                                             </td>
-                                                                            <td>{{ $appointment->patient->phone_no }}</td>
+                                                                            <td>{{ $appointment->patient?->phone_no }}</td>
                                                                             <td class="email_link"> <a
-                                                                                    href="mailto:{{ $appointment->patient->email }}">{{ $appointment->patient?->email }}</a>
+                                                                                    href="mailto:{{ $appointment->patient?->email }}">{{ $appointment->patient?->email }}</a>
                                                                             </td>
                                                                             <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                             </td>

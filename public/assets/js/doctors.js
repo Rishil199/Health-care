@@ -65,8 +65,9 @@ $(document).on('click', '.btn-add-doctors',function(e) {
                             });
                         }
                         if ( $("#clinic_id").length ) {
+                            var parent_modal = $('#add-doctors-modal > .modal-dialog > .modal-content');
                             $('#clinic_id').select2({
-                                dropdownParent: $('#add-doctors-modal'),
+                                dropdownParent: parent_modal,
                                 width: '100%'
                             });
                         }
@@ -333,8 +334,9 @@ $(document).on('click', '.edit-doctor',function(e) {
                             });
                         }
                         if ( $("#clinic_id").length ) {
+                            var parent_modal = $('#add-edit-doctor-modal > .modal-dialog > .modal-content');
                             $('#clinic_id').select2({
-                                dropdownParent: $('#add-edit-doctor-modal'),
+                                dropdownParent: parent_modal,
                                 width: '100%'
                             });
                         }
