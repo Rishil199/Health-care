@@ -396,6 +396,20 @@ class DoctorController extends Controller
     {
         $fileName = 'Doctor.csv';
         $doctors = DoctorDetails::with('user')->orderByDesc('created_at')->get();
+
+        if (Auth::user()->hasRole(User::ROLE_CLINIC))
+        {
+            $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+                $doctors = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','address','gender','birth_date','degree',
+                'experience','expertice','created_at'
+                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+        }
+
+        else if (Auth::user()->hasRole(User::ROLE_PATIENT))
+        {
+
+        }
          
         $headers = array(
             "Content-type"        => "text/csv",
