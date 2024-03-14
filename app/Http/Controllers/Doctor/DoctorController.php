@@ -435,7 +435,7 @@ class DoctorController extends Controller
                
             ); 
         }
-
+        
         return view('doctor.appointments.index', $this->data);
     }
 
