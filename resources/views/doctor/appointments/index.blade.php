@@ -257,13 +257,13 @@
                                             columns: [{
                                                     'render': function(data, type, full, meta) {
                                                         return '<a href="mailto:' + full
-                                                            .user.email + '">' + full.user
-                                                            .first_name + full.user
+                                                            .patient.email + '">' + full.patient
+                                                            .first_name + full.patient
                                                             .last_name + '</a>';
                                                     }
                                                 },
                                                 {
-                                                    data: 'user.phone_no',
+                                                    data: 'patient.phone_no',
                                                     name: 'phone_no'
                                                 },
                                                 {
@@ -336,13 +336,13 @@
                                                 columns: [{
                                                         'render': function(data, type, full, meta) {
                                                             return '<a href="mailto:' + full
-                                                                .user.email + '?">' + full.user
-                                                                .first_name + full.user
+                                                             .patient.email + '?">' + full.patient
+                                                                .first_name + full.patient
                                                                 .last_name + '</a>';
                                                         }
                                                     },
                                                     {
-                                                        data: 'user.phone_no',
+                                                        data: 'patient.phone_no',
                                                         name: 'phone_no'
                                                     },
                                                     {
@@ -411,13 +411,13 @@
                                                 columns: [{
                                                         'render': function(data, type, full, meta) {
                                                             return '<a href="mailto:' + full
-                                                                .user.email + '?">' + full.user
-                                                                .first_name + full.user
+                                                                .patient.email + '?">' + full.patient
+                                                                .first_name + full.patient
                                                                 .last_name + '</a>';
                                                         }
                                                     },
                                                     {
-                                                        data: 'user.phone_no',
+                                                        data: 'patient.phone_no',
                                                         name: 'phone_no'
                                                     },
                                                     {
@@ -485,13 +485,13 @@
                                             columns: [{
                                                     'render': function(data, type, full, meta) {
                                                         return '<a href="mailto:' + full
-                                                            .user.email + '?">' + full.user
-                                                            .first_name + full.user
+                                                            .patient.email + '?">' + full.patient
+                                                            .first_name + full.patient
                                                             .last_name + '</a>';
                                                     }
                                                 },
                                                 {
-                                                    data: 'user.phone_no',
+                                                    data: 'patient.phone_no',
                                                     name: 'phone_no'
                                                 },
                                                 {

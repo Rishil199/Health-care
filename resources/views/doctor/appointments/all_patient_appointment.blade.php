@@ -11,7 +11,7 @@
                     <th>Appointment Date</th>
                     <th>Created By</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    {{-- <th>Action</th> --}}
                 </thead>
                 <tbody>
                 </tbody>

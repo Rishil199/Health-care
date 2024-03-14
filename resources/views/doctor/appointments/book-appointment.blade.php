@@ -31,11 +31,9 @@
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1" >Select Patient <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-              
                 <select class="form-control form-select search-multiple select-box" name="event_name" id="event_name">
                     <option value="">Select Patient</option>
-                    @foreach( $patients as $patient )
-             
+                    @foreach( $patients as $patient )         
                     <option value="{{ $patient->user_id }}">{{ $patient->user->first_name }} - {{$patient->user->phone_no}}</option>
                     @endforeach
                 </select>
