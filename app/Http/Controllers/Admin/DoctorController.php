@@ -406,10 +406,7 @@ class DoctorController extends Controller
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
         }
 
-        else if (Auth::user()->hasRole(User::ROLE_PATIENT))
-        {
-
-        }
+     
          
         $headers = array(
             "Content-type"        => "text/csv",
