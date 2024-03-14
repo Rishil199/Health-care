@@ -599,11 +599,11 @@
                                                                 <tbody>
                                                                     @foreach ($appointments as $appointment)
                                                                         <tr>
-                                                                            <td>{{ ucfirst($appointment->user?->first_name) . ' ' . ucfirst($appointment->user?->last_name) }}
+                                                                            <td>{{ ucfirst($appointment->patient->first_name) . ' ' . ucfirst($appointment->patient->last_name) }}
                                                                             </td>
-                                                                            <td>{{ $appointment->user?->phone_no }}</td>
+                                                                            <td>{{ $appointment->patient->phone_no }}</td>
                                                                             <td class="email_link"> <a
-                                                                                    href="mailto:{{ $appointment->user?->email }}">{{ $appointment->user?->email }}</a>
+                                                                                    href="mailto:{{ $appointment->patient->email }}">{{ $appointment->patient?->email }}</a>
                                                                             </td>
                                                                             <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                             </td>
@@ -683,12 +683,12 @@
                                                                         <tbody>
                                                                             @foreach ($appointments as $appointment)
                                                                                 <tr>
-                                                                                    <td>{{ ucfirst($appointment->user?->first_name) . ' ' . ucfirst($appointment->user?->last_name) }}
+                                                                                    <td>{{ ucfirst($appointment->patient?->first_name) . ' ' . ucfirst($appointment->patient?->last_name) }}
                                                                                     </td>
-                                                                                    <td>{{ $appointment->user?->phone_no }}
+                                                                                    <td>{{ $appointment->patient?->phone_no }}
                                                                                     </td>
                                                                                     <td class="email_link"> <a
-                                                                                            href="mailto:{{ $appointment->user?->email }}">{{ $appointment->user?->email }}</a>
+                                                                                            href="mailto:{{ $appointment->patient?->email }}">{{ $appointment->patient?->email }}</a>
                                                                                     </td>
                                                                                     <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                                     </td>
