@@ -26,8 +26,8 @@
                                 @endforeach
                             @elseif (Auth::user()->hasRole(User::ROLE_DOCTOR))
                                 <p class="text-uppercase text-dark mb-3"><b>Hospital name :
-                                        {{ $doctorClinic->clinic?->user->first_name }}</b></p>
-                                @switch($doctorClinic->clinic?->is_main_branch)
+                                        {{ $doctorClinic?->clinic?->user?->first_name }}</b></p>
+                                @switch($doctorClinic?->clinic?->is_main_branch)
                                     @case(1)
                                         <p class="mb-4 text-uppercase text-dark"><b> Branch : Main Branch </b></p>
                                     @break
@@ -38,8 +38,8 @@
                                 @endswitch
                             @elseif(Auth::user()->hasRole(User::ROLE_RECEPTIONIST))
                                 <p class="text-uppercase text-dark mb-3"><b>Hospital name :
-                                        {{ $staffClinic->clinic->user->first_name }}</b></p>
-                                @switch($staffClinic->clinic->is_main_branch)
+                                        {{ $staffClinic?->clinic?->user?->first_name }}</b></p>
+                                @switch($staffClinic?->clinic?->is_main_branch)
                                     @case(1)
                                         <p class="mb-4 text-uppercase text-dark"><b> Branch : Main Branch </b></p>
                                     @break
@@ -599,18 +599,18 @@
                                                                 <tbody>
                                                                     @foreach ($appointments as $appointment)
                                                                         <tr>
-                                                                            <td>{{ ucfirst($appointment->patient?->first_name) . ' ' . ucfirst($appointment->patient?->last_name) }}
+                                                                            <td>{{ ucfirst($appointment?->patient?->first_name) . ' ' . ucfirst($appointment?->patient?->last_name) }}
                                                                             </td>
-                                                                            <td>{{ $appointment->patient?->phone_no }}</td>
+                                                                            <td>{{ $appointment?->patient?->phone_no }}</td>
                                                                             <td class="email_link"> <a
-                                                                                    href="mailto:{{ $appointment->patient?->email }}">{{ $appointment->patient?->email }}</a>
+                                                                                    href="mailto:{{ $appointment?->patient?->email }}">{{ $appointment?->patient?->email }}</a>
                                                                             </td>
                                                                             <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                             </td>
                                                                             <td>{{ date('d-m-Y', strtotime($appointment->appointment_date)) ?? 'N/A' }}
                                                                             </td>
-                                                                            <td>{{ $appointment->time_start }} -
-                                                                                {{ $appointment->time_end }}</td>
+                                                                            <td>{{ $appointment?->time_start }} -
+                                                                                {{ $appointment?->time_end }}</td>
                                                                         </tr>
                                                                     @endforeach
                                                                     @if (count($appointments) == 0)
@@ -640,19 +640,19 @@
                                                                     <tbody>
                                                                         @foreach ($appointments as $appointment)
                                                                             <tr>
-                                                                                <td>{{ ucfirst($appointment->doctor->user?->first_name) . ' ' . ucfirst($appointment->doctor->user?->last_name) }}
+                                                                                <td>{{ ucfirst($appointment?->doctor?->user?->first_name) . ' ' . ucfirst($appointment?->doctor?->user?->last_name) }}
                                                                                 </td>
-                                                                                <td>{{ $appointment->doctor->user?->phone_no }}
+                                                                                <td>{{ $appointment?->doctor?->user?->phone_no }}
                                                                                 </td>
                                                                                 <td class="email_link"> <a
-                                                                                        href="mailto:{{ $appointment->doctor->user?->email }}">{{ $appointment->doctor->user?->email }}</a>
+                                                                                        href="mailto:{{ $appointment?->doctor?->user?->email }}">{{ $appointment?->doctor?->user?->email }}</a>
                                                                                 </td>
                                                                                 <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                                 </td>
                                                                                 <td>{{ date('d-m-Y', strtotime($appointment->appointment_date)) ?? 'N/A' }}
                                                                                 </td>
-                                                                                <td>{{ $appointment->time_start }} -
-                                                                                    {{ $appointment->time_end }}</td>
+                                                                                <td>{{ $appointment?->time_start }} -
+                                                                                    {{ $appointment?->time_end }}</td>
                                                                             </tr>
                                                                         @endforeach
                                                                         @if (count($appointments) == 0)
@@ -683,19 +683,19 @@
                                                                         <tbody>
                                                                             @foreach ($appointments as $appointment)
                                                                                 <tr>
-                                                                                    <td>{{ ucfirst($appointment->patient?->first_name) . ' ' . ucfirst($appointment->patient?->last_name) }}
+                                                                                    <td>{{ ucfirst($appointment?->patient?->first_name) . ' ' . ucfirst($appointment?->patient?->last_name) }}
                                                                                     </td>
-                                                                                    <td>{{ $appointment->patient?->phone_no }}
+                                                                                    <td>{{ $appointment?->patient?->phone_no }}
                                                                                     </td>
                                                                                     <td class="email_link"> <a
-                                                                                            href="mailto:{{ $appointment->patient?->email }}">{{ $appointment->patient?->email }}</a>
+                                                                                            href="mailto:{{ $appointment?->patient?->email }}">{{ $appointment?->patient?->email }}</a>
                                                                                     </td>
                                                                                     <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                                     </td>
                                                                                     <td>{{ date('d-m-Y', strtotime($appointment->appointment_date)) ?? 'N/A' }}
                                                                                     </td>
-                                                                                    <td>{{ $appointment->time_start }} -
-                                                                                        {{ $appointment->time_end }}</td>
+                                                                                    <td>{{ $appointment?->time_start }} -
+                                                                                        {{ $appointment?->time_end }}</td>
                                                                                 </tr>
                                                                             @endforeach
                                                                         </tbody>
@@ -717,17 +717,17 @@
                                                             <tbody>
                                                                 @foreach ($doctors as $doctor)
                                                                     <tr>
-                                                                        <td>{{ ucfirst($doctor->user->first_name) . ' ' . ucfirst($doctor->user->last_name) }}
+                                                                        <td>{{ ucfirst($doctor?->user?->first_name) . ' ' . ucfirst($doctor?->user?->last_name) }}
                                                                         </td>
-                                                                        <td>{{ $doctor->user->phone_no }}</td>
+                                                                        <td>{{ $doctor?->user?->phone_no }}</td>
                                                                         <td class="email_link"><a
-                                                                                href="mailto:{{ $doctor->user->email }}">{{ $doctor->user->email }}</a>
+                                                                                href="mailto:{{ $doctor?->user?->email }}">{{ $doctor?->user?->email }}</a>
                                                                         </td>
                                                                         <td>
                                                                             <div class="table-btns"><a
                                                                                     class="dropdown-item doctor-view"
                                                                                     href="javascript:void(0)"
-                                                                                    data-url="{{ route('doctors.view', $doctor->id) }}"
+                                                                                    data-url="{{ route('doctors.view', $doctor?->id) }}"
                                                                                     data-id=" $doctor->id "
                                                                                     data-bs-toggle="viewmodal"
                                                                                     data-bs-target="#myViewModal">
@@ -772,11 +772,11 @@
                                                             <tbody>
                                                                 @foreach ($doctors as $doctor)
                                                                     <tr>
-                                                                        <td>{{ ucfirst($doctor->user->first_name) . ' ' . ucfirst($doctor->user->last_name) }}
+                                                                        <td>{{ ucfirst($doctor?->user?->first_name) . ' ' . ucfirst($doctor?->user?->last_name) }}
                                                                         </td>
-                                                                        <td>{{ $doctor->user->phone_no }}</td>
+                                                                        <td>{{ $doctor?->user?->phone_no }}</td>
                                                                         <td class="email_link"><a
-                                                                                href="mailto:{{ $doctor->user->email }}">{{ $doctor->user->email }}</a>
+                                                                                href="mailto:{{ $doctor?->user?->email }}">{{ $doctor?->user?->email }}</a>
                                                                         </td>
                                                                         <td>
                                                                             <div class="table-btns"><a
@@ -827,17 +827,17 @@
                                                             <tbody>
                                                                 @foreach ($patients as $patient)
                                                                     <tr>
-                                                                        <td>{{ ucfirst($patient->user?->first_name) . ' ' . ucfirst($patient->user?->last_name) }}
+                                                                        <td>{{ ucfirst($patient?->user?->first_name) . ' ' . ucfirst($patient?->user?->last_name) }}
                                                                         </td>
-                                                                        <td>{{ $patient->user?->phone_no }}</td>
+                                                                        <td>{{ $patient?->user?->phone_no }}</td>
                                                                         <td class="email_link"><a
-                                                                                href="mailto:{{ $patient->user?->email }}">{{ $patient->user?->email }}</a>
+                                                                                href="mailto:{{ $patient?->user?->email }}">{{ $patient?->user?->email }}</a>
                                                                         </td>
                                                                         <td>
                                                                             <div class="table-btns">
                                                                                 <a class="dropdown-item patient-view"
                                                                                     href="javascript:void(0)"
-                                                                                    data-url="{{ route('patients.view', $patient->id) }}"
+                                                                                    data-url="{{ route('patients.view', $patient?->id) }}"
                                                                                     data-id="{{ $patient->id }}"
                                                                                     data-toggle="viewmodal"
                                                                                     data-target="#myViewModal">
