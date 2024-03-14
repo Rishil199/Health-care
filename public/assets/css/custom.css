@@ -17,3 +17,9 @@ label#name-error {
 .st0:hover {
 /*    fill: #fff !important;*/
 }
+.theme-form-group .select2-selection {
+    border: 1px solid #ced4da !important;
+    padding: 0.2rem 2rem 0.2rem 0.3rem !important;
+    height: 100% !important;
+}
+.cursor-pointer {cursor: pointer;}
