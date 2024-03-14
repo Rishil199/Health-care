@@ -406,7 +406,6 @@ class DoctorController extends Controller
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
         }
 
-     
          
         $headers = array(
             "Content-type"        => "text/csv",
@@ -459,9 +458,7 @@ class DoctorController extends Controller
             if($doctors){
                 $doctordetails=DoctorDetails::select('id','user_id')->whereIn('id',$doctors->all())->with('user')->get();             
             }
-;
-           
-            // }
+
             
             // $doctors = DoctorDetails::select(array(
             //     'id','user_id','clinic_id','status','created_at'
