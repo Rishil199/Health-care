@@ -51,7 +51,7 @@ class StoreDoctorRequest extends FormRequest
             'birth_date.required'=> 'Doctor birth date is required.',
             'degree.required'=>'Doctor degree is required.',
             'experience.required'=>'Doctor experience is required.',
-            'expertice.required'=>'Doctor expertice is required.'
+            'expertice.required'=>'Doctor expertise is required.'
         ];
     }
 }

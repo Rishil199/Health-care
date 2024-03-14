@@ -26,8 +26,8 @@
                                 @endforeach
                             @elseif (Auth::user()->hasRole(User::ROLE_DOCTOR))
                                 <p class="text-uppercase text-dark mb-3"><b>Hospital name :
-                                        {{ $doctorClinic->clinic->user->first_name }}</b></p>
-                                @switch($doctorClinic->clinic->is_main_branch)
+                                        {{ $doctorClinic->clinic?->user->first_name }}</b></p>
+                                @switch($doctorClinic->clinic?->is_main_branch)
                                     @case(1)
                                         <p class="mb-4 text-uppercase text-dark"><b> Branch : Main Branch </b></p>
                                     @break
@@ -531,9 +531,15 @@
                                                                     </g>
                                                                 </svg>
                                                             </span>
+                                                            @if(Auth::user()->hasAnyRole([ User::ROLE_DOCTOR, User::ROLE_RECEPTIONIST]))
                                                             <span class="svg-text">
-                                                                Patients
+                                                                Master Patients
                                                             </span>
+                                                            @else 
+                                                            <span class="svg-text">
+                                                                 Patients
+                                                            </span>
+                                                            @endif
                                                         </button>
                                                     </li>
                                                 @elseif (Auth::user()->hasRole(User::ROLE_CLINIC) && $doctors->isNotEmpty())
@@ -561,7 +567,7 @@
                                                                 </svg>
                                                             </span>
                                                             <span class="svg-text">
-                                                                Patients
+                                                                Master Patients
                                                             </span>
                                                         </button>
                                                     </li>
@@ -593,11 +599,11 @@
                                                                 <tbody>
                                                                     @foreach ($appointments as $appointment)
                                                                         <tr>
-                                                                            <td>{{ ucfirst($appointment->user?->first_name) . ' ' . ucfirst($appointment->user?->last_name) }}
+                                                                            <td>{{ ucfirst($appointment->patient->first_name) . ' ' . ucfirst($appointment->patient->last_name) }}
                                                                             </td>
-                                                                            <td>{{ $appointment->user?->phone_no }}</td>
+                                                                            <td>{{ $appointment->patient->phone_no }}</td>
                                                                             <td class="email_link"> <a
-                                                                                    href="mailto:{{ $appointment->user?->email }}">{{ $appointment->user?->email }}</a>
+                                                                                    href="mailto:{{ $appointment->patient->email }}">{{ $appointment->patient?->email }}</a>
                                                                             </td>
                                                                             <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                             </td>
@@ -677,12 +683,12 @@
                                                                         <tbody>
                                                                             @foreach ($appointments as $appointment)
                                                                                 <tr>
-                                                                                    <td>{{ ucfirst($appointment->user?->first_name) . ' ' . ucfirst($appointment->user?->last_name) }}
+                                                                                    <td>{{ ucfirst($appointment->patient?->first_name) . ' ' . ucfirst($appointment->patient?->last_name) }}
                                                                                     </td>
-                                                                                    <td>{{ $appointment->user?->phone_no }}
+                                                                                    <td>{{ $appointment->patient?->phone_no }}
                                                                                     </td>
                                                                                     <td class="email_link"> <a
-                                                                                            href="mailto:{{ $appointment->user?->email }}">{{ $appointment->user?->email }}</a>
+                                                                                            href="mailto:{{ $appointment->patient?->email }}">{{ $appointment->patient?->email }}</a>
                                                                                     </td>
                                                                                     <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
                                                                                     </td>

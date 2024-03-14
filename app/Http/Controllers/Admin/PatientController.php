@@ -48,12 +48,17 @@ class PatientController extends Controller
                 $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
 
                 $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
-
-                $patients = PatientDetails::select(array(
-                'id','user_id','clinic_id','created_at','doctor_id'
-                ))->with('user')->where('doctor_id',$user_id->id)->get();
                 
-     
+                $doctorIds=DoctorDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->clinic_id)->pluck('id');
+           
+                $patients=PatientDetails::select(array(
+                    'id','user_id','clinic_id','created_at','doctor_id'
+                 ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorIds)->orderByDesc('created_at')->get();
+
+
+                // $patients = PatientDetails::select(array(
+                // 'id','user_id','clinic_id','created_at','doctor_id'
+                // ))->with('user')->where('doctor_id',$user_id->id)->orderByDesc('created_at')->get();
                
             }
              if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)) {

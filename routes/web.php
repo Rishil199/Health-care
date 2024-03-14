@@ -31,7 +31,7 @@ use Spatie\Permission\Models\Role;
 Route::get('/', function () {
     return view('welcome');
 });
-
+// Route::get('/verification',[UserController::class,'resetpswd']);
 
 Route::post('subscription/store',  [UserController::class, 'subscriptionStore'])->name('subscription'); 
 
@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::post('/change-password', [UserController::class, 'updatePassword'])->name('update-password');
     Route::get('/change-profile', [UserController::class, 'changeProfile'])->name('change-profile');
     Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
+    
 
     //users
     Route::group(['prefix' => 'users'], function() {

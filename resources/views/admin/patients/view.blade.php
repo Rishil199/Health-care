@@ -130,7 +130,7 @@
                     <div class="theme-form-group ">
                         <label class="theme-label" for="prescription">Prescription</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->prescription  ?? '-' }}</span>
+                           <span>{{ $patient->prescription  !=='' ? $patient->prescription:'-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                     <div class="theme-form-group ">
                         <label class="theme-label" for="allergies">Allergies</label>
                         <div class="theme-form-input">
-                            <span>{{ $patient->allergies ?? '-'  }}</span>
+                            <span>{{ $patient->allergies !=='' ? $patient->allergies: '-'  }}</span>
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                     <div class="theme-form-group">
                         <label class="theme-label" for="illness">Medical History</label>
                         <div class="theme-form-input">
-                        <span>   <span>{{ $patient->illness == "yes"  ? 'Yes' : 'No' }}</span>
+                       <span>{{ $patient->illness == "yes"  ? 'Yes' : '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                     <div class="theme-form-group ">
                         <label class="theme-label" for="exercise">Exercise</label>
                         <div class="theme-form-input">
-                        <span>{{ $patient->exercise == "yes"  ? 'Yes' : 'No' }}</span>
+                        <span>{{ $patient->exercise == "yes"  ? 'Yes' : '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                     <div class="theme-form-group ">
                         <label class="theme-label" for="alchohol_consumption">Alchohol Consumption</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->alchohol_consumption == "yes"  ? 'Yes' : 'No' }}</span>
+                           <span>{{ $patient->alchohol_consumption == "yes"  ? 'Yes' : '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                     <div class="theme-form-group ">
                         <label class="theme-label" for="diet">Diet</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->diet == "yes"  ? 'Yes' : 'No' }}</span>
+                           <span>{{ $patient->diet == "yes"  ? 'Yes' : '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                     <div class="theme-form-group">
                         <label class="theme-label" for="smoke">Smoke</label>
                         <div class="theme-form-input">
-                           <span>{{ $patient->smoke == "yes"  ? 'Yes' : 'No' }}</span>
+                           <span>{{ $patient->smoke == "yes"  ? 'Yes' : '-' }}</span>
                         </div>
                     </div>
                 </div>

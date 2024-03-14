@@ -220,7 +220,7 @@
                                          },
                                         { data: 'created_by', name: 'created_by'},
                                         { data: 'status', name: 'status' },
-                                        { data: 'action', name: 'action' },
+                                        // { data: 'action', name: 'action' },
 
                                     ],
                                     "columnDefs": [
@@ -278,7 +278,7 @@
                                          },
                                         { data: 'created_by', name: 'created_by'},
                                         { data: 'status', name: 'status' },
-                                        { data: 'action', name: 'action' },
+                                        // { data: 'action', name: 'action' },
                                     ],
                                     "columnDefs": [
                                         { className: "patient_link", "targets": [ 0 ] }
@@ -335,7 +335,7 @@
                                         },
                                         { data: 'created_by', name: 'created_by'},                                         
                                         { data: 'status', name: 'status' },
-                                        { data: 'action', name: 'action' },
+                                        // { data: 'action', name: 'action' },
                                     ],
                                     "columnDefs": [
                                         { className: "patient_link", "targets": [ 0 ] }

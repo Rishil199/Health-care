@@ -141,7 +141,7 @@ function validateForm( $form ) {
                     required:'Doctor birth date is required.'
                 },
                 'expertice': {
-                    required:'Doctor expertice is required.'
+                    required:'Doctor expertise is required.'
                 },
                 'status':{
                     required:'Doctor status is required.'
