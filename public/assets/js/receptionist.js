@@ -33,8 +33,15 @@ $(document).on('click', '.btn-add-receptionists',function(e) {
                     if ( resp.status ) {
                         make_modal( 'add-receptionists-modal', resp.data.view, true, 'modal-lg' );
                         validateForm( $('.add-receptionists-form') );
-                         if ( $("#datepicker").length ) {
+                        if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker();
+                        }
+                        if ( $("#clinic_id").length ) {
+                            var parent_modal = $('#add-receptionists-modal > .modal-dialog > .modal-content');
+                            $('#clinic_id').select2({
+                                dropdownParent: parent_modal,
+                                width: '100%'
+                            });
                         }
                     }
                 }
@@ -258,6 +265,12 @@ $(document).on('click', '.edit-receptionists',function(e) {
                         validateForm( $('#update-receptionists-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker();
+                        }
+                        if ( $("#clinic_id").length ) {
+                            $('#clinic_id').select2({
+                                dropdownParent: $('#add-edit-receptionists-modal > .modal-dialog > .modal-content'),
+                                width: '100%'
+                            });
                         }
                     }
                 }
