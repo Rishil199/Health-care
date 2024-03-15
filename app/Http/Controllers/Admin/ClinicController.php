@@ -269,8 +269,7 @@ class ClinicController extends Controller
      */
 
     public function show($slug='', Request $request) {
-        
-        
+    
         $user = User::where('slug', $slug)->firstOrFail();
 
         if ($request->ajax()) {

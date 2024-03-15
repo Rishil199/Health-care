@@ -3,14 +3,6 @@
     <div class="title">
         <strong>Book Appointment</strong>
     </div>
-    <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close">
-    <svg fill="#000000" width="20" height="20" version="1.1" id="lni_lni-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-        <path d="M34.5,32L62.2,4.2c0.7-0.7,0.7-1.8,0-2.5c-0.7-0.7-1.8-0.7-2.5,0L32,29.5L4.2,1.8c-0.7-0.7-1.8-0.7-2.5,0
-           c-0.7,0.7-0.7,1.8,0,2.5L29.5,32L1.8,59.8c-0.7,0.7-0.7,1.8,0,2.5c0.3,0.3,0.8,0.5,1.2,0.5s0.9-0.2,1.2-0.5L32,34.5l27.7,27.8
-           c0.3,0.3,0.8,0.5,1.2,0.5c0.4,0,0.9-0.2,1.2-0.5c0.7-0.7,0.7-1.8,0-2.5L34.5,32z" fill="#fff">
-        </path>
-    </svg>
-    </button>
 </div>
 <div class="modal-body">
     <form action="" method="post" id="add-patient-appointment-form" class="add-patient-appointment-form">
@@ -28,13 +20,13 @@
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1">Select Hospital <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <select class="form-control form-select" name="event_name" id="clinic-dropdown">
+                <select class="form-control form-select search-multiple select-box" name="event_name" id="clinic-dropdown">
                     <option value="">Select Hospital</option>
-                    @foreach( $clinics as $clinic )
-                    @if($clinic->status==1)
-                    <option value="{{ $clinic->user_id }}">{{ $clinic->user->fullName }}</option>
-                    @endif 
-                    @endforeach
+                    {{-- @foreach( $clinics as $clinic ) --}}
+                    {{-- @if($clinic->status==1) --}}
+                    <option value=""></option>
+                    {{-- @endif 
+                    @endforeach --}}
                 </select>
             </div>
             @if(Auth::user()->hasRole(User::ROLE_PATIENT))
@@ -92,6 +84,9 @@
             @endif
             <div class="text-center mt-2">
                <input type="submit" class="btn btn-primary create-appointment" id="create-appointment" value="Save" />
+               <button  type="button" class="btn btn-outline-dark mt-0 mx-3 text-center" data-bs-dismiss="modal">  
+                Cancel 
+            </button>
             </div>
         </div>
     </form>
@@ -105,6 +100,20 @@
         event_name: {
             required: true
         },
+        doctor_id:{
+            required:true
+        }
+      },
+      messages:{
+        'time_start':{
+           required : "Select time is required"
+        },
+        'event_name':{
+            required:"Select Hospital is required "
+        },
+        'doctor_id':{
+        required:"Select Doctor is required."
+        }
       }
     });   
 </script>
@@ -213,3 +222,24 @@
     }
 
 </script>
+
+
+
+{{-- $(document).ready(function () {
+    // alert("hello");
+    $('#clinic-dropdown').select2({
+        ajax: {
+            url: "patient.fetchClinics",
+            dataType: "json",
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+});
+ --}}
+
