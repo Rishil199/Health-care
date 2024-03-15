@@ -442,7 +442,7 @@ class DoctorController extends Controller
                
             ); 
         }
-        
+    
         return view('doctor.appointments.index', $this->data);
     }
 
@@ -470,39 +470,54 @@ class DoctorController extends Controller
                 }    
 
     }
+    /**
+     * Checks if an appointment exists for a specific doctor on a given date and time range.
+     *
+     * @param int $doctor_id The ID of the doctor.
+     * @param array $splitTime An array containing the start and end times of the appointment.
+     * @param string $date The date of the appointment.
+     * @return bool Whether an appointment exists.
+     */
+    public function isExistAppointment($doctor_id,$splitTime, $date){
+        $start_time = $splitTime[0] ?? '';
+        $end_time = $splitTime[1] ?? '';
+        
+        return DoctorAppointmentDetails::where('doctor_id', $doctor_id)
+        ->whereDate('appointment_date', $date)
+        ->whereBetween('time_start', [$start_time, $end_time])
+        ->whereBetween('time_end', [$start_time, $end_time])
+        ->exists();
+    }
 
     public function calendarEvents(Request $request) {
-
         $splitTime = explode('-', $request->time_start, 2);
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
             $doctor_main_id = $doctor_id->id;
             $doctor_main_clinicid = $doctor_id->clinic_id;
-
-
         }
         else {
-
             $doctor_main_id = $request->doctor_id ? $request->doctor_id : 0;
             $doctor_main_clinicid = $request->clinic_id ? $request->clinic_id : 0;
-
         }
-
+        $exist_appointment  = $this->isExistAppointment($doctor_main_id, $splitTime, $request->appointment_date);
+        if($exist_appointment){
+            return response()->json(['status' => 2, 'message' => 'The appointment slot already exists at this time.']);
+        }
         $event = DoctorAppointmentDetails::create([
-          'patient_id' => $request->event_name,
-          'user_id' => $request->event_name,
-          'disease_name' => $request->disease_name ?? '',   
-          'appointment_date' => $request->appointment_date,
-          'doctor_id' => $doctor_main_id,
-          'receptionist_id' => $request->receptionist_id ? $request->receptionist_id : 0,
-          'clinic_id' => $doctor_main_clinicid,
-          'created_by' => $request->created_by,
-          'time_start' => $splitTime[0],
-          'time_end' => $splitTime[1],
-          'weight'=>$request->weight ?? null,
-          'blood_pressure'=>$request->blood_pressure ?? null
-        ]);
-   
+            'patient_id' => $request->event_name,
+            'user_id' => $request->event_name,
+            'disease_name' => $request->disease_name ?? '',   
+            'appointment_date' => $request->appointment_date,
+            'doctor_id' => $doctor_main_id,
+            'receptionist_id' => $request->receptionist_id ? $request->receptionist_id : 0,
+            'clinic_id' => $doctor_main_clinicid,
+            'created_by' => $request->created_by,
+            'time_start' => $splitTime[0],
+            'time_end' => $splitTime[1],
+            'weight'=>$request->weight ?? null,
+            'blood_pressure'=>$request->blood_pressure ?? null
+          ]);
 
         if($request->disease_name != null){
             PatientDetails::create('disease_name',$request->disease_name);

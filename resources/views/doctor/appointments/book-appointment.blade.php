@@ -1,14 +1,4 @@
 @use ('App\Models\User')
-<style> 
-/* .select-box {
-    width:-750px;
-    z-index: 19999 !important;
-} */
-/* .book-appointment {
-    modal-xl;
-} */
-
-</style>
 <div class="modal-header">
     <div class="title">
         <strong>Book Appointment</strong>
@@ -92,38 +82,39 @@
                <input type="submit" class="btn btn-primary create-appointment" id="create-appointment" value="Save" />
                <button  type="button" class="btn btn-outline-dark mt-0 mx-3 text-center" data-bs-dismiss="modal">  
                 Cancel 
-            </button>
+                </button>
             </div>
         </div>
     </form>
 </div>
 
 <script>
-    $( "#add-appointment-form" ).validate({
-      rules: {
-        time_start: {
-            required: true
-        },
-        event_name: {
-            required: true
-        },
-        doctor_id: {
-            required: true
-        }
-      },
-     messages: {
-    'time_start': {
-      required: "Start time is required. ",
-    },
-    'event_name': {
-      required: " Patient is required.",
-    },
-    'doctor_id': {
-      required: "Doctor is required",
-    },
-  }
-});
-
+    if($( "#add-appointment-form" ).length > 0){
+        $( "#add-appointment-form" ).validate({
+            rules: {
+                time_start: {
+                    required: true
+                },
+                event_name: {
+                    required: true
+                },
+                doctor_id: {
+                    required: true
+                }
+            },
+            messages: {
+                'time_start': {
+                required: "Start time is required. ",
+                },
+                'event_name': {
+                required: " Patient is required.",
+                },
+                'doctor_id': {
+                required: "Doctor is required",
+                },
+            },
+        });
+    }
 </script>
 
 <script>
