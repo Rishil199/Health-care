@@ -78,9 +78,9 @@
             @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <div class="col-md-6 mb-3">
                <div class="form-group theme-form-group">
-                  <label class="theme-label" for="picker1">Choose Hospital <span class="text-danger">*</span></label>
+                  <label class="theme-label" for="clinic_id">Choose Hospital <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
-                     <select class="form-control form-select" name="clinic_id">
+                     <select class="form-control form-select" name="clinic_id" id="clinic_id">
                         <option value="">Choose Hospital</option>
                         @foreach($clinics as $value)
                         <option value="{{ $value->id }}">{{ ucfirst($value->user->first_name) }}</option>

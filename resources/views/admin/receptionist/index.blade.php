@@ -2,6 +2,7 @@
 @push('header_css')
 <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<link href="{{ asset('assets/js/plugins/select2/select2.min.css') }}" rel="stylesheet" />
 @endpush
 @section('content-breadcrumb')
 <li>
@@ -107,6 +108,7 @@
 </div>
 @endsection
 @push('footer_js')
+<script src="{{ asset('assets/js/plugins/select2/select2.min.js') }}"></script>
 <script type="text/javascript">
    let receptionists_url = "{{ route('receptionists.index') }}"  
    let receptionists_store_url = "{{ route('receptionists.store') }}"
