@@ -162,6 +162,10 @@
                                                 dropdownParent: $('#book-appointment-modal'),
                                                 width: '100%'
                                              });
+                                             $('#doctor_id').select2({
+                                                dropdownParent: $('#book-appointment-modal'),
+                                                width: '100%'
+                                             });
                                         }
                                     }
                                 },

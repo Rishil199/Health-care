@@ -119,8 +119,8 @@ class UserController extends Controller
             //         'id','user_id','clinic_id','created_at','doctor_id'
             //      ))->latest()->with('user')->where('doctor_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->get();
        
-            $appointments = DoctorAppointmentDetails::with('patient')->withTrashed()->where('doctor_id',$user_id->id)->where('clinic_id',$clinic_user_id?->clinic_id)->latest()->get();
-             
+            $appointments = DoctorAppointmentDetails::with('patient')->withTrashed()->where('doctor_id',$user_id->id)->latest()->get();
+
             $appointmentsCount = count(DoctorAppointmentDetails::where('doctor_id',$user_id->id)->withTrashed()->get()); 
        
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()

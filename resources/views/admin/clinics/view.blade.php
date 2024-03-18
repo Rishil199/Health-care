@@ -97,6 +97,7 @@
                 </div>
             </div>
         </div>
+        <h4 class="mx-4">Branch Details </h4>
         <div class="col-12">
         <div class="row">
              <div class="theme-block mt-4">

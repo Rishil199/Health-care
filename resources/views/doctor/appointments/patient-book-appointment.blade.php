@@ -31,8 +31,9 @@
                <div class="form-group theme-form-group">
                   <label class="theme-label mt-3" for="picker1">Select Doctor</label>
                   <div class="theme-form-input">
-                     <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
-                     </select>
+                      <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
+                          <option value="">Select Doctor</option>
+                    </select>
                   </div>
                </div>
             </div>
@@ -52,7 +53,7 @@
             </div>
             </div>
             @endif
-            <input type="hidden" name="clinic_id" value="{{$clinic_details?->id}}">
+            <input type="hidden" name="clinic_id" class="clinic_id"  value="{{$clinic_details?->id}}">
             {{-- <input type="hidden" name="receptionist_id" value="{{$receptionist_details?->id}}"> --}}
             <input type="hidden" name="created_by" value="{{Auth::user()->id}}">
             {{-- <div class="theme-form-input">
@@ -140,6 +141,7 @@
    $(document).ready(function () {
        $('#clinic-dropdown').on('change', function () {
            let clinic_id = this.value;
+           $('.clinic_id').val(clinic_id);
            let appointment_date = $(document).find('#appointment_date').val();
            $("#time_start-dropdown").html('');
            $.ajax({
@@ -191,8 +193,8 @@
 
      $(document).on('submit', '#add-patient-appointment-form', function(event) {
         event.preventDefault();
-        let $this = $(this);
-        $this.addClass('pe-none');
+       var clinic_id =$('.clinic_id').val();
+        $(this).addClass('pe-none');
         let data = $(this).serializeArray();
         $.ajax({
             url: '{{ route('patient_appointment_calender')}}',
@@ -210,7 +212,7 @@
                 error_notification_add();
             }
             }).always(function(){
-                $this.removeClass('pe-none');
+                $(this).removeClass('pe-none');
             });
     });
     function displayMessage(message) {

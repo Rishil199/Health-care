@@ -29,7 +29,7 @@
                 <div class="form-group theme-form-group">
                     <input type="hidden" data-id="{{ $all_appointent->id }}" id="data_id">
                     <label for="patient_name" class="theme-label">Patient Name :</label> <span
-                        class="fw-normal">{{ $all_appointent->user->first_name }}</span>
+                        class="fw-normal">{{ $all_appointent->patient->first_name }}</span>
                 </div>
             </div>
             <div class="col-md-6 mb-3">
