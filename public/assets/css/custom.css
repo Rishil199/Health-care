@@ -23,3 +23,6 @@ label#name-error {
     height: 100% !important;
 }
 .cursor-pointer {cursor: pointer;}
+span#select2-clinic_id-container {
+    font-weight: 400;
+}

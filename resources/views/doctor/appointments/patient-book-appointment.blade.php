@@ -6,16 +6,13 @@
 </div>
 <div class="modal-body">
     <form action="" method="post" id="add-patient-appointment-form" class="add-patient-appointment-form">
-    @csrf
-
-    <div class="col-md-6 mb-1">
-        <div class="form-group theme-form-group">
-            <label for="appointment_date" class="theme-label">Selected Date  : </label> <span
-                class="fw-normal">{{\Carbon\Carbon::parse($selected_date)->format('d-m-Y') }}</span>
+        @csrf
+        <div class="col-md-6 mb-1">
+            <div class="form-group theme-form-group">
+                <label for="appointment_date" class="theme-label">Selected Date  : </label> <span
+                    class="fw-normal">{{\Carbon\Carbon::parse($selected_date)->format('d-m-Y') }}</span>
+            </div>
         </div>
-    </div>
-
-
         <div class="form-group theme-form-group">
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1">Select Hospital <span class="text-danger">*</span></label>
@@ -85,8 +82,8 @@
             <div class="text-center mt-2">
                <input type="submit" class="btn btn-primary create-appointment" id="create-appointment" value="Save" />
                <button  type="button" class="btn btn-outline-dark mt-0 mx-3 text-center" data-bs-dismiss="modal">  
-                Cancel 
-            </button>
+                    Cancel 
+                </button>
             </div>
         </div>
     </form>

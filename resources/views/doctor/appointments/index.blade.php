@@ -208,11 +208,15 @@
                         $('#loader').show();
                     },
                     success: (function(data) {
-                        displayMessage("Appointment Added successfully!");
-                        $('#myModal').modal('hide');
+                        if(data.status == '2'){
+                            toastr.error(data.message, '');
+                        }else{
+                            displayMessage("Appointment Added successfully!");
+                            $('#myModal').modal('hide');
+                            window.location.reload();
+                            calendar.fullCalendar('unselect');
+                        }
                         $('#loader').hide();
-                        window.location.reload();
-                        calendar.fullCalendar('unselect');
                     }),
                     error: function(response) {
                         error_notification_add();
