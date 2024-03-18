@@ -84,13 +84,10 @@ class PatientController extends Controller
                 $doctorsIds = DoctorDetails::select(array(
                     'id','user_id','clinic_id','status','created_at'
                 ))->latest()->with('user')->where('clinic_id',$user_id->id)->pluck('id');
-           
-
-
+            
                 $patients = PatientDetails::select(array(
                     'id','user_id','clinic_id','doctor_id','created_at'
                 ))->latest()->with('user')->where('clinic_id',$clinic_details->id)->orWhere('receptionist_id',$user_id->id)->orWhereIn('doctor_id',$doctorsIds)->get();
-              
               
             }
 
@@ -512,6 +509,47 @@ class PatientController extends Controller
     {
         $fileName = 'patients.csv';
         $patients = PatientDetails::with('user')->orderByDesc('created_at')->get();
+       
+        if(Auth::user()->hasRole(User::ROLE_CLINIC))
+        {
+            $user_id = ClinicDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            $doctorsIds = DoctorDetails::select(array(
+                'id','user_id','clinic_id','status','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->pluck('id');
+       
+            $patients = PatientDetails::select(array(
+                'id','user_id','clinic_id','doctor_id','address','admit_date','gender','prescription','allergies','illness','exercise',
+                'alchohol_consumption','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$user_id->id)->orWhereIn('doctor_id',$doctorsIds)->get();          
+          
+        }
+
+        elseif (Auth::user()->hasRole(User::ROLE_DOCTOR))
+        {
+            $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            $doctorIds=DoctorDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->clinic_id)->pluck('id');         
+            $patients=PatientDetails::select(array(
+         'id','user_id','clinic_id','created_at','doctor_id','address','admit_date','gender','prescription','allergies','illness','exercise',
+         'alchohol_consumption','created_at'
+            ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorIds)->orderByDesc('created_at')->get();
+        }
+
+
+      elseif(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)) {
+
+           $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+           $doctorsIds = DoctorDetails::select(array(
+               'id','user_id','clinic_id','status','created_at'
+           ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->pluck('id');
+       
+           
+           $patients = PatientDetails::select(array(
+           'id','user_id','clinic_id','doctor_id','address','admit_date','gender','prescription','allergies','illness','exercise',
+           'alchohol_consumption','created_at'
+          ))->latest()->with('user')->where('clinic_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorsIds)->get();
+        }
+
+       
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

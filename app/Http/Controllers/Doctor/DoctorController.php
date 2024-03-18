@@ -601,7 +601,6 @@ class DoctorController extends Controller
             ->addColumn('time_end', function($row) {
                 return date('H:i A', strtotime($row->time_end));
             })
-            
             ->addColumn('action', function($row){
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
@@ -1164,7 +1163,8 @@ class DoctorController extends Controller
         $post_data = $request->validated( $request->messages());
         $splitTime = $request->next_start_time ? explode('-', $request->next_start_time, 2) : null;
         $all_appointent = DoctorAppointmentDetails::with('user')->find($request->id);
-        $all_appointent->disease_name = $post_data['disease_name'];
+        $all_appointent->disease_name = $post_data['disease_name'] ?? null;
+        $all_appointent->prescription = $post_data['prescription'] ?? null;
         $all_appointent->is_complete = isset($post_data['is_complete'])? $post_data['is_complete']:null;
         $all_appointent->next_date =  $request->next_date ? date('Y/m/d', strtotime($request->next_date)) : null;
         $all_appointent->next_start_time =  isset($splitTime[0]) ? $splitTime[0] : $all_appointent->next_start_time;
@@ -1271,9 +1271,8 @@ class DoctorController extends Controller
 
     public function fetchDoctors(Request $request)
     {
-        
-        $clinic_id = ClinicDetails::where('user_id',$request->clinic_id)->first();
-        $data['doctors'] = DoctorDetails::where("clinic_id",$clinic_id->id)->with('user')->get();
+        $clinic_id = ClinicDetails::where('id',$request->clinic_id)->first();
+        $data['doctors'] = DoctorDetails::where("clinic_id",$clinic_id?->id)->with('user')->get();
         return response()->json($data);
     }
 
@@ -1293,14 +1292,14 @@ class DoctorController extends Controller
 
         $current_time = now()->toTimeString();
 
-        $data['current_slots'] = DoctorAppointmentDetails::where('clinic_id',$clinic_id->id)->get();
+        $data['current_slots'] = DoctorAppointmentDetails::where('clinic_id',$clinic_id?->id)->get();
       
 
         $available_time_slots = DoctorAppointmentDetails::with('user')->select(array(
             'id', 'patient_id', 'time_start', 'time_end', 'appointment_date','clinic_id'
         ))->where(array(
             'appointment_date' => $date,
-            'clinic_id' => $clinic_id->id,
+            'clinic_id' => $clinic_id?->id,
         ))->get();
 
         
@@ -1458,8 +1457,8 @@ class DoctorController extends Controller
         if(Auth::user()->hasRole(User::ROLE_PATIENT)) {
             $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->with('user')->where('user_id',$request->doctor_id)->first();
             $clinic_id = ClinicDetails::select('id','user_id')->with('user')->where('user_id',$request->event_name)->first();
-            $doctor_main_id = $request->doctor_id ? $doctor_id->id  :  0;
-            $doctor_main_clinicid = $request->event_name ?  $clinic_id->id  : 0;
+            $doctor_main_id = $request->doctor_id ? $doctor_id?->id  :  0;
+            $doctor_main_clinicid = $request->event_name ?  $clinic_id?->id  : 0;
 
         }
        
@@ -1501,7 +1500,7 @@ class DoctorController extends Controller
         $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->orderByDesc('created_at')->get();
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
-                return $row->user->phone_no;
+                return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
                 return date('d-m-Y',strtotime($row->appointment_date));
@@ -1568,7 +1567,7 @@ class DoctorController extends Controller
 
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
-                return $row->user->phone_no;
+                return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
                 return date('d-m-Y',strtotime($row->appointment_date));
@@ -1632,7 +1631,7 @@ class DoctorController extends Controller
 
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
-                return $row->user->phone_no;
+                return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
                 return date('d-m-Y',strtotime($row->appointment_date));
@@ -1698,7 +1697,7 @@ class DoctorController extends Controller
      
         return Datatables::of($appointments)
             ->addColumn('phone_no', function($row) {
-                return $row->user->phone_no;
+                return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
                 return date('d-m-Y',strtotime($row->appointment_date));
@@ -1853,6 +1852,30 @@ class DoctorController extends Controller
 
     }
 
+
+     public function fetchClinics(Request $request)
+    {
+        if($request->ajax()){
+        $search =$request->input('q');
+        $clinicsNames = ClinicDetails::where('is_main_branch',1)->with('user');
+        if($search)
+        {
+            $clinicsNames->whereHas('user',function($query) use ($search){
+              $query->where('first_name','like',"%$search%");       
+              
+            });
+        }
+        $clinics=$clinicsNames->get();
+        $formattedclinics=$clinics->map(function($clinic){
+            return [
+                'id'=>$clinic->id,
+                'text'=>$clinic->user->first_name,
+            ];
+        });
+        return response()->json($formattedclinics);
+    }
+    
+    }
 }
 
 

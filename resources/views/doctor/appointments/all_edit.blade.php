@@ -137,9 +137,9 @@
                             <label class="switch" for="is_complete">
                                 <div class="form-check form-switch form-switch-md"><label class="switch"><input
                                             data-id={{ $all_appointent->id }} class="toggle-class form-check-input"
-                                            type="checkbox" id="is_complete" data-onstyle="success"
+                                            type="checkbox" id="is_complete" name="is_complete" data-onstyle="success"
                                             data-offstyle="danger" data-toggle="toggle" data-on="Active"
-                                            data-off="InActive" value="1" cheked disabled ></label></div>
+                                            data-off="InActive" value="1" ></label></div>
                             </label>
                         </div>
                     </div>

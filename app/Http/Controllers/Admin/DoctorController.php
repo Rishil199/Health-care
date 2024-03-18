@@ -406,7 +406,6 @@ class DoctorController extends Controller
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
         }
 
-     
          
         $headers = array(
             "Content-type"        => "text/csv",
@@ -459,9 +458,7 @@ class DoctorController extends Controller
             if($doctors){
                 $doctordetails=DoctorDetails::select('id','user_id')->whereIn('id',$doctors->all())->with('user')->get();             
             }
-;
-           
-            // }
+
             
             // $doctors = DoctorDetails::select(array(
             //     'id','user_id','clinic_id','status','created_at'
@@ -487,20 +484,39 @@ class DoctorController extends Controller
     public function clinicsListing(Request $request){
          if ($request->ajax()) {
             
-            $clinics = ClinicDetails::select(array(
-                'id','user_id','clinic_id','status','created_at','is_main_branch','address'
-            ))->latest()->with('user')->where([['is_main_branch',1],['status',1]])->get();
+            // $clinics = ClinicDetails::select(array(
+            //     'id','user_id','clinic_id','status','created_at','is_main_branch','address'
+            // ))->latest()->with('user')->where([['is_main_branch',1],['status',1]])->get();
 
-            return Datatables::of($clinics)
-                    ->editColumn('status',function($row){
-                            if($row->status == 1){
-                                $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked disabled></label></div>';
-                            }
-                            else{
-                                $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
-                            }
-                            return $status;
-                        })->rawColumns(['status'])->make(true);
+            $authUser= Auth::user();
+            $clinics= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
+            ->pluck('clinic_id');
+
+            if($clinics){
+                $clinicDetails=ClinicDetails::select('id','user_id','status','created_at','is_main_branch','address')->whereIn('id',$clinics->all())->with('user')->get();             
+            }
+ 
+
+            return Datatables::of($clinicDetails)
+            ->editColumn('action',function($row){
+                $actionBtn =    '<div class="dropable-btn">
+                                        <div class="dropdown">
+                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                            </svg>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                            <li>
+                                               <a class="dropdown-item view-clinic" href="'. route('clinics.view', $row->user->slug) .'" title="View">
+                                                  <span class="svg-text">View</span>
+                                               </a>
+                                            </li>
+                                            </ul>
+                                        </div>
+                                    </div>';
+                    return $actionBtn;
+             })->rawColumns(['action'])->make(true);
         }
 
         $this->data = array(

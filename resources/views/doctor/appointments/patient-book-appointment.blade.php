@@ -17,13 +17,13 @@
             <input type="hidden" name="appointment_date" id="appointment_date" value="{{ $appointment_date }}" />
             <label class="theme-label" for="picker1">Select Hospital <span class="text-danger">*</span></label>
             <div class="theme-form-input">
-                <select class="form-control form-select" name="event_name" id="clinic-dropdown">
+                <select class="form-control form-select search-multiple select-box" name="event_name" id="clinic-dropdown">
                     <option value="">Select Hospital</option>
-                    @foreach( $clinics as $clinic )
-                    @if($clinic->status==1)
-                    <option value="{{ $clinic->user_id }}">{{ $clinic->user->fullName }}</option>
-                    @endif 
-                    @endforeach
+                    {{-- @foreach( $clinics as $clinic ) --}}
+                    {{-- @if($clinic->status==1) --}}
+                    <option value=""></option>
+                    {{-- @endif 
+                    @endforeach --}}
                 </select>
             </div>
             @if(Auth::user()->hasRole(User::ROLE_PATIENT))
@@ -97,6 +97,20 @@
         event_name: {
             required: true
         },
+        doctor_id:{
+            required:true
+        }
+      },
+      messages:{
+        'time_start':{
+           required : "Select time is required"
+        },
+        'event_name':{
+            required:"Select Hospital is required "
+        },
+        'doctor_id':{
+        required:"Select Doctor is required."
+        }
       }
     });   
 </script>
@@ -104,7 +118,6 @@
    $(document).ready(function () {
        $('#clinic-dropdown').on('change', function () {
            var idCountry = this.value;
-    
            $("#doctor-dropdown").html('');
            $.ajax({
                url: "{{ route('appointments.fetchDoctors')}}",
@@ -205,3 +218,24 @@
     }
 
 </script>
+
+
+
+{{-- $(document).ready(function () {
+    // alert("hello");
+    $('#clinic-dropdown').select2({
+        ajax: {
+            url: "patient.fetchClinics",
+            dataType: "json",
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+});
+ --}}
+

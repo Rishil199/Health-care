@@ -270,7 +270,8 @@ if ( $('.clinics-patients-table').length ) {
             
             { data: 'user.phone_no', name: 'user.phone_no' },
             { data: 'address', name: 'address' },
-            { data: 'status', name: 'status' },
+            // { data: 'status', name: 'status' },
+            { data: 'action', name: 'action' },
 
 
         ]

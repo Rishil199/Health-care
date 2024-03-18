@@ -39,7 +39,6 @@ class ReceptionistController extends Controller
                 $receptionist = ReceptionistDetails::select(array(
                 'id','user_id','clinic_id','status','created_at'
                  ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
-
             }
 
             return Datatables::of($receptionist)
@@ -340,6 +339,15 @@ class ReceptionistController extends Controller
     {
         $fileName = 'Receptionists.csv';
         $receptionists = ReceptionistDetails::with('user')->orderByDesc('created_at')->get();
+
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
+            $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            $receptionists = ReceptionistDetails::select(array(
+            'id','user_id','clinic_id','status','gender','birth_date','qualification','experience','created_at'
+             ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();
+            
+        }
+        
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

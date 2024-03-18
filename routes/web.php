@@ -196,7 +196,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
             Route::get('/past_patient_appointment', [MainDoctorController::class, 'past_patient_appointment'])
             ->name('past_patient_appointment');
             Route::delete('patient-delete', [MainDoctorController::class, 'destroyPatient'])->name('all-patient-appointments.destroy');
-          
+            Route::get('fetchClinics', [MainDoctorController::class, 'fetchClinics'])->name('patient.fetchClinics');
     });
 });
  
