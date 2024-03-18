@@ -121,7 +121,6 @@
    $(document).ready(function () {
        $('#clinic-dropdown').on('change', function () {
            var idCountry = this.value;
-    
            $("#doctor-dropdown").html('');
            $.ajax({
                url: "{{ route('appointments.fetchDoctors')}}",
