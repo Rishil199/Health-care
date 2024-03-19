@@ -591,7 +591,7 @@ class DoctorController extends Controller
             })
             ->addColumn('appointment_date',function($row){
                 if ($row->next_date) {
-                    return $row->next_date .' '.$row->next_start_time;
+                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
                 }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
@@ -724,7 +724,7 @@ class DoctorController extends Controller
             })
             ->addColumn('appointment_date',function($row){
                 if ($row->next_date) {
-                    return $row->next_date .' '.$row->next_start_time;
+                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
                 }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
@@ -851,7 +851,7 @@ class DoctorController extends Controller
             })
             ->addColumn('appointment_date',function($row){
                 if ($row->next_date) {
-                    return $row->next_date .' '.$row->next_start_time;
+                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
                 }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
@@ -973,9 +973,6 @@ class DoctorController extends Controller
                 return $row->patient->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                // if ($row->next_date) {
-                //     return $row->next_date .' '.$row->next_start_time;
-                // }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
             ->addColumn('phone_no', function($row) {
