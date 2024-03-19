@@ -553,7 +553,7 @@ class DoctorController extends Controller
         }
         
         $appointments = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
-    
+
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
             $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
            
@@ -566,12 +566,11 @@ class DoctorController extends Controller
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
           
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-        
             $appointments = DoctorAppointmentDetails::with('patient')->withTrashed()
-                ->where(function ( $query ) use ($receptionist_details, $user_id) {
-                    $query->where('receptionist_id',$receptionist_details?->id)
-                        ->orWhere('clinic_id', $user_id->id);
-                })->latest()->get();
+            ->where(function ( $query ) use ($receptionist_details, $user_id) {
+                $query->where('receptionist_id',$receptionist_details?->id)
+                ->orWhere('clinic_id', $user_id->id);
+            })->latest()->get();            
         }
 
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
@@ -579,15 +578,24 @@ class DoctorController extends Controller
             $clinic_user_id = DoctorAppointmentDetails::select('id','user_id','clinic_id','doctor_id')->where('clinic_id',$user_id->clinic_id)->first();
             $appointments = DoctorAppointmentDetails::with('patient')->withTrashed()->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->latest()->get();
         }
-
+        
         return Datatables::of($appointments)
+            ->addColumn('patient_name', function($row) {
+                if($row->patient?->email){
+                    $full_name = $row->patient?->first_name . ' '.$row->patient?->last_name; 
+                    return '<a href="mailto:'.$row->patient?->email.'">'.$full_name.'</a>';
+                }else{
+                    return '-';
+                }
+            })
             ->addColumn('phone_no', function($row) {
                 return $row->patient->phone_no;
-            
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
-       
+                if ($row->next_date) {
+                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
+                }
+                return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
             ->addColumn('created_by', function($row) {
                 $created_by = User::select('id','first_name','last_name','name')->where('id',$row->created_by)->first();
@@ -645,7 +653,7 @@ class DoctorController extends Controller
                                 </div>';
                         return $actionBtn;
                 })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['patient_name', 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
 
         return response()->json($this->data);
@@ -683,10 +691,7 @@ class DoctorController extends Controller
                 // ->where('clinic_id', $clinic_user_id?->clinic_id);
             })
             ->where('is_complete','=','0')->get();
-            
-
-  
-            }
+        }
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
@@ -709,12 +714,26 @@ class DoctorController extends Controller
 
 
         return Datatables::of($appointments)
+            ->addColumn('patient_name', function($row) {
+                if($row->patient?->email){
+                    $full_name = $row->patient?->first_name . ' '.$row->patient?->last_name; 
+                    return '<a href="mailto:'.$row->patient?->email.'">'.$full_name.'</a>';
+                }else{
+                    return '-';
+                }
+            })
             ->addColumn('phone_no', function($row) {
                 return $row->patient->phone_no;
             })
-            ->addColumn('appointment_date', function($row) {
-                return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            ->addColumn('appointment_date',function($row){
+                if ($row->next_date) {
+                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
+                }
+                return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
+            // ->addColumn('appointment_date', function($row) {
+            //     return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            // })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
             }) 
@@ -770,7 +789,7 @@ class DoctorController extends Controller
                                 </div>';
                         return $actionBtn;
                 })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['patient_name','phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
         return response()->json($this->data);
     }
@@ -822,13 +841,29 @@ class DoctorController extends Controller
         }
 
         return Datatables::of($appointments)
+            ->addColumn('patient_name', function($row) {
+                if($row->patient?->email){
+                    $full_name = $row->patient?->first_name . ' '.$row->patient?->last_name; 
+                    return '<a href="mailto:'.$row->patient?->email.'">'.$full_name.'</a>';
+                }else{
+                    return '-';
+                }
+            })
             ->addColumn('phone_no', function($row) {
                 return $row->patient->phone_no;
             })
-
-            ->addColumn('appointment_date', function($row) {
-                return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            ->addColumn('appointment_date',function($row){
+                if ($row->next_date) {
+                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
+                }
+                return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
+            ->addColumn('phone_no', function($row) {
+                return $row->patient->phone_no;
+            })
+            // ->addColumn('appointment_date', function($row) {
+            //     return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            // })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
             }) 
@@ -874,7 +909,7 @@ class DoctorController extends Controller
                                 </div>';
                         return $actionBtn;
                 })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['patient_name', 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
 
         return response()->json($this->data);
@@ -929,12 +964,26 @@ class DoctorController extends Controller
         }
 
         return Datatables::of($appointments)
+            ->addColumn('patient_name', function($row) {
+                if($row->patient?->email){
+                    $full_name = $row->patient?->first_name . ' '.$row->patient?->last_name; 
+                    return '<a href="mailto:'.$row->patient?->email.'">'.$full_name.'</a>';
+                }else{
+                    return '-';
+                }
+            })
             ->addColumn('phone_no', function($row) {
                 return $row->patient->phone_no;
             })
-            ->addColumn('appointment_date', function($row) {
-                return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            ->addColumn('appointment_date',function($row){
+                return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
+            ->addColumn('phone_no', function($row) {
+                return $row->patient->phone_no;
+            })
+            // ->addColumn('appointment_date', function($row) {
+            //     return date('d-m-Y' , strtotime( $row->appointment_date)) ;
+            // })
            ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
             })
@@ -968,7 +1017,7 @@ class DoctorController extends Controller
                             </div>';
                     return $actionBtn;   
             })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['patient_name', 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
 
         return response()->json($this->data);
