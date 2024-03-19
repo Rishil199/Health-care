@@ -164,6 +164,7 @@
                     <thead class="table table-light">
                         <tr>
                             <th>Sr.no</th>
+                            <th>Doctor Name</th>
                             <th scope="col">Appointment Date</th>
                             <th scope="col">Appointment Time</th>
                             <th scope="col">Observation</th>
@@ -180,6 +181,7 @@
                         <?php $count++;?>
                         <tr class="table-font">
                             <td>{{$count}}</td>
+                            <td>{{$history->doctor->user->first_name}}</td>
                             <td>{{ \Carbon\Carbon::parse($history->appointment_date)->format('d-m-Y')}}</td>
                             <td>{{ $history->time_start }} - {{ $history->time_end }}</td>
                             <td>{{ $history->disease_name !==null && $history->disease_name !=='' ? $history->disease_name:'-'}}</td>

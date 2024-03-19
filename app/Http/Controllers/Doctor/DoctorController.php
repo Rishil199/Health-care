@@ -603,6 +603,7 @@ class DoctorController extends Controller
             ->addColumn('time_end', function($row) {
                 return date('H:i A', strtotime($row->time_end));
             })
+           
             ->addColumn('action', function($row){
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
@@ -690,7 +691,7 @@ class DoctorController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            $appointments = DoctorAppointmentDetails::where('appointment_date',$date)->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->get();
+            $appointments = DoctorAppointmentDetails::where('appointment_date',$date)->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->where('is_complete','=','0')->get();
             
         }
 
@@ -1091,9 +1092,8 @@ class DoctorController extends Controller
        
        
         $all_appointent = DoctorAppointmentDetails::with('patient')->findOrFail($id);        
-        $appointment_history=DoctorAppointmentDetails::select('id','user_id','appointment_date','time_start','time_end'
-        ,'disease_name','prescription','weight','blood_pressure','dietplan','next_date')->where('patient_id',$all_appointent->patient_id)->with('user')->orderByDesc('appointment_date')->get();
-    
+        $appointment_history=DoctorAppointmentDetails::select('id','user_id','doctor_id','appointment_date','time_start','time_end'
+        ,'disease_name','prescription','weight','blood_pressure','dietplan','next_date')->where('patient_id',$all_appointent->patient_id)->with('user')->orderByDesc('created_at')->get();
         $view = view('doctor.appointments.all_edit', compact('all_appointent','time','available_slot','current_time','appointment_history'))->render();
         
         $response = array(
@@ -1461,7 +1461,10 @@ class DoctorController extends Controller
             $clinic_id = ClinicDetails::select('id','user_id')->with('user')->where('id',$request->event_name)->first();
             $doctor_main_id = $request->doctor_id ? $doctor_id?->id  :  0;
             $doctor_main_clinicid = $request->event_name ?  $clinic_id?->id  : 0;
-
+        }
+          $exist_appointment  = $this->isExistAppointment($doctor_main_id, $splitTime, $request->appointment_date);
+        if($exist_appointment){
+            return response()->json(['status' => 2, 'message' => 'The appointment slot already exists at this time.']);
         }
        
         $event = DoctorAppointmentDetails::create([

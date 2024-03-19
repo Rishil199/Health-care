@@ -647,7 +647,7 @@
                                                                                 <td class="email_link"> <a
                                                                                         href="mailto:{{ $appointment?->doctor?->user?->email }}">{{ $appointment?->doctor?->user?->email }}</a>
                                                                                 </td>
-                                                                                <td>{{ $appointment->disease_name ? $appointment->disease_name : 'N/A' }}
+                                                                                <td>{{ $appointment->prescription ? $appointment->prescription : 'N/A' }}
                                                                                 </td>
                                                                                 <td>{{ date('d-m-Y', strtotime($appointment->appointment_date)) ?? 'N/A' }}
                                                                                 </td>

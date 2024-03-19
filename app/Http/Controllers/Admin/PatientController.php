@@ -339,16 +339,12 @@ class PatientController extends Controller
         }
      
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
-     
-            $user=DoctorAppointmentDetails::select('id','user_id')->where('patient_id',$id)->with('user')->first(); 
-      
-             $user_id = PatientDetails::find($id);
-
+            $user=DoctorAppointmentDetails::select('id','user_id','patient_id')->where('patient_id',$id)->with('patient')->first(); 
+            $user_id = PatientDetails::find($id);
+            
             if ($user)
             {
-        
-              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude','height','weight','blood_group','blood_pressure','relation','relative_name','emergency_contact')->where('user_id',$user->user_id)->with('user')->first();
-              
+              $patient = PatientDetails::select('clinic_id','user_id','doctor_id','gender','admit_date','disease_name','prescription','allergies','illness','exercise','alchohol_consumption','diet','smoke','address','latitude','logitude','height','weight','blood_group','blood_pressure','relation','relative_name','emergency_contact')->where('user_id',$user->patient_id)->with('user')->first(); 
             } 
             else if ($user_id)
             {
