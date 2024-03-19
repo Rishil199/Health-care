@@ -262,27 +262,18 @@
                                             serverSide: true,
                                             aaSorting: [],
                                             ajax: "{{ route('all_appointment') }}",
-                                            columns: [{
-                                                    'render': function(data, type, full, meta) {
-                                                        return '<a href="mailto:' + full
-                                                            .patient.email + '">' + full.patient
-                                                            .first_name + full.patient
-                                                            .last_name + '</a>';
-                                                    }
+                                            columns: [
+                                                {
+                                                    data: 'patient_name',
+                                                    name: 'patient_name'
                                                 },
                                                 {
                                                     data: 'patient.phone_no',
                                                     name: 'phone_no'
                                                 },
                                                 {
-                                                    'render': function(data, type, full, meta) {
-                                                        if (full.next_date) {
-                                                            return full.next_date + ' ' +
-                                                                full.next_start_time;
-                                                        }
-                                                        return full.appointment_date + ' ' +
-                                                            full.time_start;
-                                                    }
+                                                    data: 'appointment_date',
+                                                    name: 'appointment_date'
                                                 },
                                                 {
                                                     data: 'created_by',
@@ -341,24 +332,18 @@
                                                 serverSide: true,
                                                 aaSorting: [],
                                                 ajax: "{{ route('todays_appointment') }}",
-                                                columns: [{
-                                                        'render': function(data, type, full, meta) {
-                                                            return '<a href="mailto:' + full
-                                                             .patient.email + '?">' + full.patient
-                                                                .first_name + full.patient
-                                                                .last_name + '</a>';
-                                                        }
+                                                columns: [
+                                                    {
+                                                        data: 'patient_name',
+                                                        name: 'patient_name'
                                                     },
                                                     {
                                                         data: 'patient.phone_no',
                                                         name: 'phone_no'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-
-                                                            return full.appointment_date + ' ' +
-                                                                full.time_start;
-                                                        }
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
                                                     },
                                                     {
                                                         data: 'created_by',
@@ -416,23 +401,18 @@
                                                 serverSide: true,
                                                 aaSorting: [],
                                                 ajax: "{{ route('upcoming_appointment') }}",
-                                                columns: [{
-                                                        'render': function(data, type, full, meta) {
-                                                            return '<a href="mailto:' + full
-                                                                .patient.email + '?">' + full.patient
-                                                                .first_name + full.patient
-                                                                .last_name + '</a>';
-                                                        }
+                                                columns: [
+                                                    {
+                                                    data: 'patient_name',
+                                                        name: 'patient_name'
                                                     },
                                                     {
                                                         data: 'patient.phone_no',
                                                         name: 'phone_no'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-                                                            return full.appointment_date + ' ' +
-                                                                full.time_start;
-                                                        }
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
                                                     },
                                                     {
                                                         data: 'created_by',
@@ -490,24 +470,19 @@
                                             serverSide: true,
                                             aaSorting: [],
                                             ajax: "{{ route('past_appointment') }}",
-                                            columns: [{
-                                                    'render': function(data, type, full, meta) {
-                                                        return '<a href="mailto:' + full
-                                                            .patient.email + '?">' + full.patient
-                                                            .first_name + full.patient
-                                                            .last_name + '</a>';
-                                                    }
-                                                },
-                                                {
-                                                    data: 'patient.phone_no',
-                                                    name: 'phone_no'
-                                                },
-                                                {
-                                                    'render': function(data, type, full, meta) {
-                                                        return full.appointment_date + ' ' +
-                                                            full.time_start;
-                                                    }
-                                                },
+                                            columns: [
+                                                    {
+                                                    data: 'patient_name',
+                                                        name: 'patient_name'
+                                                    },
+                                                    {
+                                                        data: 'patient.phone_no',
+                                                        name: 'phone_no'
+                                                    },
+                                                    {
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
+                                                    },
                                                 {
                                                     'render': function(data, type, full, meta) {
                                                         return full.next_date;
