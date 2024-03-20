@@ -29,7 +29,7 @@
                 <div class="form-group theme-form-group">
                     <input type="hidden" data-id="{{ $all_appointent->id }}" id="data_id">
                     <label for="patient_name" class="theme-label">Patient Name :</label> <span
-                        class="fw-normal">{{ $all_appointent->user->first_name }}</span>
+                        class="fw-normal">{{ $all_appointent->patient->first_name }}</span>
                 </div>
             </div>
             <div class="col-md-6 mb-3">
@@ -164,6 +164,7 @@
                     <thead class="table table-light">
                         <tr>
                             <th>Sr.no</th>
+                            <th>Doctor Name</th>
                             <th scope="col">Appointment Date</th>
                             <th scope="col">Appointment Time</th>
                             <th scope="col">Observation</th>
@@ -180,6 +181,7 @@
                         <?php $count++;?>
                         <tr class="table-font">
                             <td>{{$count}}</td>
+                            <td>{{$history->doctor->user->first_name}}</td>
                             <td>{{ \Carbon\Carbon::parse($history->appointment_date)->format('d-m-Y')}}</td>
                             <td>{{ $history->time_start }} - {{ $history->time_end }}</td>
                             <td>{{ $history->disease_name !==null && $history->disease_name !=='' ? $history->disease_name:'-'}}</td>

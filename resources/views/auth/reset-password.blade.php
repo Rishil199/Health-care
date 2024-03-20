@@ -20,26 +20,26 @@
           <form method="POST" action="{{ route('password.update') }}">
             @csrf
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
-            <div class="input-with-error">
-               <div class="input-group mb-3">
+            <div class="input-with-error  mb-3">
+               <div class="input-group">
                   <span class="input-group-text input-icon">
                   <i class="lni lni-envelope"></i>
                   </span>
                   <input type="email" class="form-control @error('email') is-invalid @enderror"  name="email" value="{{ $request->email }}" placeholder="E-Mail Address">
                </div>
                @error('email')
-               <div class="mb-3"><span class="text-danger">{{ $message }}</span></div>
+               <div class="mb-2"><span class="text-danger">{{ $message }}</span></div>
                @enderror
             </div>
-            <div class="input-with-error">
-               <div class="input-group mb-3">
+            <div class="input-with-error mb-3">
+               <div class="input-group ">
                   <span class="input-group-text input-icon">
                   <i class="lni lni-lock-alt"></i>
                   </span>
                   <input id="password" class="block mt-1 w-full form-control" type="password" name="password" placeholder="Password" required />
                </div>
                @error('password')
-               <div class="mb-3"><span class="text-danger">{{ $message }}</span></div>
+               <div class="mb-1"><span class="text-danger">{{ $message }}</span></div>
                @enderror
             </div>
                <div class="input-with-error">

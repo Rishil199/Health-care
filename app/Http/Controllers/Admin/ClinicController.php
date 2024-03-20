@@ -176,6 +176,7 @@ class ClinicController extends Controller
      */
 
     public function viewBranch(Request $request, $id) {
+    
         if($id) {
               $clinic = ClinicDetails::select('id','user_id','clinic_id','status','address','created_at')->where('id',$id)->with('user')->first();
              
@@ -269,7 +270,7 @@ class ClinicController extends Controller
      */
 
     public function show($slug='', Request $request) {
-    
+  
         $user = User::where('slug', $slug)->firstOrFail();
 
         if ($request->ajax()) {
