@@ -66,7 +66,7 @@ class StorePatientRequest extends FormRequest
             'first_name.regex'=> 'Patient name is invalid..',
             'email.required'=>'Patient email is required.',
             'email.unique' => 'patient email is already taken.',
-            'phone_no.required'=>'Patient phone number is required.',
+            'phone_no.required'=>'Patient contact number is required.',
             'address.required'=>'Patient address is required.',
             'gender.required'=>'Patient gender is required.',
             'doctor_id.required'=>'Selecting Doctor is mandatory.',

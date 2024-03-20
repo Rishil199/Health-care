@@ -1,5 +1,5 @@
+@use ('App\Models\User')
 @extends('layouts.app')
-
 @push('header_css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 @endpush
@@ -74,24 +74,29 @@
         <div class="col-md-12 mb-3">
          <div class="card-header d-flex justify-content-between align-items-center mx-3 mt-3">
             <h4 class="mb-0">Hospital Information</h4>
+            
+        @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <button class="btn-back btn-sm" onclick="window.location='{{route('clinics.index')}}'">Back</button>
+            @elseif (Auth::user()->hasRole(User::ROLE_PATIENT))
+            <button class="btn-back btn-sm" onclick="window.location='{{route('clinicsListing.index')}}'">Back</button>
+            @endif
         </div>
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item">
-                           <strong>Hospital Name:</strong> <span>{{ optional($main_clinic->user)->first_name }}</span>
+                           <strong>Hospital Name : </strong> <span>{{ optional($main_clinic->user)->first_name }}</span>
                         </li>
                         <li class="list-group-item">
-                           <strong>Email:</strong> <a href="mailto:{{ optional($main_clinic->user)->email }}">{{ optional($main_clinic->user)->email }}</a>
+                           <strong>Email : </strong> <a href="mailto:{{ optional($main_clinic->user)->email }}" class="mb-2">{{ optional($main_clinic->user)->email }}</a>
                         </li>
                         <li class="list-group-item">
-                           <strong>Status:</strong> <span>{{ $main_clinic->status==0 ? "Deactive" : "Active" }}</span>
+                           <strong>Status : </strong> <span>{{ $main_clinic->status==0 ? "Deactive" : "Active" }}</span>
                         </li>
                         <li class="list-group-item">
-                           <strong>Phone:</strong> <span>{{ optional($main_clinic->user)->phone_no }}</span>
+                           <strong>Phone : </strong> <span>{{ optional($main_clinic->user)->phone_no }}</span>
                         </li>
                         <li class="list-group-item">
-                           <strong>Address:</strong> <span>{{ $main_clinic->address }}</span>
+                           <strong>Address : </strong> <span>{{ $main_clinic->address }}</span>
                         </li>
                     </ul>
                 </div>

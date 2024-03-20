@@ -46,7 +46,7 @@ class StoreDoctorRequest extends FormRequest
             'last_name.regex'=> 'Doctor last name is invalid.',
             'email.required'=> 'Doctor email is required.',
             'email.unique'=> 'Doctor email is already taken.',
-            'phone_no.required'=> 'Doctor phone number is required.',
+            'phone_no.required'=> 'Doctor contact number is required.',
             'address.required'=> 'Doctor address is required.',
             'birth_date.required'=> 'Doctor birth date is required.',
             'degree.required'=>'Doctor degree is required.',

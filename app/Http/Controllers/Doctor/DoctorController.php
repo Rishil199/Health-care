@@ -690,12 +690,12 @@ class DoctorController extends Controller
                 $query->where('doctor_id',$user_id->id);
                 // ->where('clinic_id', $clinic_user_id?->clinic_id);
             })
-            ->where('is_complete','=','0')->get();
+            ->where('is_complete','=','0')->latest()->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            $appointments = DoctorAppointmentDetails::where('appointment_date',$date)->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->where('is_complete','=','0')->get();
+            $appointments = DoctorAppointmentDetails::where('appointment_date',$date)->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->where('is_complete','=','0')->latest()->get();
             
         }
 
@@ -709,7 +709,7 @@ class DoctorController extends Controller
                     $query->where('receptionist_id',$user_id->id)
                         ->orWhere('clinic_id', $user_id->clinic_id);
                 })
-                ->where('is_complete','=','0')->get();
+                ->where('is_complete','=','0')->latest()->get();
         }
 
 
@@ -943,14 +943,14 @@ class DoctorController extends Controller
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('doctor_id',$user_id->id)
                         ->where('clinic_id', $clinic_user_id?->clinic_id);
-                })->get();
+                })->latest()->get();
                
         }
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->get();
+            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->latest()->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
@@ -960,7 +960,7 @@ class DoctorController extends Controller
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('receptionist_id',$user_id->id)
                         ->orWhere('clinic_id', $user_id->clinic_id);
-                })->get();
+                })->latest()->get();
         }
 
         return Datatables::of($appointments)
@@ -1552,6 +1552,15 @@ class DoctorController extends Controller
 
         $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->orderByDesc('created_at')->get();
         return Datatables::of($appointments)
+
+        ->addColumn('doctor_name', function($row) {
+            if($row->doctor?->user->email){
+                $full_name = $row->doctor?->user?->first_name . ' '.$row->doctor?->user?->last_name; 
+                return '<a href="mailto:'.$row->doctor?->user?->email.'">'.$full_name.'</a>';
+            }else{
+                return '-';
+            }
+        })
             ->addColumn('phone_no', function($row) {
                 return $row->doctor->user->phone_no;
             })
@@ -1593,7 +1602,7 @@ class DoctorController extends Controller
                                 </div>';
                         return $actionBtn;
                 })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['doctor_name','phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
 
         return response()->json($this->data);
@@ -1619,6 +1628,14 @@ class DoctorController extends Controller
         $appointments = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->get();
 
         return Datatables::of($appointments)
+        ->addColumn('doctor_name', function($row) {
+            if($row->doctor?->user->email){
+                $full_name = $row->doctor?->user?->first_name . ' '.$row->doctor?->user?->last_name; 
+                return '<a href="mailto:'.$row->doctor?->user?->email.'">'.$full_name.'</a>';
+            }else{
+                return '-';
+            }
+        })
             ->addColumn('phone_no', function($row) {
                 return $row->doctor->user->phone_no;
             })
@@ -1658,7 +1675,7 @@ class DoctorController extends Controller
                                 </div>';
                         return $actionBtn;
                 })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['doctor_name','phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
         return response()->json($this->data);
     }
@@ -1683,6 +1700,14 @@ class DoctorController extends Controller
         $appointments = DoctorAppointmentDetails::where('appointment_date','>',$date)->withTrashed()->where('is_complete','=','0')->with('doctor.user')->where('patient_id',Auth::user()->id)->get();
 
         return Datatables::of($appointments)
+        ->addColumn('doctor_name', function($row) {
+            if($row->doctor?->user->email){
+                $full_name = $row->doctor?->user?->first_name . ' '.$row->doctor?->user?->last_name; 
+                return '<a href="mailto:'.$row->doctor?->user?->email.'">'.$full_name.'</a>';
+            }else{
+                return '-';
+            }
+        })
             ->addColumn('phone_no', function($row) {
                 return $row->doctor->user->phone_no;
             })
@@ -1723,7 +1748,7 @@ class DoctorController extends Controller
                                 </div>';
                         return $actionBtn;
                 })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['doctor_name','phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
 
         return response()->json($this->data);
@@ -1749,6 +1774,14 @@ class DoctorController extends Controller
         $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->withTrashed()->with('doctor.user')->where('patient_id',Auth::user()->id)->get();
      
         return Datatables::of($appointments)
+        ->addColumn('doctor_name', function($row) {
+            if($row->doctor?->user->email){
+                $full_name = $row->doctor?->user?->first_name . ' '.$row->doctor?->user?->last_name; 
+                return '<a href="mailto:'.$row->doctor?->user?->email.'">'.$full_name.'</a>';
+            }else{
+                return '-';
+            }
+        })
             ->addColumn('phone_no', function($row) {
                 return $row->doctor->user->phone_no;
             })
@@ -1786,7 +1819,7 @@ class DoctorController extends Controller
                             </div>';
                     return $actionBtn;   
             })
-            ->rawColumns([ 'phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
+            ->rawColumns(['doctor_name','phone_no', 'disease_name', 'time_start', 'time_end', 'action' ])
             ->make(true);
 
         return response()->json($this->data);

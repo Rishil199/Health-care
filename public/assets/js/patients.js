@@ -37,6 +37,22 @@ $(document).on('click', '.btn-add-patients',function(e) {
                             format: 'dd/mm/yyyy'
                             });
                         }
+                        if ( $("#clinic-dropdown").length ) {
+                            var parent_modal = $('#add-patients-modal > .modal-dialog > .modal-content');
+                            $('#clinic-dropdown').select2({
+                                dropdownParent: parent_modal,
+                                width: '100%',
+                                
+                            });
+                        }
+                        if ( $("#doctor-dropdown").length ) {
+                            var parent_modal = $('#add-patients-modal > .modal-dialog > .modal-content');
+                            $('#doctor-dropdown').select2({
+                                dropdownParent: parent_modal,
+                                width: '100%'
+                            });
+                        }
+
                     }
                 }
             },
@@ -238,6 +254,22 @@ $(document).on('click', '.edit-patient',function(e) {
                             format: 'dd/mm/yyyy'
                             });
                         }
+                          if ( $("#clinic-dropdown").length ) {
+                            var parent_modal = $('#add-edit-patient-modal > .modal-dialog > .modal-content');
+                            $('#clinic-dropdown').select2({
+                                dropdownParent: parent_modal,
+                                width: '100%'
+                            });
+                        }
+                        if ( $("#doctor-dropdown").length ) {
+                            var parent_modal = $('#add-edit-patient-modal > .modal-dialog > .modal-content');
+                            $('#doctor-dropdown').select2({
+                                dropdownParent: parent_modal,
+                                width: '100%'
+                            });
+                        }
+
+
                     }
                 }
             }

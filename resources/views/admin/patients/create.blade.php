@@ -190,10 +190,10 @@
                 @if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
                     <div class="col-md-6 mb-3">
                         <div class="form-group theme-form-group">
-                            <label class="theme-label" for="picker1">Choose Clinic</label>
+                            <label class="theme-label" for="clinic-dropdown">Choose Hospital</label>
                             <div class="theme-form-input">
                                 <select class="form-control form-select" name="clinic_id" id="clinic-dropdown">
-                                    <option value="">Choose Clinic</option>
+                                    <option value="">Choose Hospital</option>
                                     @foreach ($clinics as $value)
                                         <option value="{{ $value->user_id }}">{{ $value?->user?->first_name }}</option>
                                     @endforeach
@@ -205,7 +205,7 @@
                 @if (Auth::user()->hasAnyRole(User::ROLE_SUPER_ADMIN))
                     <div class="col-md-6 mb-3">
                         <div class="form-group theme-form-group">
-                            <label class="theme-label" for="picker1">Choose Doctor</label>
+                            <label class="theme-label" for="doctor-dropdown">Choose Doctor</label>
                             <div class="theme-form-input">
                                 <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
                                     <option value="">Choose Doctor</option>
@@ -382,7 +382,7 @@
                         $("#doctor-dropdown").append('<option value="' + value.user
                             .id + '">' + value.user.first_name + '</option>');
                     });
-                    $('#city-dd').html('<option value="">Select City</option>');
+                    // $('#city-dd').html('<option value="">Select City</option>');
                 }
             });
         });
