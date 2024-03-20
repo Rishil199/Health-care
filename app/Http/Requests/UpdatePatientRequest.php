@@ -54,7 +54,7 @@ class UpdatePatientRequest extends FormRequest
             'first_name.required'=>'Patient name is required',
             'first_name.regex'=> 'Patient name is invalid.',
             'email.required'=>'Patient email is required',
-            'phone_no.required'=>'Patient phone number is required',
+            'phone_no.required'=>'Patient contact number is required',
             'address.required'=>'Patient address is required',
             'admit_date.required'=>'Patient admit date is required',
             'gender.required'=>'Patient gender is required',

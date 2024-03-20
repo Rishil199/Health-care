@@ -247,14 +247,10 @@
                                                 serverSide: true,
                                                 aaSorting: [],
                                                 ajax: "{{ route('all_patient_appointment') }}",
-                                                columns: [{
-                                                        'render': function(data, type, full, meta) {
-                                                            return '<a href="mailto:' + full
-                                                                .doctor.user.email + '?">' +
-                                                                full.doctor.user.first_name +
-                                                                ' ' + full.doctor.user
-                                                                .last_name + '</a>';
-                                                        }
+                                                columns: [
+                                                    {
+                                                        data:'doctor_name',
+                                                        name:'doctor_name'
                                                     },
                                                     {
                                                         data: 'doctor.user.phone_no',
@@ -321,14 +317,10 @@
                                                 serverSide: true,
                                                 aaSorting: [],
                                                 ajax: "{{ route('todays_patient_appointment') }}",
-                                                columns: [{
-                                                        'render': function(data, type, full, meta) {
-                                                            return '<a href="mailto:' + full
-                                                                .doctor.user.email + '?">' +
-                                                                full.doctor.user.first_name +
-                                                                ' ' + full.doctor.user
-                                                                .last_name + '</a>';
-                                                        }
+                                                columns: [
+                                                    {
+                                                        data:'doctor_name',
+                                                        name:'doctor_name'
                                                     },
                                                     {
                                                         data: 'doctor.user.phone_no',
@@ -394,14 +386,10 @@
                                                 serverSide: true,
                                                 aaSorting: [],
                                                 ajax: "{{ route('upcoming_patient_appointment') }}",
-                                                columns: [{
-                                                        'render': function(data, type, full, meta) {
-                                                            return '<a href="mailto:' + full
-                                                                .doctor.user.email + '?">' +
-                                                                full.doctor.user.first_name +
-                                                                ' ' + full.doctor.user
-                                                                .last_name + '</a>';
-                                                        }
+                                                columns: [
+                                                    {
+                                                        data:'doctor_name',
+                                                        name:'doctor_name'
                                                     },
                                                     {
                                                         data: 'doctor.user.phone_no',
@@ -467,14 +455,10 @@
                                                 serverSide: true,
                                                 aaSorting: [],
                                                 ajax: "{{ route('past_patient_appointment') }}",
-                                                columns: [{
-                                                        'render': function(data, type, full, meta) {
-                                                            return '<a href="mailto:' + full
-                                                                .doctor.user.email + '?">' +
-                                                                full.doctor.user.first_name +
-                                                                ' ' + full.doctor.user
-                                                                .last_name + '</a>';
-                                                        }
+                                                columns: [
+                                                    {
+                                                        data:'doctor_name',
+                                                        name:'doctor_name'
                                                     },
                                                     {
                                                         data: 'doctor.user.phone_no',

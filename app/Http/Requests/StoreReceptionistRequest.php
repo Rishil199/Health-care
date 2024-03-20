@@ -44,8 +44,9 @@ class StoreReceptionistRequest extends FormRequest
             'last_name.regex'=> 'Staff last name is invalid.',
             'email.required'=> 'Staff email is required.',
             'email.unique'=> 'Staff email is already taken.',
-            'phone_no.required'=> 'Staff phone number is required.',
+            'phone_no.required'=> 'Staff contact number is required.',
             'birth_date.required'=> 'Staff birth date is required.',
+            'birth_date.before'=>'Staff birth date must be date before today',
             'gender.required'=>'Staff gender is required.',
             'qualification.required'=>'Staff qualification is required.',
             'experience.required'=>'Staff experience is required.'
