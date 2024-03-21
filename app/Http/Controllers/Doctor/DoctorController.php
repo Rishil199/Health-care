@@ -1253,8 +1253,6 @@ class DoctorController extends Controller
       
         if ( $request->ajax() ) {
 
-            
-
             if ( $request->load_view == 'true' ) {
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );
                 
@@ -1412,7 +1410,7 @@ class DoctorController extends Controller
 
     public function fetchTimeSlotsDoctor(Request $request)
     {
-        
+    
         $doctor_id = DoctorDetails::where('user_id',$request->doctor_id)->first();
      
         $data['generalSettings'] = GeneralSettings::select('id','start_time','end_time','duration')->where('user_id',$request->doctor_id)->first();
@@ -1495,7 +1493,6 @@ class DoctorController extends Controller
     }
 
     public function patientcalendarEvents(Request $request) {
-
         $splitTime = explode('-', $request->time_start, 2);
 
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
@@ -1962,6 +1959,43 @@ class DoctorController extends Controller
     }
     
     }
+
+
+ public function patientClinicAppointments(Request $request)
+ {
+     if($request->ajax())
+     {
+        if ( $request->load_view == 'true' ) {
+
+            $clinic_id=$request->clinic_id;
+            $clinic_name=ClinicDetails::select('id','user_id')->where('id',$clinic_id)->with('user')->first();
+            $doctors=DoctorDetails::select('id','clinic_id','user_id')->where('clinic_id',$clinic_id)->with('user')->get();
+            $this->data=array(
+                'clinic_id'=>$clinic_id,
+                'clinic_name'=>$clinic_name,
+                'doctors'=>$doctors,
+            );
+            
+            $view= view('doctor.appointments.patient-clinic-appointment',$this->data)->render();  
+
+            $this->data=array(
+                'status' => true,
+                'data' => array(
+                'view' => $view,
+        ),
+);
+            
+            return response()->json($this->data);
+            
+            
+        }
+     }
+ }
+
+
+    
 }
+
+
 
 

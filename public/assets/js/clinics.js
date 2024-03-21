@@ -28,7 +28,8 @@ if ( $('.branches-table').length ) {
             { data: 'fullname', name: 'fullname' },
             { data: 'email', name: 'email' },    
             { data: 'user.phone_no', name: 'user.phone_no' },
-            { data: 'status', name: 'status' },
+            // { data: 'status', name: 'status' },
+            { data: 'address', name: 'address' },
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action', orderable: false, searchable: false, width: '5%' },
         ]
@@ -360,3 +361,35 @@ $(document).on('click', '.toggle-class',function(e) {
         }
     }); 
 }) 
+
+
+$(document).ready(function () {
+    $('.btn-appointment').click(function () { 
+        var pclinic_url=$(this).attr('data-url');
+        var clinic_id = $("input[name='clinic_id']").val();
+      $.ajax({
+        type: "get",
+        url: pclinic_url,
+        data: {
+            load_view : true,
+            clinic_id : clinic_id,
+            _token: '{{csrf_token()}}',
+        },
+        dataType: "JSON",
+        complete: response => {
+            let resp = response.responseJSON;
+            if (resp) {
+                if (resp.status) {
+                    make_modal('patient-clinic-appointment', resp
+                        .data.view, true, 'modal-lg');
+
+                $('#doctor-dropdown').select2({
+                    dropdownParent: $('#patient-clinic-appointment'),
+                    width: '100%'
+                })
+                }
+            }
+        }
+    });
+});
+});

@@ -2,12 +2,17 @@
 @extends('layouts.app')
 @push('header_css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
+    <link href="{{ asset('assets/js/plugins/select2/select2.min.css') }}" rel="stylesheet" />
 @endpush
 @section('content-breadcrumb')
 <style>
 .btn-back{
    background-color: #263b5e;
     color: white;
+}
+
+.btn-appointment{
+   width:150px; 
 }
 
 </style>
@@ -74,13 +79,21 @@
         <div class="col-md-12 mb-3">
          <div class="card-header d-flex justify-content-between align-items-center mx-3 mt-3">
             <h4 class="mb-0">Hospital Information</h4>
-            
+            <div class="row">
+               <div class="col">
         @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
             <button class="btn-back btn-sm" onclick="window.location='{{route('clinics.index')}}'">Back</button>
             @elseif (Auth::user()->hasRole(User::ROLE_PATIENT))
-            <button class="btn-back btn-sm" onclick="window.location='{{route('clinicsListing.index')}}'">Back</button>
+            <button class="btn-back btn-sm btn-appointment" id="btn-appointment" data-url="{{ route('patient.BookClinic') }}">Book Appointment</button>      
+         </div>
+          <div class="col">
+         <button class="btn-back btn-sm" onclick="window.location='{{route('clinicsListing.index')}}'">Back</button>
             @endif
+               </div>
+            </div>
         </div>
+        <input type="hidden" name="clinic_id" value="{{$main_clinic->id}}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -112,7 +125,8 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone No.</th>
-                        <th>Status</th>
+                        {{-- <th>Status</th> --}}
+                        <th>Address</th>
                         <th>Created At</th>
                         <th>Action</th>
                       </thead>
@@ -135,4 +149,5 @@
     </script>
     <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/clinics.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/select2/select2.min.js') }}"></script>
 @endpush

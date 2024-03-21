@@ -197,7 +197,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
             ->name('past_patient_appointment');
             Route::delete('patient-delete', [MainDoctorController::class, 'destroyPatient'])->name('all-patient-appointments.destroy');
             Route::get('fetchClinics', [MainDoctorController::class, 'fetchClinics'])->name('patient.fetchClinics');
-    });
+            Route::get('patientClinicAppointments', [MainDoctorController::class, 'patientClinicAppointments'])->name('patient.BookClinic');
+        });
 
     Route::group(['prefix' => 'hospital'], function() {
    Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view')->middleware(['role:Super Admin|Patient']);
