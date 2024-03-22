@@ -1525,6 +1525,8 @@ class DoctorController extends Controller
           'time_end' => $splitTime[1],
         ]);
 
+      
+
         if($request->disease_name != null){
             PatientDetails::create('disease_name',$request->disease_name);
         }

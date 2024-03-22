@@ -14,14 +14,15 @@
             </div>
         </div>
         <div class="form-group theme-form-group">
-            <label for="appointment_date" class="theme-label">Select Date : </label> 
-            <input type="date" name="appointment_date" id="appointment_date">
+            <label for="appointment_date" class="theme-label">Select Date : </label> <span class="text-danger">*</span>
+            {{-- <input type="date" name="appointment_date" id="appointment_date"> --}}
+            <input class="form-control" id='datepicker' name="appointment_date" type="text" placeholder="Select appointment Date" required autocomplete="off" />
             </div>
                 <div class="col-md-12 mb-3">
                     <div class="form-group theme-form-group">
-                        <label class="theme-label mt-3" for="picker1">Select Doctor</label>
+                        <label class="theme-label mt-3" for="picker1">Select Doctor</label><span class="text-danger">*</span>
                         <div class="theme-form-input">
-                            <select class="form-control form-select" name="doctor_id" id="doctor-dropdown">
+                            <select class="form-control form-select" name="doctor_id" id="doctor-dropdown" required>
                                 <option value="">Select Doctor</option>
                                 @foreach($doctors as $doctor)
                                 <option value="{{$doctor->user->id}}">{{$doctor->user->fullName}}</option>
@@ -48,10 +49,11 @@
             {{-- @if (Auth::user()->hasRole(User::ROLE_PATIENT)) --}}
                 <div class="col-md-12 mb-3">
                     <div class="form-group theme-form-group">
-                        <label class="theme-label" for="time_start">Time Slot</label>
+                        <label class="theme-label" for="time_start">Time Slot</label><span class="text-danger">*</span>
                         <div class="theme-form-input">
                             <input type="hidden" id="modal-appointment-selected-date-for-check">
-                            <select class="form-control form-select" name="time_start" id="time_start-dropdown">
+                            <select class="form-control form-select" name="time_start" id="time_start-dropdown" required>
+                                <option value="">Select Timeslot</option>
                             </select>
                         </div>
                     </div>
@@ -73,7 +75,7 @@
             time_start: {
                 required: true
             },
-            event_name: {
+            appointment_date: {
                 required: true
             },
             doctor_id: {
@@ -82,10 +84,10 @@
         },
         messages: {
             'time_start': {
-                required: "Select time is required"
+                required: "Select Time is required"
             },
-            'event_name': {
-                required: "Select Hospital is required "
+            'appointment_date': {
+                required: "Select Appoinment Date is required "
             },
             'doctor_id': {
                 required: "Select Doctor is required."
@@ -94,62 +96,10 @@
     });
 </script>
  <script>
-    // $(document).ready(function() {
-    //     $('#clinic-dropdown').on('change', function() {
-    //         var idCountry = this.value;
-    //         $("#doctor-dropdown").html('');
-    //         $.ajax({
-    //             url: "{{ route('appointments.fetchDoctors') }}",
-    //             type: "POST",
-    //             data: {
-    //                 clinic_id: idCountry,
-    //             },
-    //             dataType: 'json',
-    //             success: function(result) {
-    //                 $('#doctor-dropdown').html('<option value="">Select Doctor</option>');
-    //                 $.each(result.doctors, function(key, value) {
-    //                     $("#doctor-dropdown").append('<option value="' + value.user
-    //                         .id + '">' + value.user.first_name + '</option>');
-    //                 });
-    //             }
-    //         });
-    //     });
-    // });
-
-
-    // $(document).ready(function() {
-    //     $('#clinic-dropdown').on('change', function() {
-    //         let clinic_id = this.value;
-    //         $('.clinic_id').val(clinic_id);
-    //         let appointment_date = $(document).find('#appointment_date').val();
-    //         $("#time_start-dropdown").html('');
-    //         $.ajax({
-    //             url: "{{ route('appointments.fetchTimeSlots') }}",
-    //             type: "POST",
-    //             data: {
-    //                 clinic_id: clinic_id,
-    //                 appointment_date: appointment_date,
-    //             },
-    //             dataType: 'json',
-    //             success: function(result) {
-    //                 $('#time_start-dropdown').html(
-    //                     '<option value="">Select Time Slot</option>');
-    //                 console.log(result);
-    //                 $.each(result.arr, function(key, value) {
-    //                     console.log(key, value)
-    //                     $("#time_start-dropdown").append('<option value="' + value +
-    //                         '">' + value + '</option>');
-    //                 });
-    //             }
-    //         });
-    //     });
-    // });
-
-
     $(document).ready(function() {
         $('#doctor-dropdown').on('change', function() {
             let doctor_id = this.value;
-            let appointment_date = $("input[name='appointment_date']").val();
+            // let appointment_date = $("input[name='appointment_date']").val();
             // alert(appointment_date);
             $("#time_start-dropdown").html('');
             $.ajax({
@@ -157,7 +107,7 @@
                 type: "POST",
                 data: {
                     doctor_id: doctor_id,
-                    appointment_date: appointment_date
+                    // appointment_date: appointment_date
                 },
                 dataType: 'json',
                 success: function(result) {
@@ -180,6 +130,7 @@
         event.preventDefault();
         var clinic_id = $('.clinic_id').val();
         var event_name=$('.clinic_id').val();
+        let appointment_date = $("input[name='appointment_date']").val();
         $(this).addClass('pe-none');
         let data = $(this).serializeArray();
         $.ajax({
@@ -199,7 +150,6 @@
                     displayMessage("Appointment Added successfully!");
                     $('#myModal').modal('hide');
                     window.location.reload();
-                    // calendar.fullCalendar('unselect');
                 }
                 $('#loader').hide();
             }),
@@ -218,20 +168,4 @@
 
 
 
-{{-- $(document).ready(function () {
-    // alert("hello");
-    $('#clinic-dropdown').select2({
-        ajax: {
-            url: "patient.fetchClinics",
-            dataType: "json",
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        }
-    });
-});
- --}}
+

@@ -240,20 +240,4 @@
 
 
 
-{{-- $(document).ready(function () {
-    // alert("hello");
-    $('#clinic-dropdown').select2({
-        ajax: {
-            url: "patient.fetchClinics",
-            dataType: "json",
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        }
-    });
-});
- --}}
+

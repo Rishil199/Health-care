@@ -90,8 +90,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
             Route::get('createBranch/{id}', [ClinicController::class, 'createBranch'])->name('clinics.createBranch');
             Route::get('createMainBranch', [ClinicController::class, 'createMainBranch'])->name('clinics.createMainBranch');
 
-            Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');
-            Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view');
+            // Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');
+            // Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view');
             Route::get('add-branch', [ClinicController::class, 'add_branch'])->name('clinics.add-branch');
             Route::post('store', [ClinicController::class, 'store'])->name('clinics.store');
             Route::delete('delete', [ClinicController::class, 'destroy'])->name('clinics.destroy');
@@ -200,8 +200,12 @@ Route::group(['middleware' => ['auth','verified']], function () {
             Route::get('patientClinicAppointments', [MainDoctorController::class, 'patientClinicAppointments'])->name('patient.BookClinic');
         });
 
+
+    Route::middleware(['role:Super Admin|Patient'])->group(function(){
     Route::group(['prefix' => 'hospital'], function() {
-   Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view')->middleware(['role:Super Admin|Patient']);
+    Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view');
+    Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');
+});
 });
  
 });

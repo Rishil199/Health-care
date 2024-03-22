@@ -359,6 +359,7 @@ class ClinicController extends Controller
                                                     </li>';
                                                     if (Auth::user()->hasRole(User::ROLE_PATIENT))
                                                       $actionBtn .= '<li>
+                                                      <a class="dropdown-item" href="javascript:void(0)" data-url="'. route('patient.BookClinic',$row->id) .'" data-id="'. $row->id .'">
                                                       <svg width="20" height="20" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 409.6 409.6" style="enable-background:new 0 0 409.6 409.6;" xml:space="preserve">
                                                       <g>
                                                           <path d="M410.4,292.8c-2,4-5.3,5-9.6,5c-20.3-0.1-40.5-0.1-60.8-0.1c-1.4,0-2.9,0-4.8,0c0,1.8,0,3.2,0,4.6
@@ -381,7 +382,8 @@ class ClinicController extends Controller
                                                           c0.7-33.3-26.7-61.5-60.6-62.1c-33.7-0.7-61.6,26.6-62.4,60.7C143.4,159.8,170.8,187.8,205.1,188.5z" fill="#545a6d"></path>
                                                       </g>
                                                   </svg>
-                                                    <span class="svg-text">Book Appointment</span>
+                                                    <span class="svg-text cursor-pointer">Book Appointment</span>
+                                                    </a>
                                                     </li>
                                             </ul>
                                         </div>
