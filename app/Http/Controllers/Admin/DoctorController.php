@@ -450,7 +450,6 @@ class DoctorController extends Controller
     public function doctorsListing(Request $request){
 
          if ($request->ajax()) {
-            
             $authUser= Auth::user();
             $doctors= DoctorAppointmentDetails::select('id','user_id','doctor_id','clinic_id')->where('patient_id',$authUser->id)
             ->pluck('doctor_id');
@@ -458,12 +457,13 @@ class DoctorController extends Controller
             if($doctors){
                 $doctordetails=DoctorDetails::select('id','user_id')->whereIn('id',$doctors->all())->with('user')->get();             
             }
-
-            
             // $doctors = DoctorDetails::select(array(
             //     'id','user_id','clinic_id','status','created_at'
             // ))->latest()->with('user')->get();
             return Datatables::of($doctordetails)
+                    ->editColumn('name',function($row){
+                        return ($row->user->first_name ?? '') . ' ' . ($row->user->last_name ?? '');
+                    })
                     ->editColumn('action',function($row){
                         $action = '<a href="javascript:void(0)" class="dropdown-item doctor-view" data-url="' . route('doctors.view',['id' => $row->id]) . '" data-id="' . $row->id . '" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
                         <i class="bi bi-eye-fill bi-lg" style="color:black;"></i>

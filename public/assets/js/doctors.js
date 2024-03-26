@@ -23,13 +23,8 @@ if ( $('.doctors-patients-table').length ) {
         aaSorting: [],
         ajax: doctorss_url,
         columns: [
-            { 
-                'render': function(data, type, full, meta)
-                {
-                    return full.user.first_name + ' ' + full.user.last_name;
-                },
-                
-            },
+
+            { data: 'name', name: 'name' },
             {
                 'render': function(data, type, full, meta)
                 {
