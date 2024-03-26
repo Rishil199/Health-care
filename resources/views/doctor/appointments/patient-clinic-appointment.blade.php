@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="modal-body">
-    <form action="" method="post" id="add-patient-appointment-form" class="add-patient-appointment-form">
+    <form action="" method="post" id="patient-clinic-appointment-form" class="patient-clinic-appointment-form">
         @csrf
         <div class="col-md-6 mb-1">
             <div class="form-group theme-form-group">
@@ -70,7 +70,7 @@
     </form>
 </div>
 <script>
-    $("#add-patient-appointment-form").validate({
+    $("#patient-clinic-appointment-form").validate({
         rules: {
             time_start: {
                 required: true
@@ -126,26 +126,30 @@
 
 
 
-    $(document).on('submit', '#add-patient-appointment-form', function(event) {
+    $(document).on('submit', '#patient-clinic-appointment-form', function(event) {
         event.preventDefault();
         var clinic_id = $('.clinic_id').val();
         var event_name=$('.clinic_id').val();
         let appointment_date = $("input[name='appointment_date']").val();
         $(this).addClass('pe-none');
         let data = $(this).serializeArray();
+        data.push({ name: 'formType', value: 'patient-clinic-appointment-form' });
         $.ajax({
             url: '{{ route('patient_appointment_calender') }}',
             type: 'POST',
             dataType: 'json',
             data: data,
             success: (function(data) {
+                console.log(data);
+                return false;
                 if (data.status == '2') {
-                    setTimeout(() => {
+                    // setTimeout(() => {
                     toastr.error(data.message, '');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                    }, 0);
+                    // return false;
+                    // setTimeout(() => {
+                    //     window.location.reload();
+                    // }, 2000);
+                    // }, 0);
                 } else {
                     displayMessage("Appointment Added successfully!");
                     $('#myModal').modal('hide');
@@ -154,7 +158,7 @@
                 $('#loader').hide();
             }),
             error: function(response) {
-                error_notification_add();
+                // error_notification_add();
             }
         }).always(function() {
             $(this).removeClass('pe-none');

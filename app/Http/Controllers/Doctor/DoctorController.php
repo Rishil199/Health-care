@@ -1493,6 +1493,7 @@ class DoctorController extends Controller
     }
 
     public function patientcalendarEvents(Request $request) {
+        // dd($request);
         $splitTime = explode('-', $request->time_start, 2);
 
         if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
@@ -1502,13 +1503,25 @@ class DoctorController extends Controller
 
         }
         if(Auth::user()->hasRole(User::ROLE_PATIENT)) {
+            if($request->form_type=='patient-clinic-appointment-form')
+            {
+                // dd($request->form_type);
             $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->with('user')->where('user_id',$request->doctor_id)->first();
             $clinic_id = ClinicDetails::select('id','user_id')->with('user')->where('id',$request->event_name)->first();
             $doctor_main_id = $request->doctor_id ? $doctor_id?->id  :  0;
             $doctor_main_clinicid = $request->event_name ?  $clinic_id?->id  : 0;
+            }
+            else
+            {
+                $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->with('user')->where('user_id',$request->doctor_id)->first();
+                $clinic_id = ClinicDetails::select('id','user_id')->with('user')->where('id',$request->event_name)->first();
+                $doctor_main_id = $request->doctor_id ? $doctor_id?->id  :  0;
+                $doctor_main_clinicid = $request->event_name ?  $clinic_id?->id  : 0;
+            }
+
         }
           $exist_appointment  = $this->isExistAppointment($doctor_main_id, $splitTime, $request->appointment_date);
-        if($exist_appointment){
+          if($exist_appointment){
             return response()->json(['status' => 2, 'message' => 'The appointment slot already exists at this time.']);
         }
        
