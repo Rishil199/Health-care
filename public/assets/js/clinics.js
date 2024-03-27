@@ -250,6 +250,15 @@ function delete_main_record(id) {
     });
 }
 
+
+
+
+// $(document).on('click','#listing-add-branch',function(){
+//    $('.addlist-branch').val('Branch');
+//     var subbranch= $('.addlist-branch').val();
+//     console.log(subbranch);
+//      });
+
 $(document).on('click', '.add-branch',function(e) {
     e.preventDefault();
     let add_branch_url = $(this).attr('data-url');

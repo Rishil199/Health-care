@@ -51,7 +51,11 @@
                             @endif
 
                         </div>
+                        @if(session('errorMessage'))
+                        <div class=" alert alert-danger text-end fs-6" role="alert" id="errorMessage">
+                            {{session('errorMessage')}}
                     </div>
+                    @endif
                     @if (Auth::user()->hasRole(User::ROLE_CLINIC) && $doctors->isEmpty())
                         <div class="alert alert-info fs-7" role="alert">Your doctor is not registerd, if you want to book
                             an
@@ -916,4 +920,17 @@
 @push('footer_js')
     <script src="{{ asset('assets/js/doctors.js') }}"></script>
     <script src="{{ asset('assets/js/patients.js') }}"></script>
+<script>
+  $(document).ready(function () {
+    setTimeout(() => {
+        var errorMessageById=document.getElementById("errorMessage");
+        if(errorMessageById)
+        {
+            errorMessageById.style.display='none';
+        }
+    }, 3000);
+  });
+
+
+</script>
 @endpush
