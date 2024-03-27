@@ -204,6 +204,7 @@
         var clinic_id = $('.clinic_id').val();
         $(this).addClass('pe-none');
         let data = $(this).serializeArray();
+         data.push({ name: 'formType', value: 'add-patient-appointment-form' });
         $.ajax({
             url: '{{ route('patient_appointment_calender') }}',
             type: 'POST',
@@ -240,20 +241,4 @@
 
 
 
-{{-- $(document).ready(function () {
-    // alert("hello");
-    $('#clinic-dropdown').select2({
-        ajax: {
-            url: "patient.fetchClinics",
-            dataType: "json",
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        }
-    });
-});
- --}}
+

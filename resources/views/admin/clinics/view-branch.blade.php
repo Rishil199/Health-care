@@ -4,7 +4,7 @@
             <strong>View Branch Details</strong>
         </div>
     </div>
-    <div class="modal-body mx-5">
+    <div class="modal-body mx-5 mt-2">
         <div class="view-block">
             <div class="row">
                 <div class="col-md-7">

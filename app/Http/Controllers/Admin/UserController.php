@@ -211,7 +211,7 @@ class UserController extends Controller
                     });
             })
             ->where('is_complete','=','0')->count();
-            // dd($todays_appointment);
+
             $upcoming_appointment = count(DoctorAppointmentDetails::where('appointment_date','>',$date)->where('clinic_id',$user_id->id)->withTrashed()->get());
             $past_appointment = count(DoctorAppointmentDetails::where('is_complete','=','1')->where('clinic_id',$user_id->id)->withTrashed()->get());
         }

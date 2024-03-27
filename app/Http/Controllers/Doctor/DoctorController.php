@@ -1253,8 +1253,6 @@ class DoctorController extends Controller
       
         if ( $request->ajax() ) {
 
-            
-
             if ( $request->load_view == 'true' ) {
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );
                 
@@ -1412,7 +1410,7 @@ class DoctorController extends Controller
 
     public function fetchTimeSlotsDoctor(Request $request)
     {
-        
+    
         $doctor_id = DoctorDetails::where('user_id',$request->doctor_id)->first();
      
         $data['generalSettings'] = GeneralSettings::select('id','start_time','end_time','duration')->where('user_id',$request->doctor_id)->first();
@@ -1505,13 +1503,24 @@ class DoctorController extends Controller
 
         }
         if(Auth::user()->hasRole(User::ROLE_PATIENT)) {
+            if($request->form_type=='patient-clinic-appointment-form')
+            {
             $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->with('user')->where('user_id',$request->doctor_id)->first();
             $clinic_id = ClinicDetails::select('id','user_id')->with('user')->where('id',$request->event_name)->first();
             $doctor_main_id = $request->doctor_id ? $doctor_id?->id  :  0;
             $doctor_main_clinicid = $request->event_name ?  $clinic_id?->id  : 0;
+            }
+            else
+            {
+                $doctor_id = DoctorDetails::select('id','user_id','clinic_id')->with('user')->where('user_id',$request->doctor_id)->first();
+                $clinic_id = ClinicDetails::select('id','user_id')->with('user')->where('id',$request->event_name)->first();
+                $doctor_main_id = $request->doctor_id ? $doctor_id?->id  :  0;
+                $doctor_main_clinicid = $request->event_name ?  $clinic_id?->id  : 0;
+            }
+
         }
           $exist_appointment  = $this->isExistAppointment($doctor_main_id, $splitTime, $request->appointment_date);
-        if($exist_appointment){
+          if($exist_appointment){
             return response()->json(['status' => 2, 'message' => 'The appointment slot already exists at this time.']);
         }
        
@@ -1527,6 +1536,8 @@ class DoctorController extends Controller
           'time_start' => $splitTime[0],
           'time_end' => $splitTime[1],
         ]);
+
+      
 
         if($request->disease_name != null){
             PatientDetails::create('disease_name',$request->disease_name);
@@ -1962,6 +1973,43 @@ class DoctorController extends Controller
     }
     
     }
+
+
+ public function patientClinicAppointments(Request $request)
+ {
+     if($request->ajax())
+     {
+        if ( $request->load_view == 'true' ) {
+
+            $clinic_id=$request->clinic_id;
+            $clinic_name=ClinicDetails::select('id','user_id')->where('id',$clinic_id)->with('user')->first();
+            $doctors=DoctorDetails::select('id','clinic_id','user_id')->where('clinic_id',$clinic_id)->with('user')->get();
+            $this->data=array(
+                'clinic_id'=>$clinic_id,
+                'clinic_name'=>$clinic_name,
+                'doctors'=>$doctors,
+            );
+            
+            $view= view('doctor.appointments.patient-clinic-appointment',$this->data)->render();  
+
+            $this->data=array(
+                'status' => true,
+                'data' => array(
+                'view' => $view,
+        ),
+);
+            
+            return response()->json($this->data);
+            
+            
+        }
+     }
+ }
+
+
+    
 }
+
+
 
 
