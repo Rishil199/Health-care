@@ -73,7 +73,8 @@ class ClinicController extends Controller
                                                </a>
                                             </li>
                                             <li>
-                                               <a class="dropdown-item add-branch" href="javascript:void(0)" data-url="'. route('clinics.createBranch',$row->id) .'" data-id="'. $row->id .'" data-toggle="addmodal" data-target="#myAddModal" title="Add">
+                                               <a class="dropdown-item add-branch" href="javascript:void(0)" data-url="'. route('clinics.createBranch',$row->id) .'" data-id="'. $row->id .'" data-toggle="addmodal" data-target="#myAddModal" title="Add" 
+                                               id="listing-add-branch">
                                                   <span class="svg-text">Add New Branch</span>
                                                </a>
                                             </li>

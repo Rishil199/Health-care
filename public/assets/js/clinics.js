@@ -250,6 +250,15 @@ function delete_main_record(id) {
     });
 }
 
+
+
+
+// $(document).on('click','#listing-add-branch',function(){
+//    $('.addlist-branch').val('Branch');
+//     var subbranch= $('.addlist-branch').val();
+//     console.log(subbranch);
+//      });
+
 $(document).on('click', '.add-branch',function(e) {
     e.preventDefault();
     let add_branch_url = $(this).attr('data-url');
@@ -401,39 +410,3 @@ $(document).ready(function () {
 });
 });
 
-
-
-$('.btn-appointment').click(function () { 
-        var pclinic_url=$(this).attr('data-url');
-        var clinic_id = $("input[name='clinic_id']").val();
-      $.ajax({
-        type: "get",
-        url: pclinic_url,
-        data: {
-            load_view : true,
-            clinic_id : clinic_id,
-            _token: '{{csrf_token()}}',
-        },
-        dataType: "JSON",
-        complete: response => {
-            let resp = response.responseJSON;
-            if (resp) {
-                if (resp.status) {
-                    make_modal('patient-clinic-appointment', resp
-                        .data.view, true, 'modal-lg');
-                    if ($('#datepicker').length){
-                        $('#datepicker').datepicker({
-                            format:'yyyy-mm-dd',
-                            startDate: new Date(),
-                        });
-                    }
-
-                $('#doctor-dropdown').select2({
-                    dropdownParent: $('#patient-clinic-appointment'),
-                    width: '100%'
-                })
-                }
-            }
-        }
-    });
-});
