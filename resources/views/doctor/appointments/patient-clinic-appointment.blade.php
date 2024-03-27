@@ -141,17 +141,15 @@
             data: data,
             success: (function(data) {
                 console.log(data);
-                return false;
                 if (data.status == '2') {
-                    // setTimeout(() => {
+                    setTimeout(() => {
                     toastr.error(data.message, '');
-                    // return false;
-                    // setTimeout(() => {
-                    //     window.location.reload();
-                    // }, 2000);
-                    // }, 0);
-                } else {
-                    displayMessage("Appointment Added successfully!");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }, 0);
+            } else {
+                displayMessage("Appointment Added successfully!");
                     $('#myModal').modal('hide');
                     window.location.reload();
                 }
@@ -159,9 +157,10 @@
             }),
             error: function(response) {
                 // error_notification_add();
-            }
-        }).always(function() {
+            },
+            complete: function() {
             $(this).removeClass('pe-none');
+            }
         });
     });
 
