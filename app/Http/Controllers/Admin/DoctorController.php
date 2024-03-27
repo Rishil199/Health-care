@@ -464,14 +464,16 @@ class DoctorController extends Controller
                     ->editColumn('name',function($row){
                         return ($row->user->first_name ?? '') . ' ' . ($row->user->last_name ?? '');
                     })
+                    ->editColumn('email',function($row){
+                        return ($row->user?->email ?? '');
+                    })
                     ->editColumn('action',function($row){
                         $action = '<a href="javascript:void(0)" class="dropdown-item doctor-view" data-url="' . route('doctors.view',['id' => $row->id]) . '" data-id="' . $row->id . '" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
-                        <i class="bi bi-eye-fill bi-lg" style="color:black;"></i>
-                    </a>';
-  
-                     
-                            return $action;
-                        })->rawColumns(['action'])->make(true);
+                            <i class="bi bi-eye-fill bi-lg" style="color:black;"></i>
+                        </a>';
+                        return $action;
+                    })
+                    ->rawColumns(['action'])->make(true);
         }
 
         $this->data = array(

@@ -430,7 +430,6 @@
                 let $this = $(this).find('a.past-patient-appointment-btn');
                 let add_view_url = $this.attr('href');
                 if (add_view_url) {
-                    console.log('add_view_url', add_view_url)
                     $.ajax({
                         url: add_view_url,
                         type: 'get',
@@ -465,15 +464,12 @@
                                                         name: 'phone_no'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-                                                            return full.appointment_date + ' ' +
-                                                                full.time_start;
-                                                        }
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-                                                            return full.next_date;
-                                                        }
+                                                        data: 'next_date',
+                                                        name: 'next_date'
                                                     },
                                                     {
                                                         data: 'created_by',

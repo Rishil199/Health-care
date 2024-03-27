@@ -630,7 +630,7 @@
                                                             <div class="table-responsive">
                                                                 <table class="table theme-table sr-table">
                                                                     <thead class="table-dark">
-                                                                        <th>Name</th>
+                                                                        <th>Doctor Name</th>
                                                                         <th>Contact No</th>
                                                                         <th>Email</th>
                                                                         <th>Prescription</th>

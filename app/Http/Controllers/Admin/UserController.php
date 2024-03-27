@@ -243,8 +243,7 @@ class UserController extends Controller
             }
 
 
-            $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->get();
-       
+            $appointments = DoctorAppointmentDetails::with('doctor.user')->withTrashed()->where('patient_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
             $appointmentsCount = DoctorAppointmentDetails::with('user')->withTrashed()->where('patient_id',Auth::user()->id)->count();
             
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->with('user')->withTrashed()->where('patient_id',Auth::user()->id)->where('is_complete','=','0')->count();

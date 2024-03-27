@@ -176,7 +176,7 @@ class ClinicController extends Controller
      */
 
     public function viewBranch(Request $request, $id) {
-    
+        
         if($id) {
               $clinic = ClinicDetails::select('id','user_id','clinic_id','status','address','created_at')->where('id',$id)->with('user')->first();
              
@@ -272,7 +272,7 @@ class ClinicController extends Controller
     public function show($slug='', Request $request) {
   
         $user = User::where('slug', $slug)->firstOrFail();
-
+        
         if ($request->ajax()) {
             if($slug) {
                 $clinics = ClinicDetails::select(array(
@@ -382,7 +382,7 @@ class ClinicController extends Controller
                                                           c0.7-33.3-26.7-61.5-60.6-62.1c-33.7-0.7-61.6,26.6-62.4,60.7C143.4,159.8,170.8,187.8,205.1,188.5z" fill="#545a6d"></path>
                                                       </g>
                                                   </svg>
-                                                    <span class="svg-text cursor-pointer">Book Appointment</span>
+                                                    <span class="svg-text cursor-pointer"> Book Appointment</span>
                                                     </a>
                                                     </li>
                                             </ul>

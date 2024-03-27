@@ -26,9 +26,10 @@ if ( $('.doctors-patients-table').length ) {
 
             { data: 'name', name: 'name' },
             {
+                data: 'email',
                 'render': function(data, type, full, meta)
                 {
-                    return '<a href="mailto:' + full.user.email + '?">' + full.user.email + '</a>';
+                    return '<a href="mailto:' + full.email + '?">' + full.email + '</a>';
                 }
             },
             { data: 'user.phone_no', name: 'user.phone_no' },
