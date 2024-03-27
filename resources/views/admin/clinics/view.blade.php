@@ -115,7 +115,12 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-between align-items-center mx-3 mt-3">
         <h4 class="mx-4">Branch Details </h4>
+        @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
+        <button class="btn-back btn-sm add-branch cursor-pointer" data-url="{{route('clinics.createBranch',$main_clinic->id)}}" id="add-branch">Add New Branch </button>
+        @endif
+        </div>
         <div class="col-12">
         <div class="row">
              <div class="theme-block mt-4">

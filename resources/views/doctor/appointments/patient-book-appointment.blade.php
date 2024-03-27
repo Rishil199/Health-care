@@ -211,6 +211,7 @@
             dataType: 'json',
             data: data,
             success: (function(data) {
+                console.log(data);
                 if (data.status == '2') {
                     setTimeout(() => {
                     toastr.error(data.message, '');
@@ -229,8 +230,9 @@
             error: function(response) {
                 error_notification_add();
             }
-        }).always(function() {
+            , complete: function() {
             $(this).removeClass('pe-none');
+            }
         });
     });
 
