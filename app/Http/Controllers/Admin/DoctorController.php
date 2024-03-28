@@ -415,7 +415,7 @@ class DoctorController extends Controller
             "Expires"             => "0"
         );
 
-        $columns = array('Id','First Name','Last Name','Gender','Email','Contact No.','Status','Address','Birth Date','Qualification','Experience','Expertice','Clinic Name');
+        $columns = array('Id','First Name','Last Name','Gender','Email','Contact No.','Status','Address','Birth Date','Qualification','Experience','Expertice');
         
         $clinic_name = DoctorDetails::with('user')->select('clinic_id','id','user_id')->get();
           
@@ -435,9 +435,8 @@ class DoctorController extends Controller
                 $row['Qualification']  = $doctor->degree;
                 $row['Experience']  = $doctor->experience;
                 $row['Expertice']  = $doctor->expertice;
-                $row['Clinic Name']  = $doctor->clinic_id;
 
-                fputcsv($file, array($row['Id'],$row['First Name'],$row['Last Name'],$row['Gender'],$row['Email'],$row['Contact No.'],$row['Status'],$row['Address'],$row['Birth Date'],$row['Qualification'],$row['Experience'],$row['Expertice'],$row['Clinic Name']));
+                fputcsv($file, array($row['Id'],$row['First Name'],$row['Last Name'],$row['Gender'],$row['Email'],$row['Contact No.'],$row['Status'],$row['Address'],$row['Birth Date'],$row['Qualification'],$row['Experience'],$row['Expertice']));
             }
 
             fclose($file);

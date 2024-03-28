@@ -46,7 +46,6 @@
                   <label class="theme-label" for="birth_date">Birth Date: <span class="text-danger">*</span></label>
                   <div class="theme-form-input">
                      <input class="form-control" id='datepicker' name="birth_date" type="text" placeholder="Birth Date" />
-                     
                   </div>
                </div>
             </div>
