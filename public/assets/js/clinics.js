@@ -130,6 +130,7 @@ function validateForm( $form ) {
             },
             submitHandler: ( form ) => {
                 let url = $form.attr('action');
+
                 $.ajax({
                     url:  url,
                     type: url.indexOf('/update') === -1 ? 'POST' : 'PUT',
@@ -141,7 +142,7 @@ function validateForm( $form ) {
                     },
                     success:function(response){
                         if(response.status){
-                            url.indexOf('/update') === -1 ? data_insert_notification() : data_update_notification(),
+                            url.indexOf('/update') === -1 ? data_insert_notification($form.attr('name')) : data_update_notification(),
                             table.ajax.reload();
                             $form.parents('.modal').modal('hide');  
                         }
@@ -249,9 +250,6 @@ function delete_main_record(id) {
         }
     });
 }
-
-
-
 
 // $(document).on('click','#listing-add-branch',function(){
 //    $('.addlist-branch').val('Branch');

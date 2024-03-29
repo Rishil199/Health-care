@@ -471,19 +471,20 @@
                                             aaSorting: [],
                                             ajax: "{{ route('past_appointment') }}",
                                             columns: [
-                                                    {
-                                                    data: 'patient_name',
-                                                        name: 'patient_name'
-                                                    },
-                                                    {
-                                                        data: 'patient.phone_no',
-                                                        name: 'phone_no'
-                                                    },
-                                                    {
-                                                        data: 'appointment_date',
-                                                        name: 'appointment_date'
-                                                    },
                                                 {
+                                                data: 'patient_name',
+                                                    name: 'patient_name'
+                                                },
+                                                {
+                                                    data: 'patient.phone_no',
+                                                    name: 'phone_no'
+                                                },
+                                                {
+                                                    data: 'appointment_date',
+                                                    name: 'appointment_date'
+                                                },
+                                                {
+                                                    name: 'next_date',
                                                     'render': function(data, type, full, meta) {
                                                         return full.next_date;
                                                     }
