@@ -74,14 +74,14 @@ Route::group(['middleware' => ['auth','verified']], function () {
         // });
     
         //roles
-        Route::group(['prefix' => 'roles'], function() {
-            Route::get('/', [RoleController::class, 'index'])->name('roles.index');
-            Route::get('create', [RoleController::class, 'create'])->name('roles.create');
-            Route::post('store', [RoleController::class, 'store'])->name('roles.store');
-            Route::delete('delete', [RoleController::class, 'destroy'])->name('roles.destroy');
-            Route::get('edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
-            Route::put('update/{id}', [RoleController::class, 'update'])->name('roles.update'); 
-        });
+        // Route::group(['prefix' => 'roles'], function() {
+        //     Route::get('/', [RoleController::class, 'index'])->name('roles.index');
+        //     Route::get('create', [RoleController::class, 'create'])->name('roles.create');
+        //     Route::post('store', [RoleController::class, 'store'])->name('roles.store');
+        //     Route::delete('delete', [RoleController::class, 'destroy'])->name('roles.destroy');
+        //     Route::get('edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
+        //     Route::put('update/{id}', [RoleController::class, 'update'])->name('roles.update'); 
+        // });
 
         //Hospital
         Route::group(['prefix' => 'hospital'], function() {

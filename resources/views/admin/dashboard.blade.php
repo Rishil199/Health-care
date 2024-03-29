@@ -590,9 +590,9 @@
                                                             <table class="table theme-table sr-table">
                                                                 <thead class="table-dark">
                                                                     @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_RECEPTIONIST, User::ROLE_DOCTOR]))
-                                                                        <th>Name</th>
+                                                                        <th>Patient Name</th>
                                                                     @else
-                                                                        <th>Name</th>
+                                                                        <th>Patient Name</th>
                                                                     @endif
                                                                     <th>Contact No</th>
                                                                     <th>Email</th>
@@ -677,7 +677,7 @@
                                                                 <div class="table-responsive">
                                                                     <table class="table theme-table sr-table">
                                                                         <thead class="table-dark">
-                                                                            <th>Name</th>
+                                                                            <th>Patient Name</th>
                                                                             <th>Contact No</th>
                                                                             <th>Email</th>
                                                                             <th>Prescription</th>
@@ -713,7 +713,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table theme-table sr-table">
                                                             <thead class="table-dark">
-                                                                <th>Name</th>
+                                                                <th>Doctor Name</th>
                                                                 <th>Contact No</th>
                                                                 <th>Email</th>
                                                                 <th>View Details</th>
@@ -768,7 +768,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table theme-table sr-table">
                                                             <thead class="table-dark">
-                                                                <th>Name</th>
+                                                                <th>Doctor Name</th>
                                                                 <th>Contact No</th>
                                                                 <th>Email</th>
                                                                 <th>View Details</th>
@@ -823,7 +823,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table theme-table sr-table">
                                                             <thead class="table-dark">
-                                                                <th>Name</th>
+                                                                <th>Patient Name</th>
                                                                 <th>Contact No</th>
                                                                 <th>Email</th>
                                                                 <th>View Details</th>

@@ -34,15 +34,16 @@ class StorePatientRequest extends FormRequest
                 'gender' => 'required',
                 'doctor_id' => 'required',  
                 'clinic_id' => 'required',
-                'height'=>'required|regex:/^\d+(\.\d{1})?$/|max:5',
-                'weight'=>'required|regex:/^\d+(\.\d{1})?$/|max:5',
+                'height'=>'required|regex:/^\d{2,3}(\.\d*)?$/|max:6',
+                'weight'=>'required|regex:/^\d{2,3}(\.\d{1})?$/|max:5',
                 'blood_pressure'=>'nullable|regex:/^\d+\/\d+$/|max:6',
                 'blood_group'=>'nullable|regex:/^[A-Za-z+-]+$/',
                 'emergency_contact'=>'nullable|regex:/^[+\-\d]+$/'
+                
             ];
         }
         
-        if(Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN,User::ROLE_RECEPTIONIST,User::ROLE_DOCTOR,User::ROLE_CLINIC])) {
+        if(Auth::user()->hasAnyRole([User::ROLE_RECEPTIONIST,User::ROLE_DOCTOR,User::ROLE_CLINIC])) {
             
             return [
                 'first_name' => 'required|regex: /^[a-zA-Z ]{2,30}$/',
@@ -50,8 +51,8 @@ class StorePatientRequest extends FormRequest
                 'phone_no' => 'required|min:10|max:15|regex:/^[+\-\d]+$/',
                 'address' => 'required',
                 'gender' => 'required',
-                'height'=>'required|regex:/^\d+(\.\d{1})?$/|max:5',
-                'weight'=>'required|regex:/^\d+(\.\d{1})?$/|max:5',
+                'height'=>'required|regex:/^\d{2,3}(\.\d*)?$/|max:6',
+                'weight'=>'required|regex:/^\d{2,3}(\.\d{1})?$/|max:5',
                 'blood_pressure'=>'nullable|regex:/^\d+\/\d+$/|max:6',
                 'blood_group'=>'nullable|regex:/^[A-Za-z+-]+$/',
                 'emergency_contact'=>'nullable|regex:/^[+\-\d]+$/'
