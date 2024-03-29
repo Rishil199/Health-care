@@ -72,13 +72,25 @@ class DoctorController extends Controller
                     return $formatedDate;
                 })
                 ->addColumn('fullname', function($row) {
-                    
+                    if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)){
                     return  '<span class="text-wrap">'. $row->user->first_name.' '.$row->user->last_name.  '<div class="mb-0"></div>' .
                     '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>'.
                     '</span>';
+                }
+                else 
+                {
+                  return  $row->user->first_name.' '.$row->user->last_name;   
+                }
                 })
                 ->addColumn('email', function($row) {
-                  return $row->clinic? $row->clinic->user->first_name:'';
+                    if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
+                    {
+                        return $row->clinic? $row->clinic->user->first_name:'';
+                    }
+                    else
+                    {
+                        return '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>';
+                    }
        
                 })
                 ->addColumn('action', function($row) {

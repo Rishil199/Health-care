@@ -1,3 +1,4 @@
+@use ('App\Models\User')
 @extends('layouts.app')
 @push('header_css')
 <link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
@@ -91,8 +92,11 @@
                <table class="table theme-table sr-table receptionists-table" id="receptionists-table" style="width: 100%" name="Staff">
                   <thead class="table-dark">
                      <th>Name</th>
+                     @if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))          
                      <th>Hospital Name</th>
-                     {{-- <th>Email</th> --}}
+                     @else 
+                     <th>Email</th>
+                     @endif 
                      <th>Phone No.</th>
                      <th>Status</th>
                      <th>Created At</th>

@@ -40,8 +40,8 @@ class UpdatePatientRequest extends FormRequest
             'exercise' => 'required',
             'alchohol_consumption' => 'required',
             'diet' => 'required',
-            'height'=>'required||regex:/^\d+(\.\d{1})?$/|max:5',
-            'weight'=>'required||regex:/^\d+(\.\d{1})?$/|max:5',
+            'height'=>'required||regex:/^\d{2,3}(\.\d*)?$/|max:6',
+            'weight'=>'required||regex:/^\d{2,3}(\.\d*)?$/|max:5',
             'smoke'=>'required'
 
         ];
