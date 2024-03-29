@@ -72,13 +72,25 @@ class DoctorController extends Controller
                     return $formatedDate;
                 })
                 ->addColumn('fullname', function($row) {
-                    
+                    if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)){
                     return  '<span class="text-wrap">'. $row->user->first_name.' '.$row->user->last_name.  '<div class="mb-0"></div>' .
                     '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>'.
                     '</span>';
+                }
+                else 
+                {
+                  return  $row->user->first_name.' '.$row->user->last_name;   
+                }
                 })
                 ->addColumn('email', function($row) {
-                  return $row->clinic? $row->clinic->user->first_name:'';
+                    if (Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
+                    {
+                        return $row->clinic? $row->clinic->user->first_name:'';
+                    }
+                    else
+                    {
+                        return '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>';
+                    }
        
                 })
                 ->addColumn('action', function($row) {
@@ -415,7 +427,7 @@ class DoctorController extends Controller
             "Expires"             => "0"
         );
 
-        $columns = array('Id','First Name','Last Name','Gender','Email','Contact No.','Status','Address','Birth Date','Qualification','Experience','Expertice','Clinic Name');
+        $columns = array('Id','First Name','Last Name','Gender','Email','Contact No.','Status','Address','Birth Date','Qualification','Experience','Expertice');
         
         $clinic_name = DoctorDetails::with('user')->select('clinic_id','id','user_id')->get();
           
@@ -435,9 +447,8 @@ class DoctorController extends Controller
                 $row['Qualification']  = $doctor->degree;
                 $row['Experience']  = $doctor->experience;
                 $row['Expertice']  = $doctor->expertice;
-                $row['Clinic Name']  = $doctor->clinic_id;
 
-                fputcsv($file, array($row['Id'],$row['First Name'],$row['Last Name'],$row['Gender'],$row['Email'],$row['Contact No.'],$row['Status'],$row['Address'],$row['Birth Date'],$row['Qualification'],$row['Experience'],$row['Expertice'],$row['Clinic Name']));
+                fputcsv($file, array($row['Id'],$row['First Name'],$row['Last Name'],$row['Gender'],$row['Email'],$row['Contact No.'],$row['Status'],$row['Address'],$row['Birth Date'],$row['Qualification'],$row['Experience'],$row['Expertice']));
             }
 
             fclose($file);

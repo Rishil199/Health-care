@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/welcomestyle.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
     <title>Narola care</title>
+    <link rel="icon" href="{{ asset('assets/favicon.png') }}">
 </head>
 
 <body class="welcome-page">
@@ -96,9 +97,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#contact-us">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#testimonial-section">Testimonial</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#testimonial-section">Testimonial</a>

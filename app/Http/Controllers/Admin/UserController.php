@@ -90,11 +90,11 @@ class UserController extends Controller
         
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at'
-            ))->latest()->with('user')->get();
+            ))->latest()->with('user')->limit(10)->get();
    
             $doctors = DoctorDetails::select(array(
                 'id','user_id','created_at'
-            ))->latest()->with('user')->get();
+            ))->latest()->with('user')->limit(10)->get();
  
             $receptionistCount = count(ReceptionistDetails::get());
         }

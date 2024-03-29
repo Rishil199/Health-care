@@ -57,7 +57,8 @@ $(document).on('click', '.btn-add-doctors',function(e) {
                         validateForm( $('.add-doctors-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker({
-                                format: 'dd/mm/yyyy'
+                                format: 'dd/mm/yyyy',
+                                endDate:'Od'
                             });
                         }
                         if ( $("#clinic_id").length ) {
@@ -326,7 +327,8 @@ $(document).on('click', '.edit-doctor',function(e) {
                         validateForm( $('#update-doctors-form') );
                         if ( $("#datepicker").length ) {
                             $("#datepicker").datepicker({
-                                format: 'dd/mm/yyyy'
+                                format: 'dd/mm/yyyy',
+                                endDate:'Od'
                             });
                         }
                         if ( $("#clinic_id").length ) {
