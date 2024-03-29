@@ -20,15 +20,17 @@ $(document).ready(function () {
 });
 
 $(document).ready(function() {
+  if($("#subscribe_form").length > 0){
     $("#subscribe_form").validate({
-        rules: {
-            email: {
-                required: true,
-                email: true,
-            },
-        },
-        submitHandler: function(form) {
-            form.submit();
-        }
+      rules: {
+          email: {
+              required: true,
+              email: true,
+          },
+      },
+      submitHandler: function(form) {
+          form.submit();
+      }
     });
+  }
 });
