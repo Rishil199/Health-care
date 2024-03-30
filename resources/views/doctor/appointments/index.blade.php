@@ -377,7 +377,6 @@
                 let $this = $(this).find('a.upcoming-appointment-btn');
                 let add_view_url = $this.attr('href');
                 if (add_view_url) {
-                    console.log('add_view_url', add_view_url)
                     $.ajax({
                         url: add_view_url,
                         type: 'get',
@@ -390,7 +389,6 @@
                         complete: function(response) {
                             let resp = response.responseJSON;
                             if (resp) {
-                                console.log('resp', resp)
                                 if (resp.status) {
                                     make_view_modal('upcoming-appointment-details-modal theme-offcanvas-xl',
                                         resp.data.view, true);
@@ -403,7 +401,7 @@
                                                 ajax: "{{ route('upcoming_appointment') }}",
                                                 columns: [
                                                     {
-                                                    data: 'patient_name',
+                                                        data: 'patient_name',
                                                         name: 'patient_name'
                                                     },
                                                     {
@@ -424,7 +422,9 @@
                                                     },
                                                     {
                                                         data: 'action',
-                                                        name: 'action'
+                                                        name: 'action',
+                                                        sortable: false,
+                                                        searchable: false,
                                                     },
                                                 ],
                                                 "columnDefs": [{
@@ -471,19 +471,20 @@
                                             aaSorting: [],
                                             ajax: "{{ route('past_appointment') }}",
                                             columns: [
-                                                    {
-                                                    data: 'patient_name',
-                                                        name: 'patient_name'
-                                                    },
-                                                    {
-                                                        data: 'patient.phone_no',
-                                                        name: 'phone_no'
-                                                    },
-                                                    {
-                                                        data: 'appointment_date',
-                                                        name: 'appointment_date'
-                                                    },
                                                 {
+                                                data: 'patient_name',
+                                                    name: 'patient_name'
+                                                },
+                                                {
+                                                    data: 'patient.phone_no',
+                                                    name: 'phone_no'
+                                                },
+                                                {
+                                                    data: 'appointment_date',
+                                                    name: 'appointment_date'
+                                                },
+                                                {
+                                                    name: 'next_date',
                                                     'render': function(data, type, full, meta) {
                                                         return full.next_date;
                                                     }

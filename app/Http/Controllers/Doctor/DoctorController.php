@@ -593,7 +593,8 @@ class DoctorController extends Controller
             })
             ->addColumn('appointment_date',function($row){
                 if ($row->next_date) {
-                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
+                    $next_date = date("Y-m-d",strtotime($row->next_date));
+                    return date('d-m-Y H:i a',strtotime($next_date .' '.$row->next_start_time));    
                 }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
@@ -612,6 +613,9 @@ class DoctorController extends Controller
             })
            
             ->addColumn('action', function($row){
+                if($row->deleted_at){
+                    return '-';
+                }
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -661,7 +665,6 @@ class DoctorController extends Controller
 
     public function todays_appointment(Request $request){
 
-        
         $date = today()->format('Y-m-d');
       
         // $date=Carbon::createFromFormat('Y-m-d',$d)->format('d-m-Y');
@@ -727,7 +730,8 @@ class DoctorController extends Controller
             })
             ->addColumn('appointment_date',function($row){
                 if ($row->next_date) {
-                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
+                    $next_date = date("Y-m-d",strtotime($row->next_date));
+                    return date('d-m-Y H:i a',strtotime($next_date .' '.$row->next_start_time));     
                 }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
@@ -748,6 +752,9 @@ class DoctorController extends Controller
                 return date('H:i A', strtotime($row->time_end));
             })
             ->addColumn('action', function($row){
+                if($row->deleted_at){
+                    return '-';
+                }
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -797,7 +804,6 @@ class DoctorController extends Controller
     public function upcoming_appointment(Request $request){
 
         $date = today()->format('Y-m-d');
-
          if ( $request->load_view == '1' ) {
             $this->data = [];
             $view = view('doctor.appointments.upcoming_appointment', $this->data)->render();
@@ -820,7 +826,7 @@ class DoctorController extends Controller
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('doctor_id',$user_id->id)
                         ->where('clinic_id', $clinic_user_id?->clinic_id); 
-                    });
+                    })->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)) {
@@ -854,7 +860,8 @@ class DoctorController extends Controller
             })
             ->addColumn('appointment_date',function($row){
                 if ($row->next_date) {
-                    return date('d-m-Y H:i a',strtotime($row->next_date .' '.$row->next_start_time));    
+                    $next_date = date("Y-m-d",strtotime($row->next_date));
+                    return date('d-m-Y H:i a',strtotime($next_date .' '.$row->next_start_time));    
                 }
                 return date('d-m-Y H:i a',strtotime($row->appointment_date.' '.$row->time_start));
             })
@@ -878,6 +885,9 @@ class DoctorController extends Controller
                 return date('H:i A', strtotime($row->time_end));
             })
             ->addColumn('action', function($row){
+                if($row->deleted_at){
+                    return '-';
+                }
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -1079,7 +1089,6 @@ class DoctorController extends Controller
      */
 
     public function edit($id) {
-
         $user_id = auth()->id();
 
         $date = today();
@@ -1091,14 +1100,13 @@ class DoctorController extends Controller
             'patient_id' => $user_id,
         ))->get();
 
-
         $available_slot[] = '';
         foreach ($available_time_slot as $available) {
             $available_slot[] = $available->next_start_time . ' - ' . $available->next_end_time;
         }   
 
         $general_time = GeneralSettings::select('start_time', 'end_time', 'duration')->where('user_id', $user_id)->first();
-
+        
         $current_date = date('H:00:00');
         
         $current_time = now()->toTimeString();
@@ -1134,10 +1142,7 @@ class DoctorController extends Controller
                 $time[$i]['end'] = $end;
             }
             $i++;
-    
         } 
-        
-       
        
         $all_appointent = DoctorAppointmentDetails::with('patient')->findOrFail($id);        
         $appointment_history=DoctorAppointmentDetails::select('id','user_id','doctor_id','appointment_date','time_start','time_end'
@@ -1150,6 +1155,7 @@ class DoctorController extends Controller
                 'view' => $view,
             ),
         );
+        
         return response()->json($response);
     }
 
@@ -1739,6 +1745,9 @@ class DoctorController extends Controller
                 return date('H:i A', strtotime($row->time_end));
             })
             ->addColumn('action', function($row){
+                if($row->deleted_at){
+                    return '-';
+                }
                  $actionBtn =   '<div class="dropable-btn">
                                            <a class="dropdown-item" href="javascript:delete_record(' . $row->id . ');" class="delete btn btn-delete" title="Delete">
                                                   <span class="svg-icon">
