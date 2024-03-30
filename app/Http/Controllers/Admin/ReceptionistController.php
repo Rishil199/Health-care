@@ -175,7 +175,7 @@ class ReceptionistController extends Controller
         $users->save();
         $receptionist->status = $request['status'];
         $receptionist->gender = $request['gender'];
-        $receptionist->birth_date = Carbon::parse($request['birth_date'])->format('Y-m-d h:i');
+        $receptionist->birth_date = Carbon::createFromFormat('d/m/Y', $request['birth_date'])->format('Y-m-d');
         $receptionist->qualification = $request['qualification'];
         $receptionist->experience = $request['experience'];
         $receptionist->user_id = $users['id'];
@@ -282,7 +282,7 @@ class ReceptionistController extends Controller
         $receptionist = ReceptionistDetails::with('user')->findOrFail($id);
         // $receptionist->status = $request['status'];
         $receptionist->gender = $request['gender'];
-        $receptionist->birth_date = Carbon::parse($request->validated()['birth_date'])->format('Y-m-d h:i');
+        $receptionist->birth_date = Carbon::createFromFormat('d/m/Y', $request['birth_date'])->format('Y-m-d');
         $receptionist->qualification = $request->validated()['qualification'];
         $receptionist->experience = $request->validated()['experience'];
         $receptionist->clinic_id = $request['clinic_id'] ? $request['clinic_id'] : $clinic_id;

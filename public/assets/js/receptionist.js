@@ -59,12 +59,12 @@ $(document).on('click', '.btn-add-receptionists',function(e) {
 });
 
 function validateForm( $form ) {
+  
     if ( $form.length ) {
         $.validator.addMethod("phoneNumber",function(value,element){
             var regex = /^[+\-\d]+$/;
             return this.optional(element) || regex.test(value);
         }, "Please enter a valid phone number.");
-        console.log('$form', $form);
         let validateForm = $form.validate({
             rules: {
                 'first_name': {
@@ -82,7 +82,7 @@ function validateForm( $form ) {
                 },
                 'birth_date':{
                     required:true,
-                    date: true,
+                    date: false,
                 },
                 'clinic_id': {
                     required: true
@@ -166,8 +166,8 @@ function validateForm( $form ) {
                 }
             },
             submitHandler: ( form ) => {
+               
                 let url = $form.attr('action');
-                console.log(url);
                 $('#loader').show();
                 $.ajax({
                     url:  url,
@@ -293,7 +293,7 @@ $(document).on('click', '.edit-receptionists',function(e) {
 $(document).on('click', '.toggle-class',function(e) {
     var status = $(this).prop('checked') == true ? 1 : 0;  
         var receptionist_id = $(this).data('id');  
-        console.log(status,receptionist_id);
+        // console.log(status,receptionist_id);
         $.ajax({ 
            type: "GET", 
            dataType: "json", 

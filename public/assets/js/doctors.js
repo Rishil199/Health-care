@@ -104,7 +104,7 @@ function validateForm( $form ) {
                 },
                 'birth_date': {
                     required: true,
-                    date: true,
+                    // date: true,
                 },
                 'expertice': {
                     required: true
