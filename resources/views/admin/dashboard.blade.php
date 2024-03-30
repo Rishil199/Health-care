@@ -587,7 +587,7 @@
                                                     <div class="tab-pane fade show active" id="doc-tab-pane"
                                                         role="tabpanel" aria-labelledby="doc-tab" tabindex="0">
                                                         <div class="table-responsive">
-                                                            <table class="table theme-table sr-table">
+                                                            <table class="table theme-table sr-table" id="appointments_tab">
                                                                 <thead class="table-dark">
                                                                     @if (Auth::user()->hasAnyRole([User::ROLE_SUPER_ADMIN, User::ROLE_RECEPTIONIST, User::ROLE_DOCTOR]))
                                                                         <th>Patient Name</th>
@@ -601,7 +601,7 @@
                                                                     <th>Appointment Time</th>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach ($appointments as $appointment)
+                                                                    {{-- @foreach ($appointments as $appointment)
                                                                         <tr>
                                                                             <td>{{ ucfirst($appointment?->patient?->first_name) . ' ' . ucfirst($appointment?->patient?->last_name) }}
                                                                             </td>
@@ -616,13 +616,13 @@
                                                                             <td>{{ $appointment?->time_start }} -
                                                                                 {{ $appointment?->time_end }}</td>
                                                                         </tr>
-                                                                    @endforeach
-                                                                    @if (count($appointments) == 0)
+                                                                    @endforeach --}}
+                                                                    {{-- @if (count($appointments) == 0) --}}
                                                                         <tr>
                                                                             <td colspan="6" class="text-center">No Data
                                                                                 Found</td>
                                                                         </tr>
-                                                                    @endif
+                                                                    {{-- @endif --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -711,7 +711,7 @@
                                                 <div class="tab-pane fade" id="recipt-tab-pane" role="tabpanel"
                                                     aria-labelledby="recipt-tab" tabindex="0">
                                                     <div class="table-responsive">
-                                                        <table class="table theme-table sr-table">
+                                                        <table class="table theme-table sr-table" id="doctors-tab">
                                                             <thead class="table-dark">
                                                                 <th>Doctor Name</th>
                                                                 <th>Contact No</th>
@@ -719,8 +719,8 @@
                                                                 <th>View Details</th>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($doctors as $doctor)
-                                                                    <tr>
+                                                                {{-- @foreach ($doctors as $doctor) --}}
+                                                                    {{-- <tr>
                                                                         <td>{{ ucfirst($doctor?->user?->first_name) . ' ' . ucfirst($doctor?->user?->last_name) }}
                                                                         </td>
                                                                         <td>{{ $doctor?->user?->phone_no }}</td>
@@ -748,15 +748,15 @@
                                                                                 </a>
                                                                             </div>
                                                                         </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                @if (count($doctors) == 0)
+                                                                    </tr> --}}
+                                                                {{-- @endforeach
+                                                                @if (count($doctors) == 0) --}}
                                                                     <tr>
                                                                         <td colspan="6" class="text-center">No Data
                                                                             Found
                                                                         </td>
                                                                     </tr>
-                                                                @endif
+                                                                {{-- @endif --}}
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -821,7 +821,7 @@
                                                 <div class="tab-pane fade" id="patient-tab-pane" role="tabpanel"
                                                     aria-labelledby="patient-tab" tabindex="0">
                                                     <div class="table-responsive">
-                                                        <table class="table theme-table sr-table">
+                                                        <table class="table theme-table sr-table" id="patient-table">
                                                             <thead class="table-dark">
                                                                 <th>Patient Name</th>
                                                                 <th>Contact No</th>
@@ -829,7 +829,7 @@
                                                                 <th>View Details</th>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($patients as $patient)
+                                                                {{-- @foreach ($patients as $patient)
                                                                     <tr>
                                                                         <td>{{ ucfirst($patient?->user?->first_name) . ' ' . ucfirst($patient?->user?->last_name) }}
                                                                         </td>
@@ -859,8 +859,8 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                @endforeach
-                                                                @if (count($patients) == 0)
+                                                                @endforeach --}}
+                                                                {{-- @if (count($patients) == 0) --}}
                                                                     <tr>
                                                                         <td colspan="6" class="text-center">No Data
                                                                             Found
@@ -868,7 +868,7 @@
                                                                     </tr>
                                                                     {{-- @else 
                                           <h2>data</h2> --}}
-                                                                @endif
+                                                                {{-- @endif --}}
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -920,6 +920,11 @@
 @push('footer_js')
     <script src="{{ asset('assets/js/doctors.js') }}"></script>
     <script src="{{ asset('assets/js/patients.js') }}"></script>
+    <script src="{{ asset('assets/js/appointments.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/datatables.min.js') }}"></script>
+    <script type="text/javascript">
+        let dashboard_url = "{{ route('admin_dashboard') }}"
+    </script>
 <script>
   $(document).ready(function () {
     setTimeout(() => {
@@ -929,6 +934,13 @@
             errorMessageById.style.display='none';
         }
     }, 3000);
+
+    // if ($('#appointments_table').length > 0) {
+    //     $('#appointments_table').DataTable();
+    // }
+    // if($('#doctors-tab').length > 0){
+    //     $('#doctors-tab').DataTable();
+    // }
   });
 
 

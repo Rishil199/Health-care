@@ -30,7 +30,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */ 
 
-    public function dashboard() {
+    public function dashboard(Request $request) {
+        
         $clinicCount = count(ClinicDetails::get());
 
         $clinics=ClinicDetails::where('user_id',Auth::user()->id)->get();
@@ -86,16 +87,16 @@ class UserController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)) {
 
-            $appointments = DoctorAppointmentDetails::with('user')->latest()->get();
+            $appointments = DoctorAppointmentDetails::with('patient')->latest()->get();
         
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at'
-            ))->latest()->with('user')->limit(10)->get();
+            ))->latest()->with('user')->get();
    
             $doctors = DoctorDetails::select(array(
                 'id','user_id','created_at'
-            ))->latest()->with('user')->limit(10)->get();
- 
+            ))->latest()->with('user')->get();
+
             $receptionistCount = count(ReceptionistDetails::get());
         }
 
@@ -252,8 +253,77 @@ class UserController extends Controller
             
             $past_appointment = DoctorAppointmentDetails::where('is_complete', 1)->withTrashed()->with('user')->where('patient_id',Auth::user()->id)->count();
         }
+            if ($request->ajax()){
+            $tab_name=$request->table_name;
+            if($tab_name=='appointments_tab')
+            {
+            return Datatables::of($appointments)
+            ->addColumn('name',function($row){
+             return $row->patient?->first_name;
+            })
+            ->addColumn('email',function($row){
+             '<a href="mailto:' . $row->patient?->email . '?">' . $row->patient?->email . '</a>';
+            })
+            ->addColumn('phone_number',function($row){
+            return $row->patient?->phone_number;
+            })
+            ->addColumn('prescription',function($row){
+            return $row->disease_name ? $row->disease_name: 'N/A';
+             })
+            ->addColumn('appointment_date',function($row){
+            return date('d-m-Y',strtotime($row->appointment_date));
+             })
+            ->addColumn('appointment_time',function($row){
+            return $row->time_start.'-'.$row->time_end;
+            })
+            ->rawColumns(['name','email','phone_number','appointment_date','appointment_time'])
+            ->make(true);
+        }
+        elseif($tab_name=='doctors-tab')
+        {
+            return Datatables::of($doctors)
+            ->addColumn('fullname',function($row){
+            return $row->user->first_name.' '.$row->user->last_name;
+         })
+           ->addColumn('phone_number',function($row){
+            return $row->user->phone_no;
+        })
+            ->addColumn('email',function($row){
+            '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>';
+            })
+        ->editColumn('action',function($row){
+            $action = '<a href="javascript:void(0)" class="dropdown-item doctor-view" data-url="' . route('doctors.view',['id' => $row->id]) . '" data-id="' . $row->id . '" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
+            <i class="bi bi-eye-fill bi-lg" style="color:black;"></i> </a>';
+                return $action;
+            })
+    
+        ->rawColumns(['fullname','email','phone_no','action'])
+        ->make(true);
+        }
 
+        elseif($tab_name=='patient-tab')
+        {
+            return Datatables::of($patients)
+            ->addColumn('name',function($row){
+            return $row->user->first_name;
+         })
+           ->addColumn('phone_number',function($row){
+            return $row->user->phone_no;
+        })
+            ->addColumn('email',function($row){
+            '<a href="mailto:' . $row->user->email . '?">' . $row->user->email . '</a>';
+            })
+        ->editColumn('action',function($row){
+            $action = '<a href="javascript:void(0)" class="dropdown-item patient-view" data-url="' . route('patients.view',$row->id). '" data-id="' . $row->id . '" data-bs-toggle="viewmodal" data-bs-target="#myViewModal">
+            <i class="bi bi-eye-fill bi-lg" style="color:black;"></i> </a>';
+                return $action;
+            })
+    
+        ->rawColumns(['fullname','email','phone_no','action'])
+        ->make(true);
+        }
 
+        }
         if(Auth::user()->hasRole(User::ROLE_PATIENT)){
           $this->data = array(
                 'title' => 'Dashboard',
