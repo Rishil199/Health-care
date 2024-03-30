@@ -30,7 +30,7 @@ class DoctorController extends Controller
 
     public function index(Request $request) {
         
-    
+  
         if ($request->ajax()) {
             
             $doctors = DoctorDetails::select(array(

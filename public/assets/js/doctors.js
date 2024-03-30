@@ -348,3 +348,52 @@ $(document).on('click', '.edit-doctor',function(e) {
         });
     }
 });
+
+
+$(document).ready(function () {
+    $('#recipt-tab').click(function () { 
+        if ($('#doctors-tab').length ) {
+                $('#doctors-tab').DataTable({
+                    bDestroy: true,
+                    processing: true,
+                    serverSide: true,
+                    aaSorting: [],
+                    ajax:{   
+                     dashboard_url,
+                     data:{table_name:'doctors-tab'}
+                    },
+                    columns: [
+                        { data: 'fullname', name: 'fullname' },
+                        { data: 'user.phone_no', name: 'user.phone_no' }, 
+                        { data: 'user.email', name: 'user.email' },  
+                        {data: 'action', name:'action'}  
+                    ],
+                    "bDestroy": true
+                });
+            }
+    });
+
+$("#patient-tab").click(function(){
+    if ($('#patient-table').length ) {
+        $('#patient-table').DataTable({
+            bDestroy: true,
+            processing: true,
+            serverSide: true,
+            aaSorting: [],
+            ajax:{   
+             dashboard_url,
+             data:{table_name:'patient-tab'}
+            },
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'user.phone_no', name: 'user.phone_no' }, 
+                { data: 'user.email', name: 'user.email' },  
+                {data: 'action', name:'action'}  
+            ],
+            "bDestroy": true
+        });
+    }
+})
+
+
+});
