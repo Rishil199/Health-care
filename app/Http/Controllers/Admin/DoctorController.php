@@ -201,7 +201,7 @@ class DoctorController extends Controller
         $doctor->address = $post_data['address'];
         $doctor->status = $request['status'];
         $doctor->gender = $request['gender'];
-        $doctor->birth_date = Carbon::createFromFormat('d/m/Y',$request['birth_date']);
+        $doctor->birth_date = Carbon::createFromFormat('d/m/Y', $request['birth_date'])->format('Y-m-d');
         $doctor->degree = $request['degree'];
         $doctor->experience = $request['experience'];
         $doctor->expertice = $post_data['expertice'];
@@ -323,7 +323,7 @@ class DoctorController extends Controller
       
         $doctor->address = $request->validated()['address'];
         $doctor->gender = $request['gender'];
-        $doctor->birth_date = Carbon::createFromFormat('d/m/Y',$request['birth_date']);
+        $doctor->birth_date = Carbon::createFromFormat('d/m/Y', $request['birth_date'])->format('Y-m-d');
         $doctor->degree = $request->validated()['degree'];
         $doctor->experience = $request->validated()['experience'];
         $doctor->expertice = $request->validated()['expertice'];

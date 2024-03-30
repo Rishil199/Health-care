@@ -262,10 +262,10 @@ class UserController extends Controller
              return $row->patient?->first_name;
             })
             ->addColumn('email',function($row){
-             '<a href="mailto:' . $row->patient?->email . '?">' . $row->patient?->email . '</a>';
+             return '<a href="mailto:' . $row->patient?->email . '?">' . $row->patient?->email . '</a>';
             })
-            ->addColumn('phone_number',function($row){
-            return $row->patient?->phone_number;
+            ->addColumn('phone_no',function($row){
+            return $row->patient?->phone_no;
             })
             ->addColumn('prescription',function($row){
             return $row->disease_name ? $row->disease_name: 'N/A';
