@@ -613,6 +613,9 @@ class DoctorController extends Controller
             })
            
             ->addColumn('action', function($row){
+                if($row->deleted_at){
+                    return '-';
+                }
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -662,7 +665,6 @@ class DoctorController extends Controller
 
     public function todays_appointment(Request $request){
 
-        
         $date = today()->format('Y-m-d');
       
         // $date=Carbon::createFromFormat('Y-m-d',$d)->format('d-m-Y');
@@ -750,6 +752,9 @@ class DoctorController extends Controller
                 return date('H:i A', strtotime($row->time_end));
             })
             ->addColumn('action', function($row){
+                if($row->deleted_at){
+                    return '-';
+                }
                  $actionBtn =   '<div class="dropable-btn">
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -799,7 +804,6 @@ class DoctorController extends Controller
     public function upcoming_appointment(Request $request){
 
         $date = today()->format('Y-m-d');
-
          if ( $request->load_view == '1' ) {
             $this->data = [];
             $view = view('doctor.appointments.upcoming_appointment', $this->data)->render();
@@ -822,7 +826,7 @@ class DoctorController extends Controller
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
                     $query->where('doctor_id',$user_id->id)
                         ->where('clinic_id', $clinic_user_id?->clinic_id); 
-                    });
+                    })->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_CLINIC)) {
@@ -1085,7 +1089,6 @@ class DoctorController extends Controller
      */
 
     public function edit($id) {
-
         $user_id = auth()->id();
 
         $date = today();
