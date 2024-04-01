@@ -632,7 +632,7 @@
                                                         <div class="tab-pane fade show active" id="doc-tab-pane"
                                                             role="tabpanel" aria-labelledby="doc-tab" tabindex="0">
                                                             <div class="table-responsive">
-                                                                <table class="table theme-table sr-table">
+                                                                <table class="table theme-table sr-table" id="appointments_tab">
                                                                     <thead class="table-dark">
                                                                         <th>Doctor Name</th>
                                                                         <th>Contact No</th>
@@ -642,7 +642,7 @@
                                                                         <th>Appointment Time</th>
                                                                     </thead>
                                                                     <tbody>
-                                                                        @foreach ($appointments as $appointment)
+                                                                        {{-- @foreach ($appointments as $appointment)
                                                                             <tr>
                                                                                 <td>{{ ucfirst($appointment?->doctor?->user?->first_name) . ' ' . ucfirst($appointment?->doctor?->user?->last_name) }}
                                                                                 </td>
@@ -658,14 +658,14 @@
                                                                                 <td>{{ $appointment?->time_start }} -
                                                                                     {{ $appointment?->time_end }}</td>
                                                                             </tr>
-                                                                        @endforeach
-                                                                        @if (count($appointments) == 0)
+                                                                        @endforeach --}}
+                                                                        {{-- @if (count($appointments) == 0) --}}
                                                                             <tr>
                                                                                 <td colspan="6" class="text-center">No
                                                                                     Data
                                                                                     Found</td>
                                                                             </tr>
-                                                                        @endif
+                                                                        {{-- @endif --}}
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -675,7 +675,7 @@
                                                             <div class="tab-pane fade show active" id="doc-tab-pane"
                                                                 role="tabpanel" aria-labelledby="doc-tab" tabindex="0">
                                                                 <div class="table-responsive">
-                                                                    <table class="table theme-table sr-table">
+                                                                    <table class="table theme-table sr-table" id="appointments_tab">
                                                                         <thead class="table-dark">
                                                                             <th>Patient Name</th>
                                                                             <th>Contact No</th>
@@ -685,7 +685,7 @@
                                                                             <th>Appointment Time</th>
                                                                         </thead>
                                                                         <tbody>
-                                                                            @foreach ($appointments as $appointment)
+                                                                            {{-- @foreach ($appointments as $appointment)
                                                                                 <tr>
                                                                                     <td>{{ ucfirst($appointment?->patient?->first_name) . ' ' . ucfirst($appointment?->patient?->last_name) }}
                                                                                     </td>
@@ -701,7 +701,7 @@
                                                                                     <td>{{ $appointment?->time_start }} -
                                                                                         {{ $appointment?->time_end }}</td>
                                                                                 </tr>
-                                                                            @endforeach
+                                                                            @endforeach --}}
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -766,7 +766,7 @@
                                                     id="recipt-tab-pane" role="tabpanel" aria-labelledby="recipt-tab"
                                                     tabindex="0">
                                                     <div class="table-responsive">
-                                                        <table class="table theme-table sr-table">
+                                                        <table class="table theme-table sr-table" id="doctors-tab">
                                                             <thead class="table-dark">
                                                                 <th>Doctor Name</th>
                                                                 <th>Contact No</th>
@@ -774,7 +774,7 @@
                                                                 <th>View Details</th>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($doctors as $doctor)
+                                                                {{-- @foreach ($doctors as $doctor)
                                                                     <tr>
                                                                         <td>{{ ucfirst($doctor?->user?->first_name) . ' ' . ucfirst($doctor?->user?->last_name) }}
                                                                         </td>
@@ -804,14 +804,14 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                @endforeach
-                                                                @if (count($doctors) == 0)
+                                                                @endforeach --}}
+                                                                {{-- @if (count($doctors) == 0) --}}
                                                                     <tr>
                                                                         <td colspan="6" class="text-center">No Data
                                                                             Found
                                                                         </td>
                                                                     </tr>
-                                                                @endif
+                                                                {{-- @endif --}}
                                                             </tbody>
                                                         </table>
                                                     </div>

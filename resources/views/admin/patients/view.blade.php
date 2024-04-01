@@ -183,7 +183,7 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN))
+            @if(Auth::user()->hasRole([User::ROLE_SUPER_ADMIN,User::ROLE_CLINIC,User::ROLE_DOCTOR,User::ROLE_RECEPTIONIST]))
             <div class="theme-form-input mb-4">
                 <h5 class="mt-5">Medical history </h5>
                  </div>

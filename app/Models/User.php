@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use App\Notifications\CustomResetPasswordNotification;
+use App\Models\DoctorDetails;
 // use Spatie\Sluggable\HasSlug;
 // use Spatie\Sluggable\SlugOptions;
 
@@ -83,5 +84,10 @@ class User extends Authenticatable implements MustVerifyEmail
     // public function getRouteKeyName()
     // {
     //     return 'slug';
+    // }
+
+    // public function doctor():HasOne
+    // {
+    //     return $this->hasOne(DoctorDetails::class);
     // }
 }
