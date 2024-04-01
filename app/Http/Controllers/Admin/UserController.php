@@ -201,7 +201,7 @@ class UserController extends Controller
             $receptionistCount = count(ReceptionistDetails::where('clinic_id',$user_id->id)->get());
           
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            $appointments = DoctorAppointmentDetails::with('user')->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->latest()->get();
+           $appointments = DoctorAppointmentDetails::with('user')->where('clinic_id',$user_id->id)->latest()->withTrashed()->get();;
             $appointmentsCount = count($appointments);
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date', $date)->with('user')->withTrashed()
             ->where(function ( $query ) use ($receptionist_details, $user_id) {

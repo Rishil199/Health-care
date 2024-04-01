@@ -37,7 +37,11 @@ class ClinicController extends Controller
             
             return Datatables::of($clinics)
                 ->editColumn('status',function($row){
-                    if($row->status == 1){
+                    if($row->user->email_verified_at==null)
+                    {
+                        $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id=' . $row->id . '" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
+                    }
+                    else if($row->status == 1){
                         $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked></label></div>';
                     }
                     else{

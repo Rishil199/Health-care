@@ -350,8 +350,8 @@ $(document).on('click', '.edit-doctor',function(e) {
 });
 
 
-$(document).ready(function () {
-    $('#recipt-tab').click(function () { 
+
+    function initializeDataTable() {
         if ($('#doctors-tab').length ) {
                 $('#doctors-tab').DataTable({
                     bDestroy: true,
@@ -371,10 +371,20 @@ $(document).ready(function () {
                     "bDestroy": true
                 });
             }
-    });
+        }
 
-$("#patient-tab").click(function(){
-    if ($('#patient-table').length ) {
+
+        $('#recipt-tab').click(function () { 
+            initializeDataTable();
+        });
+
+        $(document).ready(function () {
+            initializeDataTable();
+        });
+
+        $(document).ready(function (){
+        $("#patient-tab").click(function(){
+        if ($('#patient-table').length ) {
         $('#patient-table').DataTable({
             bDestroy: true,
             processing: true,
@@ -395,5 +405,5 @@ $("#patient-tab").click(function(){
     }
 })
 
-
 });
+
