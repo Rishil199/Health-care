@@ -257,10 +257,8 @@
                                                         name: 'phone_no'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-                                                            return full.appointment_date + ' ' +
-                                                                full.time_start;
-                                                        }
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
                                                     },
                                                     {
                                                         data: 'created_by',
@@ -327,10 +325,8 @@
                                                         name: 'phone_no'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-                                                            return full.appointment_date + ' ' +
-                                                                full.time_start;
-                                                        }
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
                                                     },
                                                     {
                                                         data: 'created_by',
@@ -396,10 +392,8 @@
                                                         name: 'phone_no'
                                                     },
                                                     {
-                                                        'render': function(data, type, full, meta) {
-                                                            return full.appointment_date + ' ' +
-                                                                full.time_start;
-                                                        }
+                                                        data: 'appointment_date',
+                                                        name: 'appointment_date'
                                                     },
                                                     {
                                                         data: 'created_by',

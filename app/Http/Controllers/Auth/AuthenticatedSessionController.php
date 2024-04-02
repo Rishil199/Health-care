@@ -46,12 +46,23 @@ class AuthenticatedSessionController extends Controller
         // {
         //     return redirect()->intended(RouteServiceProvider::Doctor);
         // }
-        
-        if(auth()->user())
+        if(auth()->user()->hasRole([User::ROLE_SUPER_ADMIN,User::ROLE_PATIENT]))
+        {
+            return redirect()->intended(RouteServiceProvider::HOME);    
+        }
+        elseif(auth()->user()->hasRole(User::ROLE_CLINIC) && auth()->user()->hospital->status==1  )
+        {
+              return redirect()->intended(RouteServiceProvider::HOME);    
+        }
+        elseif(auth()->user()->hasRole(User::ROLE_DOCTOR) && auth()->user()->doctor->status==1  )
         {
             return redirect()->intended(RouteServiceProvider::HOME);
         }
-        else 
+        elseif(auth()->user()->hasRole(User::ROLE_RECEPTIONIST) && auth()->user()->staff->status==1  )
+        {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        else
         {
             $request->session()->invalidate();
 
@@ -61,8 +72,8 @@ class AuthenticatedSessionController extends Controller
             // throw ValidationException::withMessages([
             //     'email' => trans('auth.failed'),
             // ]);
-
-            return redirect()->route('login');
+           $errorMsg="You status has been disabled.";
+            return redirect()->route('login')->with('errorMsg',$errorMsg);
         }
     }
 

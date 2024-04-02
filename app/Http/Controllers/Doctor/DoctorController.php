@@ -1582,7 +1582,8 @@ class DoctorController extends Controller
                 return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
+                // return date('d-m-Y',strtotime($row->appointment_date));
+                return date('d-m-Y',strtotime($row->appointment_date)).' '. date('H:i A', strtotime($row->time_start));
             })
             ->addColumn('created_by', function($row) {
                 $created_by = User::select('id','first_name','last_name','name')->where('id',$row->created_by)->first();
@@ -1657,7 +1658,8 @@ class DoctorController extends Controller
                 return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
+                // return date('d-m-Y',strtotime($row->appointment_date));
+                return date('d-m-Y',strtotime($row->appointment_date)).' '. date('H:i A', strtotime($row->time_start));
             })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
@@ -1729,7 +1731,8 @@ class DoctorController extends Controller
                 return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
+                // return date('d-m-Y',strtotime($row->appointment_date));
+                return date('d-m-Y',strtotime($row->appointment_date)).' '. date('H:i A', strtotime($row->time_start));
             })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
