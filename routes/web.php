@@ -35,7 +35,7 @@ Route::get('/', function () {
 
 Route::post('subscription/store',  [UserController::class, 'subscriptionStore'])->name('subscription'); 
 
-Route::group(['middleware' => ['auth','verified','revalidate']], function () {
+Route::group(['middleware' => ['preventBackHistory','auth','verified']], function () {
     
     //Routes available to All Roles
     //dashboard
@@ -60,8 +60,7 @@ Route::group(['middleware' => ['auth','verified','revalidate']], function () {
 
     //Routes available to Super Admin
     //permission
-    Route::middleware(['role:Super Admin'])->group(function () {
-    
+    Route::middleware(['preventBackHistory','role:Super Admin'])->group(function () {
         //Routes available to all users
 
         // Route::group(['prefix' => 'permissions'], function() {
@@ -155,7 +154,7 @@ Route::group(['middleware' => ['auth','verified','revalidate']], function () {
 
 
         });
-        Route::middleware(['role:Doctor|Staff|Hospital'])->group(function () {
+        Route::middleware(['role:Doctor|Staff|Hospital','preventBackHistory'])->group(function () {
             Route::get('/appointments', [MainDoctorController::class, 'appointments'])->name('appointments.index');
             Route::get('/all_appointment', [MainDoctorController::class, 'all_appointment'])->name('all_appointment');
             Route::get('/todays_appointment', [MainDoctorController::class, 'todays_appointment'])->name('todays_appointment');
@@ -176,12 +175,12 @@ Route::group(['middleware' => ['auth','verified','revalidate']], function () {
         });
         });
 
-        Route::middleware(['role:Doctor|Hospital|Super Admin|Patient'])->group(function () {
+        Route::middleware(['role:Doctor|Hospital|Super Admin|Patient', 'preventBackHistory'])->group(function () {
             Route::get('view/{id}', [DoctorController::class, 'show'])->name('doctors.view');
         });
 
 
-        Route::middleware(['role:Patient'])->group(function () {
+        Route::middleware(['role:Patient', 'preventBackHistory'])->group(function () {
             Route::get('/doctor', [DoctorController::class, 'doctorsListing'])->name('doctorslisting.index');
             Route::get('/hospitals', [DoctorController::class, 'clinicsListing'])->name('clinicsListing.index');
             Route::get('/patient_appointments', [MainDoctorController::class, 'patientAppointments'])->name('patient_appointments.index');
@@ -201,7 +200,7 @@ Route::group(['middleware' => ['auth','verified','revalidate']], function () {
         });
 
 
-    Route::middleware(['role:Super Admin|Patient'])->group(function(){
+    Route::middleware(['role:Super Admin|Patient', 'preventBackHistory'])->group(function(){
     Route::group(['prefix' => 'hospital'], function() {
     Route::get('view/{slug?}', [ClinicController::class, 'show'])->name('clinics.view');
     Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');

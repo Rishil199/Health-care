@@ -5,7 +5,7 @@
 @section('content')
 <div class="login-page">
    <div class="login-logo">
-      <a href="/">
+      <a href="{{  url('/') }}">
       <img src="{{ asset('assets/img/narolacare_logo.png') }}" alt="Logo">
       </a>
    </div>

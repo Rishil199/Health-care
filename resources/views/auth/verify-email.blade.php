@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
+            <a href="{{  url('/') }}">
                 <img src="{{ asset('assets/img/narolacare_logo.png') }}" width="200"> 
             </a>
         </x-slot>
