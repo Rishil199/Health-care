@@ -12,6 +12,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use App\Notifications\CustomResetPasswordNotification;
 use App\Models\DoctorDetails;
+use App\Models\clinicDetails;
+use App\Models\ReceptionistDetails;
 // use Spatie\Sluggable\HasSlug;
 // use Spatie\Sluggable\SlugOptions;
 
@@ -86,8 +88,19 @@ class User extends Authenticatable implements MustVerifyEmail
     //     return 'slug';
     // }
 
-    // public function doctor():HasOne
-    // {
-    //     return $this->hasOne(DoctorDetails::class);
-    // }
+    public function hospital()
+    {
+        return $this->hasOne(clinicDetails::class,'user_id');
+    }
+
+    public function doctor()
+    {
+        return $this->hasOne(DoctorDetails::class,'user_id');
+    }
+
+    public function staff()
+    {
+        return $this->hasOne(ReceptionistDetails::class,'user_id');
+    }
+
 }

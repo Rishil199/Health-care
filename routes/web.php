@@ -207,6 +207,8 @@ Route::group(['middleware' => ['preventBackHistory','auth','verified']], functio
 });
 });
  
+
+Route::get('getuser_status',[UserController::class, 'getUserStatus'])->name('user_status')->middleware('preventBackHistory');
 });
  
 require __DIR__.'/auth.php';

@@ -87,7 +87,7 @@ class UserController extends Controller
 
         if(Auth::user()->hasRole(User::ROLE_SUPER_ADMIN)) {
 
-            $appointments = DoctorAppointmentDetails::with('patient')->latest()->get();
+            $appointments = DoctorAppointmentDetails::with('patient')->latest()->withTrashed()->get();
         
             $patients = PatientDetails::select(array(
                 'id','user_id','created_at'
@@ -155,7 +155,7 @@ class UserController extends Controller
             //     'id','user_id','created_at','doctor_id'
             // ))->latest()->with('user')->where('clinic_id',$user_id->id)->get();  
     
-            $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->latest()->get();
+            $appointments = DoctorAppointmentDetails::with('user')->where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->latest()->withTrashed()->get();
             $appointmentsCount = count(DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',$clinic_user_id?->clinic_id)->withTrashed()->get());
             $todays_appointment = DoctorAppointmentDetails::where('appointment_date','=',$date)->where('is_complete','=','0')->with('user')->withTrashed()
                 ->where(function ( $query ) use ($clinic_user_id, $user_id) {
@@ -259,16 +259,26 @@ class UserController extends Controller
             {
             return Datatables::of($appointments)
             ->addColumn('name',function($row){
-             return $row->patient?->first_name;
+                if(Auth::user()->hasRole(User::ROLE_PATIENT)){
+                    return $row->doctor?->user?->first_name;
+                }
+              return $row->patient?->first_name;
+             
             })
             ->addColumn('email',function($row){
-             return '<a href="mailto:' . $row->patient?->email . '?">' . $row->patient?->email . '</a>';
+            	if(Auth::user()->hasRole(User::ROLE_PATIENT)){
+            		return '<a href="mailto:' . $row->doctor?->user?->email . '?">' . $row->doctor?->user?->email . '</a>';
+            	}
+             	return '<a href="mailto:' . $row->patient?->email . '?">' . $row->patient?->email . '</a>';
             })
             ->addColumn('phone_no',function($row){
-            return $row->patient?->phone_no;
+            	if(Auth::user()->hasRole(User::ROLE_PATIENT)){
+            		return $row->doctor?->user?->phone_no;
+            	}
+            	return $row->patient?->phone_no;
             })
             ->addColumn('prescription',function($row){
-            return $row->disease_name ? $row->disease_name: 'N/A';
+            return $row->prescription ? $row->prescription: 'N/A';
              })
             ->addColumn('appointment_date',function($row){
             return date('d-m-Y',strtotime($row->appointment_date));
@@ -276,7 +286,7 @@ class UserController extends Controller
             ->addColumn('appointment_time',function($row){
             return $row->time_start.'-'.$row->time_end;
             })
-            ->rawColumns(['name','email','phone_number','appointment_date','appointment_time'])
+            ->rawColumns(['name','email','phone_no','appointment_date','appointment_time'])
             ->make(true);
         }
         elseif($tab_name=='doctors-tab')
@@ -285,7 +295,7 @@ class UserController extends Controller
             ->addColumn('fullname',function($row){
             return $row->user->first_name.' '.$row->user->last_name;
          })
-           ->addColumn('phone_number',function($row){
+           ->addColumn('phone_no',function($row){
             return $row->user->phone_no;
         })
             ->addColumn('email',function($row){
@@ -307,7 +317,7 @@ class UserController extends Controller
             ->addColumn('name',function($row){
             return $row->user->first_name;
          })
-           ->addColumn('phone_number',function($row){
+           ->addColumn('phone_no',function($row){
             return $row->user->phone_no;
         })
             ->addColumn('email',function($row){
@@ -662,8 +672,25 @@ class UserController extends Controller
     }
 
 
-    public function resetpswd()
+    // public function resetpswd()
+    // {
+    //     return view('verifyMail-test');
+    // }
+
+
+    public function getUserStatus(Request $request)
     {
-        return view('verifyMail-test');
+        if($request->ajax())
+        {
+            $user=auth()->user();
+            if($user->hasRole(User::ROLE_CLINIC) && auth()->user()->hospital->status==0)
+            {
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                return response()->json(['status'=>'disabled','redirect'=>'/login']);
+
+            }
+        }
+
     }
 }
