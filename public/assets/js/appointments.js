@@ -74,3 +74,26 @@ $(document).on('click', '.settings-add-btn',function(e) {
     }
 });
 
+$(document).ready(function () {
+    if ($('#appointments_tab').length ) {
+            $('#appointments_tab').DataTable({
+                bDestroy: true,
+                processing: true,
+                serverSide: true,
+                aaSorting: [],
+                ajax:{ 
+                    dashboard_url,
+                    data:{table_name:'appointments_tab'}
+                },
+                columns: [
+                    { data: 'name', name: 'name' },
+                    { data: 'phone_no', name: 'phone_no' },
+                    { data: 'email', name: 'email' },    
+                     {data:'prescription',name:'prescription'},
+                     {data:'appointment_date', name:'appointment_date'},
+                     {data:'appointment_time',name:'appointment_time'}
+                ],
+                "bDestroy": true
+            });
+        }
+});

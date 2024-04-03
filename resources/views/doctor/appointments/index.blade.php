@@ -288,7 +288,8 @@
                                                 },
                                                 {
                                                     data: 'action',
-                                                    name: 'action'
+                                                    name: 'action',
+                                                    sortable:false,
                                                 },
 
                                             ],
@@ -358,7 +359,8 @@
                                                     },
                                                     {
                                                         data: 'action',
-                                                        name: 'action'
+                                                        name: 'action',
+                                                        sortable:false
                                                     },
                                                 ],
                                                 "columnDefs": [{
@@ -502,7 +504,9 @@
                                                 },
                                                 {
                                                     data: 'action',
-                                                    name: 'action'
+                                                    name: 'action',
+                                                    sortable:false,
+                                                    
                                                 },
                                             ],
                                             // "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {

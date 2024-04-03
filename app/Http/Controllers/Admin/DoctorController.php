@@ -30,7 +30,7 @@ class DoctorController extends Controller
 
     public function index(Request $request) {
         
-    
+  
         if ($request->ajax()) {
             
             $doctors = DoctorDetails::select(array(
@@ -59,7 +59,12 @@ class DoctorController extends Controller
 
             return Datatables::of($doctors)
                 ->editColumn('status',function($row){
-                    if($row->status == 1){
+                    if($row->user->email_verified_at==null)
+                    {
+                        $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id=' . $row->id . '" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" disabled></label></div>';
+                    }
+                    elseif($row->status == 1){
+
                         $status = '<div class="form-check form-switch form-switch-md"><label class="switch"><input data-id='. $row->id .'" class="toggle-class form-check-input" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked></label></div>';
                     }
                     else{
@@ -201,7 +206,7 @@ class DoctorController extends Controller
         $doctor->address = $post_data['address'];
         $doctor->status = $request['status'];
         $doctor->gender = $request['gender'];
-        $doctor->birth_date = Carbon::createFromFormat('d/m/Y',$request['birth_date']);
+        $doctor->birth_date = Carbon::createFromFormat('d/m/Y', $request['birth_date'])->format('Y-m-d');
         $doctor->degree = $request['degree'];
         $doctor->experience = $request['experience'];
         $doctor->expertice = $post_data['expertice'];
@@ -323,7 +328,7 @@ class DoctorController extends Controller
       
         $doctor->address = $request->validated()['address'];
         $doctor->gender = $request['gender'];
-        $doctor->birth_date = Carbon::createFromFormat('d/m/Y',$request['birth_date']);
+        $doctor->birth_date = Carbon::createFromFormat('d/m/Y', $request['birth_date'])->format('Y-m-d');
         $doctor->degree = $request->validated()['degree'];
         $doctor->experience = $request->validated()['experience'];
         $doctor->expertice = $request->validated()['expertice'];

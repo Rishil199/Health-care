@@ -104,7 +104,7 @@ function validateForm( $form ) {
                 },
                 'birth_date': {
                     required: true,
-                    date: true,
+                    // date: true,
                 },
                 'expertice': {
                     required: true
@@ -348,3 +348,62 @@ $(document).on('click', '.edit-doctor',function(e) {
         });
     }
 });
+
+
+
+    function initializeDataTable() {
+        if ($('#doctors-tab').length ) {
+                $('#doctors-tab').DataTable({
+                    bDestroy: true,
+                    processing: true,
+                    serverSide: true,
+                    aaSorting: [],
+                    ajax:{   
+                     dashboard_url,
+                     data:{table_name:'doctors-tab'}
+                    },
+                    columns: [
+                        { data: 'fullname', name: 'fullname' },
+                        { data: 'user.phone_no', name: 'user.phone_no' }, 
+                        { data: 'user.email', name: 'user.email' },  
+                        {data: 'action', name:'action'}  
+                    ],
+                    "bDestroy": true
+                });
+            }
+        }
+
+
+        $('#recipt-tab').click(function () { 
+            initializeDataTable();
+        });
+
+        $(document).ready(function () {
+            initializeDataTable();
+        });
+
+        $(document).ready(function (){
+        $("#patient-tab").click(function(){
+        if ($('#patient-table').length ) {
+        $('#patient-table').DataTable({
+            bDestroy: true,
+            processing: true,
+            serverSide: true,
+            aaSorting: [],
+            ajax:{   
+             dashboard_url,
+             data:{table_name:'patient-tab'}
+            },
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'user.phone_no', name: 'user.phone_no' }, 
+                { data: 'user.email', name: 'user.email' },  
+                {data: 'action', name:'action'}  
+            ],
+            "bDestroy": true
+        });
+    }
+})
+
+});
+
