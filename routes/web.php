@@ -206,9 +206,9 @@ Route::group(['middleware' => ['preventBackHistory','auth','verified']], functio
     Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');
 });
 });
-
-Route::get('getUserstatus',[UserController::class,'getUserStatus'])->name('user_status');
  
+
+Route::get('getuser_status',[UserController::class, 'getUserStatus'])->name('user_status')->middleware('preventBackHistory');
 });
  
 require __DIR__.'/auth.php';

@@ -72,6 +72,6 @@
    <div class="circle mediun shade4"></div>
    <div class="circle small shade5"></div>
 </div> -->
-<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/doctors.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/jquery.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/script.js') }}"></script> --}}
 @endsection
