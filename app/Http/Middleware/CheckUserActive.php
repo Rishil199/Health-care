@@ -17,10 +17,17 @@ class CheckUserActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->hasRole(User::ROLE_CLINIC)  ){
+        $user = Auth::user();
+    
+        if ($user->hasRole(User::ROLE_CLINIC) && !$user->hospital->status || $user->hasRole(User::ROLE_DOCTOR) && !$user->doctor->status ||
+            $user->hasRole(User::ROLE_RECEPTIONIST) && !$user->staff->status) {
             
+            Auth::guard('web')->logout();
+            
+            return redirect()->route('login');
         }
-        dd(Auth::user()->hospital);
+
+        
         return $next($request);
     }
 }
