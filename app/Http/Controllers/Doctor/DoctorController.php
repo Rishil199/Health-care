@@ -51,6 +51,59 @@ class DoctorController extends Controller
         
         return view('doctor.dashboard',$this->data);
     }
+    /**
+     *@uses function to get the appointment events by date.  
+     *@param $start_date, $end_date (Date)
+     *@return (array)
+     */
+    public function getAppointmentsById($start_date, $end_date) : array {
+        $response = $appointments =  array();
+        $role = '';
+
+        if(Auth::user()->hasRole(User::ROLE_DOCTOR)){
+            $role = 1;
+            $user_id = DoctorDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            $appointments = DoctorAppointmentDetails::with('patient')->where('clinic_id',$user_id->clinic_id)
+                        ->where('doctor_id',$user_id->id)
+                        ->withTrashed();
+        }
+        if(Auth::user()->hasRole(User::ROLE_CLINIC)){
+            $role = 2;
+            $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+            $appointments = DoctorAppointmentDetails::with('doctor')->select('id','user_id','clinic_id','doctor_id','appointment_date','time_start','time_end')->where('clinic_id', $clinic_id->id);
+        }
+        if(Auth::user()->hasRole(User::ROLE_PATIENT)){
+            $role = 2;
+            $appointments = DoctorAppointmentDetails::with('doctor')->where('patient_id',Auth::user()->id)->withTrashed();
+        }
+        
+        if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
+            $role = 2;
+            $user_id = ReceptionistDetails::select('id','user_id','clinic_id')->where('user_id',Auth::user()->id)->first();
+            $appointments = DoctorAppointmentDetails::where('receptionist_id',$user_id->id)->orWhere('clinic_id',$user_id->clinic_id)->withTrashed();
+        }
+        
+        if(!empty($appointments)){
+            $appointments = $appointments->where('appointment_date', '>=', $start_date)
+            ->where('appointment_date', '<=', $end_date)->get();
+        }
+        
+        if(!empty($appointments) && $appointments->isNotEmpty()){
+            foreach($appointments as $key => $appointment){
+                $response[$key] = [
+                    'id' => $appointment->id,
+                    'start' => $appointment->appointment_date .' '. $appointment->time_start,
+                    'end' => $appointment->appointment_date .' '. $appointment->time_end,
+                ];
+                if($role === 1){
+                    $response[$key]['title'] = 'Pt: ' . $appointment?->patient?->first_name;
+                }else if($role === 2){
+                    $response[$key]['title'] = 'Dr: ' . $appointment?->doctor?->user?->first_name;
+                }
+            }
+        }
+        return $response;
+    }
 
      /**
      * Use: Appointments listing 
@@ -73,6 +126,11 @@ class DoctorController extends Controller
   
 
         if ( $request->ajax() ) {
+            //Get the appointment(events).
+            if($request->start && $request->end){
+                $response = $this->getAppointmentsById($request->start, $request->end);
+                return response()->json($response);
+            }
             
             if ( $request->load_view == 'true' ) {
               
@@ -103,21 +161,7 @@ class DoctorController extends Controller
                   
                     $patients=PatientDetails::select(array(
                         'id','user_id','clinic_id','created_at','doctor_id'
-                     ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorIds)->orderByDesc('created_at')->get();
-                  
-                    // $patients = PatientDetails::select(array(
-                    //     'id', 'user_id'
-                    // ))->with(array(
-                    //     'user' => function ( $query ) {
-                    //         return $query->select(array(
-                    //             'id', 'first_name', 'last_name','phone_no'
-                    //         ));
-                    //     }
-                    // ))->where(array(
-                    //     'doctor_id' => $user_id->id,
-                    // ))->latest()->get();
-                   
-                
+                     ))->latest()->with('user')->where('clinic_id',$user_id->clinic_id)->orWhereIn('doctor_id',$doctorIds)->orderByDesc('created_at')->get();   
                 }
            
                 if(Auth::user()->hasRole(User::ROLE_CLINIC)){
@@ -1258,6 +1302,11 @@ class DoctorController extends Controller
         $clinics = ClinicDetails::where('is_main_branch',1)->get();
       
         if ( $request->ajax() ) {
+            //Get the appointment(events).
+            if($request->start && $request->end){
+                $response = $this->getAppointmentsById($request->start, $request->end);
+                return response()->json($response);
+            }
 
             if ( $request->load_view == 'true' ) {
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );

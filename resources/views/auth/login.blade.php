@@ -9,7 +9,7 @@
       <div class="row h-100 align-items-center">
          <div class="col-lg-6 col-md-12 col-12">
            <div class="login-logo"> 
-               <a href="/">
+            <a href="{{ url('/') }}">
                <img src="{{ asset('assets/img/narolacare_logo.png') }}" alt="Logo">
                </a>
             </div>

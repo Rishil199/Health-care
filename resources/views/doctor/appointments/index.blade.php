@@ -132,6 +132,9 @@
                             event.allDay = false;
                         }
                     },
+                    eventClick: function(calEvent, jsEvent, view) {
+                        // console.log(calEvent.id);
+                    },
                     selectable: true,
                     eventOverlap: false,
                     selectHelper: true,
