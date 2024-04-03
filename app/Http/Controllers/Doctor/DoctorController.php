@@ -397,6 +397,7 @@ class DoctorController extends Controller
                 })->get()->count();
 
 
+
         }
 
      
@@ -1004,7 +1005,13 @@ class DoctorController extends Controller
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->latest()->get();
+            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('patient')->withTrashed()
+            ->where(function ($query) use ($user_id, $receptionist_details) {
+                $query->where('clinic_id', $user_id->id)
+                ->orWhere('receptionist_id', $receptionist_details ? $receptionist_details->id : null);
+            })
+            ->latest()
+            ->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
@@ -1631,7 +1638,8 @@ class DoctorController extends Controller
                 return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
+                // return date('d-m-Y',strtotime($row->appointment_date));
+                return date('d-m-Y',strtotime($row->appointment_date)).' '. date('H:i A', strtotime($row->time_start));
             })
             ->addColumn('created_by', function($row) {
                 $created_by = User::select('id','first_name','last_name','name')->where('id',$row->created_by)->first();
@@ -1706,7 +1714,8 @@ class DoctorController extends Controller
                 return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
+                // return date('d-m-Y',strtotime($row->appointment_date));
+                return date('d-m-Y',strtotime($row->appointment_date)).' '. date('H:i A', strtotime($row->time_start));
             })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';
@@ -1778,7 +1787,8 @@ class DoctorController extends Controller
                 return $row->doctor->user->phone_no;
             })
             ->addColumn('appointment_date',function($row){
-                return date('d-m-Y',strtotime($row->appointment_date));
+                // return date('d-m-Y',strtotime($row->appointment_date));
+                return date('d-m-Y',strtotime($row->appointment_date)).' '. date('H:i A', strtotime($row->time_start));
             })
             ->addColumn('status', function($row) {
                     return $row->deleted_at =='' ? 'Approved' : 'Rejected';

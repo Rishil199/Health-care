@@ -4,7 +4,11 @@
 @endpush
 @section('content')
 <div class="login-page">
-
+   {{-- @if(session('errorMsg'))
+   <div class=" alert alert-danger text-end fs-6" role="alert" id="errorMessage">
+       {{session('errorMsg')}}
+</div>
+@endif --}}
    <div class="container h-100">
       <div class="row h-100 align-items-center">
          <div class="col-lg-6 col-md-12 col-12">
@@ -20,7 +24,7 @@
             <div class="page_wrapper">
                <div class="login_main">
                   <x-auth-session-status class="alert-success" :status="session('status')" />
-                  <form  method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" autocomplete="off">
+                  <form  method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" autocomplete="off" id="login-form">
                      @csrf
                      <div class="input-with-error mb-3">
                         <div class="input-group ">
@@ -68,4 +72,6 @@
    <div class="circle mediun shade4"></div>
    <div class="circle small shade5"></div>
 </div> -->
+{{-- <script src="{{ asset('assets/js/jquery.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/script.js') }}"></script> --}}
 @endsection

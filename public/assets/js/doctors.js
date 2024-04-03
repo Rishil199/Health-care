@@ -1,4 +1,4 @@
-if ( $('.doctors-table').length ) {
+if ( $('.doctors-table').length > 0 ) {
     var table = $('.doctors-table').DataTable({
         processing: true,
         serverSide: true,
@@ -404,6 +404,12 @@ $(document).on('click', '.edit-doctor',function(e) {
         });
     }
 })
-
 });
+
+
+
+
+
+
+
 
