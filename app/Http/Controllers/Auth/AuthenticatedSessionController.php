@@ -34,33 +34,22 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // if(auth()->user()->hasRole('Super Admin'))
-        // {
-        //     return redirect()->intended(RouteServiceProvider::HOME);
-        // }
-        // else if(auth()->user()->hasRole('Clinic'))
-        // {
-        //     return redirect()->intended(RouteServiceProvider::CLINIC);
-        // }
-        // else if(auth()->user()->hasRole('Doctor'))
-        // {
-        //     return redirect()->intended(RouteServiceProvider::Doctor);
-        // }
+
         if(auth()->user()->hasRole([User::ROLE_SUPER_ADMIN,User::ROLE_PATIENT]))
         {
-            return redirect()->intended(RouteServiceProvider::HOME);    
+            return response()->json(['status'=>'active','redirect'=>RouteServiceProvider::HOME]);    
         }
         elseif(auth()->user()->hasRole(User::ROLE_CLINIC) && auth()->user()->hospital->status==1  )
         {
-              return redirect()->intended(RouteServiceProvider::HOME);    
+              return response()->json(['status'=>'active','redirect'=>RouteServiceProvider::HOME]);    
         }
         elseif(auth()->user()->hasRole(User::ROLE_DOCTOR) && auth()->user()->doctor->status==1  )
         {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return response()->json(['status'=>'active','redirect'=>RouteServiceProvider::HOME]);  
         }
         elseif(auth()->user()->hasRole(User::ROLE_RECEPTIONIST) && auth()->user()->staff->status==1  )
         {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return response()->json(['status'=>'active','redirect'=>RouteServiceProvider::HOME]);  
         }
         else
         {
@@ -72,8 +61,7 @@ class AuthenticatedSessionController extends Controller
             // throw ValidationException::withMessages([
             //     'email' => trans('auth.failed'),
             // ]);
-           $errorMsg="You status has been disabled.";
-            return redirect()->route('login')->with('errorMsg',$errorMsg);
+            return response()->json(['status'=>'disabled','redirect'=>'login']);
         }
     }
 

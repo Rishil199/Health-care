@@ -1,4 +1,4 @@
-if ( $('.doctors-table').length ) {
+if ( $('.doctors-table').length > 0 ) {
     var table = $('.doctors-table').DataTable({
         processing: true,
         serverSide: true,
@@ -404,6 +404,41 @@ $(document).on('click', '.edit-doctor',function(e) {
         });
     }
 })
-
 });
+
+
+$(document).ready(function () {
+    $('#login-form').submit(function (e) { 
+        e.preventDefault();
+        var formData=$(this).serialize();
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: formData,
+            _token: '{{csrf_token()}}',
+            success: function (response) {
+                if(response.status=='disabled')
+                {
+                     toastr.warning("Your account has been disabled.");
+                     setTimeout(() => {
+                          window.location.reload();                         
+                     }, 2000);
+                }
+                else 
+                {
+                    window.location.href=response.redirect;
+                }
+            },
+            error: function(xhr,errorThrown){
+                toastr.error("An error occured");
+            }
+        });
+        
+    });
+});
+
+
+
+
 

@@ -35,7 +35,7 @@ Route::get('/', function () {
 
 Route::post('subscription/store',  [UserController::class, 'subscriptionStore'])->name('subscription'); 
 
-Route::group(['middleware' => ['auth','verified']], function () {
+Route::group(['middleware' => ['auth','verified','revalidate']], function () {
     
     //Routes available to All Roles
     //dashboard
@@ -207,6 +207,8 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('viewBranch/{id}', [ClinicController::class, 'viewBranch'])->name('clinics.viewBranch');
 });
 });
+
+Route::get('getUserstatus',[UserController::class,'getUserStatus'])->name('user_status');
  
 });
  

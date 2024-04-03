@@ -278,7 +278,7 @@ class UserController extends Controller
             	return $row->patient?->phone_no;
             })
             ->addColumn('prescription',function($row){
-            return $row->disease_name ? $row->disease_name: 'N/A';
+            return $row->prescription ? $row->prescription: 'N/A';
              })
             ->addColumn('appointment_date',function($row){
             return date('d-m-Y',strtotime($row->appointment_date));
@@ -672,8 +672,25 @@ class UserController extends Controller
     }
 
 
-    public function resetpswd()
+    // public function resetpswd()
+    // {
+    //     return view('verifyMail-test');
+    // }
+
+
+    public function getUserStatus(Request $request)
     {
-        return view('verifyMail-test');
+        if($request->ajax())
+        {
+            $user=auth()->user();
+            if($user->hasRole(User::ROLE_CLINIC) && auth()->user()->hospital->status==0)
+            {
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                return response()->json(['status'=>'disabled','redirect'=>'/login']);
+
+            }
+        }
+
     }
 }

@@ -315,3 +315,16 @@ $(document).ready(function() {
     });
  });
     
+
+ $(document).ready(function () {
+   $.ajax({
+    type: "GET",
+    url: status_url,
+    success: function (response) {
+        if(response.status=='disabled')
+        {
+          toastr.error('Your account has been deactivated');
+        }
+    }
+});
+ });

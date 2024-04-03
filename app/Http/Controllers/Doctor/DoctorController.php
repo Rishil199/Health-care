@@ -353,6 +353,7 @@ class DoctorController extends Controller
                 })->get()->count();
 
 
+
         }
 
      
@@ -960,7 +961,13 @@ class DoctorController extends Controller
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $user_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
             $receptionist_details = ReceptionistDetails::select('id','user_id','clinic_id')->where('clinic_id',$user_id->id)->first();
-            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('patient')->withTrashed()->where('clinic_id',$user_id->id)->orWhere('receptionist_id',$receptionist_details?->id)->latest()->get();
+            $appointments = DoctorAppointmentDetails::where('disease_name','!=','')->with('patient')->withTrashed()
+            ->where(function ($query) use ($user_id, $receptionist_details) {
+                $query->where('clinic_id', $user_id->id)
+                ->orWhere('receptionist_id', $receptionist_details ? $receptionist_details->id : null);
+            })
+            ->latest()
+            ->get();
         }
 
         if(Auth::user()->hasRole(User::ROLE_RECEPTIONIST)){
