@@ -323,12 +323,12 @@ $(document).ready(function() {
         $('#login-form').submit(function (e) { 
             e.preventDefault();
             var formData=$(this).serialize();
+            formData += '&_token=' + $('meta[name="csrf-token"]').attr('content');
             console.log(formData);
             $.ajax({
                 type: "POST",
                 url: $(this).attr('action'),
                 data: formData,
-                _token: '{{csrf_token()}}',
                 success: function (response) {
                     if(response.status=='disabled')
                     {
@@ -343,7 +343,14 @@ $(document).ready(function() {
                     }
                 },
                 error: function(xhr,errorThrown){
-                    toastr.error("An error occured");
+                    if(xhr.responseJSON && xhr.responseJSON.errors) {
+                        var errors = xhr.responseJSON.errors;
+                        Object.values(errors).forEach(function(error) {
+                            toastr.error(error[0]); 
+                        });
+                    } else {
+                    toastr.error("error occured");
+                    }
                 }
             });
             
@@ -351,15 +358,15 @@ $(document).ready(function() {
     });
 
 
- $(document).ready(function () {
-   $.ajax({
-    type: "GET",
-    url: status_url,
-    success: function (response) {
-        if(response.status=='disabled')
-        {
-          toastr.error('Your account has been deactivated');
-        }
-    }
-});
- });
+//  $(document).ready(function () {
+//    $.ajax({
+//     type: "GET",
+//     url: status_url,
+//     success: function (response) {
+//         if(response.status=='disabled')
+//         {
+//           toastr.error('Your account has been deactivated');
+//         }
+//     }
+// });
+//  });
