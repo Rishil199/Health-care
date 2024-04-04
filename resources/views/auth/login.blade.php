@@ -2,6 +2,7 @@
 @push('head_css_script')
 <link href="{{ asset('assets/css/themes/lite-purple.min.css')}}" rel="stylesheet" type="text/css">
 @endpush
+
 @section('content')
 <div class="login-page">
    <div class="container h-100">
@@ -67,6 +68,4 @@
    <div class="circle mediun shade4"></div>
    <div class="circle small shade5"></div>
 </div> -->
-{{-- <script src="{{ asset('assets/js/jquery.min.js') }}"></script> --}}
-{{-- <script src="{{ asset('assets/js/script.js') }}"></script> --}}
 @endsection

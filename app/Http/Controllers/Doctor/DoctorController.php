@@ -70,7 +70,7 @@ class DoctorController extends Controller
         if(Auth::user()->hasRole(User::ROLE_CLINIC)){
             $role = 2;
             $clinic_id = ClinicDetails::select('id','user_id')->where('user_id',Auth::user()->id)->first();
-            $appointments = DoctorAppointmentDetails::with('doctor')->select('id','user_id','clinic_id','doctor_id','appointment_date','time_start','time_end')->where('clinic_id', $clinic_id->id);
+            $appointments = DoctorAppointmentDetails::with('doctor')->select('id','user_id','clinic_id','doctor_id','appointment_date','time_start','time_end')->where('clinic_id', $clinic_id->id)->withTrashed();
         }
         if(Auth::user()->hasRole(User::ROLE_PATIENT)){
             $role = 2;

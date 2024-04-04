@@ -209,7 +209,6 @@ Route::group(['middleware' => ['preventBackHistory','auth','verified']], functio
 });
  
 
-
 });
 });
  

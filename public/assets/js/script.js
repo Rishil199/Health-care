@@ -349,7 +349,7 @@ $(document).ready(function() {
                             toastr.error(error[0]); 
                         });
                     } else {
-                    toastr.error("error occured");
+                    toastr.error("An error occured");
                     }
                 }
             });
@@ -358,15 +358,3 @@ $(document).ready(function() {
     });
 
 
-//  $(document).ready(function () {
-//    $.ajax({
-//     type: "GET",
-//     url: status_url,
-//     success: function (response) {
-//         if(response.status=='disabled')
-//         {
-//           toastr.error('Your account has been deactivated');
-//         }
-//     }
-// });
-//  });
