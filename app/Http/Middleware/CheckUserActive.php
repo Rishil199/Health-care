@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class CheckUserActive
             $user->hasRole(User::ROLE_RECEPTIONIST) && !$user->staff->status) {
             
             Auth::guard('web')->logout();
-            
+            session()->flash('error_msg', 'Your account has been deativated, Please connect support team!');
             return redirect()->route('login');
         }
 
