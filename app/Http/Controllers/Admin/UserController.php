@@ -672,25 +672,5 @@ class UserController extends Controller
     }
 
 
-    // public function resetpswd()
-    // {
-    //     return view('verifyMail-test');
-    // }
-
-
-    public function getUserStatus(Request $request)
-    {
-        if($request->ajax())
-        {
-            $user=auth()->user();
-            if($user->hasRole(User::ROLE_CLINIC) && auth()->user()->hospital->status==0)
-            {
-                Auth::guard('web')->logout();
-                $request->session()->invalidate();
-                return response()->json(['status'=>'disabled','redirect'=>'/login']);
-
-            }
-        }
-
-    }
+ 
 }

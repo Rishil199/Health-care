@@ -4,11 +4,6 @@
 @endpush
 @section('content')
 <div class="login-page">
-   {{-- @if(session('errorMsg'))
-   <div class=" alert alert-danger text-end fs-6" role="alert" id="errorMessage">
-       {{session('errorMsg')}}
-</div>
-@endif --}}
    <div class="container h-100">
       <div class="row h-100 align-items-center">
          <div class="col-lg-6 col-md-12 col-12">
