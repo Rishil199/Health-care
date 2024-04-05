@@ -332,7 +332,7 @@ $(document).ready(function() {
                 success: function (response) {
                     if(response.status=='disabled')
                     {
-                         toastr.warning("Your account has been disabled.");
+                         toastr.warning("Your account has been deativated.");
                          setTimeout(() => {
                               window.location.reload();                         
                          }, 2000);
