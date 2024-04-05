@@ -112,7 +112,6 @@ class DoctorController extends Controller
      */
 
     public function appointments(Request $request) {
-        
         $user_id = auth()->id();
         $clinic_details = ClinicDetails::select('id','user_id')->where('user_id',$user_id)->first();
         $selected_date=$request->appointment_date;
@@ -132,8 +131,22 @@ class DoctorController extends Controller
                 return response()->json($response);
             }
             
+            if($request->view=='true' && $request->formtype=="display-appointment-modal")
+            {
+                $appointment_details=DoctorAppointmentDetails::select('id','user_id','patient_id','doctor_id','appointment_date','time_start','time_end','disease_name')->where('id',$request->appointment_id)->with(['doctor.user','patient'])->first();
+                $this->data=array('appointment_details'=>$appointment_details);
+                $view=view('doctor.appointments.display-appointment-detail',$this->data)->render();
+                $this->data=array(
+                    'status'=>true,
+                    'data'=>array(
+                    'view'=>$view
+                    )
+                    );
+                    return response()->json($this->data);
+                
+            }
+     
             if ( $request->load_view == 'true' ) {
-              
                 $current_time = now()->toTimeString();
                 
                

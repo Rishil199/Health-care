@@ -386,8 +386,10 @@ $(document).ready(function () {
         dataType: "JSON",
         complete: response => {
             let resp = response.responseJSON;
+            // console.log(response);
             if (resp) {
                 if (resp.status) {
+                    // console.log(resp);
                     make_modal('patient-clinic-appointment', resp
                         .data.view, true, 'modal-lg');
                     if ($('#datepicker').length){
