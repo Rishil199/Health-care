@@ -136,6 +136,34 @@
                             event.allDay = false;
                         }
                     },
+                    eventClick: function(calEvent, jsEvent, view) {
+                        var patient_appointment_id = calEvent.id;
+                        // console.log(patient_appointment_id);
+                    $.ajax({
+                        type: "get",
+                        url: "{{route('patient_appointments.index')}}",
+                        data: {
+                            view:true,
+                            patient_appointment_id:patient_appointment_id,
+                            _token: "{{csrf_token()}}",
+                            formtype: 'display-appointment-modal'
+                        },
+                        dataType: "json",
+                        complete: function (response) {
+                            // console.log(response);
+                            // return false;
+                            if(response && response.responseJSON)
+                            {
+                                let resp= response.responseJSON;
+                                make_modal('display-appointment-modal', resp.data.view, true,'modal-lg')
+                            }
+                            else 
+                            {
+                                console.log("Error: Response is undefined or null.");
+                            }
+                        }
+                    });
+                    },
                     selectable: true,
                     eventOverlap: false,
                     selectHelper: true,

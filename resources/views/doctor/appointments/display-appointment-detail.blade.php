@@ -28,8 +28,10 @@
                 <div class="col-md-12 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="theme-form-input">
+                            @if(Auth::user()->hasAnyRole([User::ROLE_CLINIC,User::ROLE_RECEPTIONIST,User::ROLE_PATIENT]))
                             <label class="theme-label" for="picker1">Doctor Name -</label>
                                 <span class="fw-normal">{{$appointment_details->doctor->user->first_name}}</span>
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -37,8 +39,10 @@
                 <div class="col-md-12 mb-3">
                     <div class="form-group theme-form-group">
                         <div class="theme-form-input">
+                            @if(Auth::user()->hasAnyRole([User::ROLE_CLINIC,User::ROLE_RECEPTIONIST,User::ROLE_DOCTOR]))
                             <label class="theme-label" for="picker1">Patient Name - </label>
                                 <span class="fw-normal">{{$appointment_details->patient->first_name}}</span>
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -47,8 +51,8 @@
                     <div class="form-group theme-form-group">
                         <div class="theme-form-input">
                             <label class="theme-label" for="picker1">Disease Name -</label>
-                                <span class="fw-normal">{{$appointment_details->disease_name}}</span>
-                        </div>
+                                <span class="fw-normal">{{$appointment_details->disease_name !==null && $appointment_details->disease_name!=='' ? $appointment_details->disease_name: 'N/A'}}</span>
+                            </div>
                     </div>
                 </div>
 

@@ -1328,6 +1328,23 @@ class DoctorController extends Controller
                 return response()->json($response);
             }
 
+            if($request->view=='true' && $request->formtype=="display-appointment-modal")
+            {
+               $appointment_details=DoctorAppointmentDetails::select('id','patient_id','user_id','doctor_id','clinic_id','disease_name','appointment_date'
+               ,'time_start','time_end')->where('id',$request->patient_appointment_id)->with(['doctor.user'])->first();
+                $this->data=array('appointment_details'=>$appointment_details);
+                $view =view('doctor.appointments.display-appointment-detail',$this->data)->render();
+                $this->data=array(
+                    'status'=>true,
+                     'data'=>array(
+                     'view'=>$view,
+                    )
+                );
+                return response()->json($this->data);
+               
+
+            }
+
             if ( $request->load_view == 'true' ) {
                 $available_slots = DoctorAppointmentDetails::getAvailableTimeslotes( $request->appointment_date, $request->event_name );
                 
