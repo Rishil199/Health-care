@@ -20,7 +20,6 @@ use App\Models\ReceptionistDetails;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-
     public const ROLE_SUPER_ADMIN = 'Super Admin';
     public const ROLE_CLINIC = 'Hospital';
     public const ROLE_DOCTOR = 'Doctor';

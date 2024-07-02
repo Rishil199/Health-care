@@ -1,6 +1,7 @@
 @use ('App\Models\User')
 @extends('layouts.app')
 @push('header_css')
+<link rel="stylesheet" href="{{ asset('assets/css/plugins/datatables.min.css') }}" />
 @endpush
 @section('content-body')
     <div class="master-wrrapper-conter">

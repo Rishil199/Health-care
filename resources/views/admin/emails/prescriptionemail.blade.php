@@ -86,7 +86,7 @@
   <meta name="format-detection" content="date=no">
   <meta name="format-detection" content="telephone=no">
   <style type="text/CSS"></style>
-  <style @import url('https://dopplerhealth.com/fonts/BasierCircle/basiercircle-regular-webfont.woff2');></style>
+  <!-- <style @import url('https://dopplerhealth.com/fonts/BasierCircle/basiercircle-regular-webfont.woff2');></style> -->
   <title></title>
   <style>
     table,
@@ -134,7 +134,7 @@
   <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#FDF8F4;">
     <table role="presentation" style="width:100%;border:none;border-spacing:0;">
       <tr>
-        <td align="center" style="padding:0;">
+        <td style="padding:0;">
           <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:'Basier Circle', 'Roboto', 'Helvetica', 'Arial', sans-serif;font-size:1em;line-height:1.37em;color:#384049;">
             <!--      Logo headder -->
             <tr>
